@@ -13,15 +13,204 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="2D Framework">
+      <UniqueIdentifier>{b7c34cef-2557-4947-800e-7c544218e818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2D Framework\Manager">
+      <UniqueIdentifier>{ade7add5-8070-4cca-a2b4-327753b350e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame">
+      <UniqueIdentifier>{e999a759-dc02-46e0-bab3-1e132a4eea45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Character">
+      <UniqueIdentifier>{5b16cb32-d68d-44f7-bd46-53b037c6fcc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Enemy">
+      <UniqueIdentifier>{94291b94-ae94-45ac-bb98-fee626481e3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Enemy\Turtle">
+      <UniqueIdentifier>{4f80b84d-53e4-4b6c-a4a6-dd6c3c1fed69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Map">
+      <UniqueIdentifier>{ceedeeec-c9c0-410a-bac9-4ea5eaf0a2c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Ammo">
+      <UniqueIdentifier>{3e009530-39fb-4fd0-ac43-d71ea3c2b300}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene">
+      <UniqueIdentifier>{3b18922b-43b7-439e-adab-b23385e2c4e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Item">
+      <UniqueIdentifier>{9c437b83-887d-41f6-bbb5-42b948cefdaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UIManager">
+      <UniqueIdentifier>{780c10e8-dd28-4382-9efd-e52cc7976fc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>2D Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>2D Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Jazz.cpp">
+      <Filter>MainGame\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Spaz.cpp">
+      <Filter>MainGame\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Lori.cpp">
+      <Filter>MainGame\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Turtle.cpp">
+      <Filter>MainGame\Enemy\Turtle</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicTurtle.cpp">
+      <Filter>MainGame\Enemy\Turtle</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>MainGame\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>MainGame\UIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Ammo.cpp">
+      <Filter>MainGame\Ammo</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>MainGame\UIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Life.cpp">
+      <Filter>MainGame\UIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Gun.cpp">
+      <Filter>MainGame\UIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreObject.cpp">
+      <Filter>MainGame\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>2D Framework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>2D Framework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>2D Framework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TiltleScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="StageSelectScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterSelectScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DifficultySelectScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayInStageScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RetryScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="HighScoreScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>2D Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>2D Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Jazz.h">
+      <Filter>MainGame\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Spaz.h">
+      <Filter>MainGame\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Lori.h">
+      <Filter>MainGame\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Turtle.h">
+      <Filter>MainGame\Enemy\Turtle</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicTurtle.h">
+      <Filter>MainGame\Enemy\Turtle</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>MainGame\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>MainGame\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Ammo.h">
+      <Filter>MainGame\Ammo</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>MainGame\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Gun.h">
+      <Filter>MainGame\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Life.h">
+      <Filter>MainGame\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreObject.h">
+      <Filter>MainGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>2D Framework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>2D Framework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>2D Framework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TiltleScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="StageSelectScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterSelectScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DifficultySelectScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayInStageScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="RetryScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="HighScoreScene.h">
+      <Filter>MainGame\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
