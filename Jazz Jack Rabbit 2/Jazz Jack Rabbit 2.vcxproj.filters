@@ -132,6 +132,12 @@
     <ClCompile Include="ImageManager.cpp">
       <Filter>2D Framework\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="GameEntity.cpp">
+      <Filter>2D Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapToolScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h">
@@ -223,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="ImageManager.h">
       <Filter>2D Framework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEntity.h">
+      <Filter>2D Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapToolScene.h">
+      <Filter>MainGame\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

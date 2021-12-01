@@ -143,6 +143,7 @@
     <ClCompile Include="BasicTurtle.cpp" />
     <ClCompile Include="CharacterSelectScene.cpp" />
     <ClCompile Include="DifficultySelectScene.cpp" />
+    <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gun.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="Spaz.cpp" />
     <ClCompile Include="StageSelectScene.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="TileMapToolScene.cpp" />
     <ClCompile Include="TiltleScene.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Turtle.cpp" />
@@ -175,6 +177,7 @@
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="DifficultySelectScene.h" />
+    <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gun.h" />
@@ -195,6 +198,7 @@
     <ClInclude Include="Spaz.h" />
     <ClInclude Include="StageSelectScene.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TileMapToolScene.h" />
     <ClInclude Include="TiltleScene.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Turtle.h" />
