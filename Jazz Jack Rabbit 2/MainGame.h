@@ -1,8 +1,9 @@
 #pragma once
 #include "Config.h"
+#include "GameEntity.h"
 
 class Image;
-class MainGame
+class MainGame : public GameEntity
 {
 private:
 	HANDLE hTimer;
