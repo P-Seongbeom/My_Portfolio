@@ -1,0 +1,6 @@
+map 1 >> 10 x 6
+map 2 >> 5 x 5
+map 3 >> 5 x 5
+map 4 >> 25 x 15
+map 5 >> 7 x 10
+map 6 >> 10 x 7

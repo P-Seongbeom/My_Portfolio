@@ -1,6 +1,7 @@
 #include "MainGame.h"
 #include "Image.h"
 #include "TileMapToolScene.h"
+#include "PlayInStageScene.h"
 
 HRESULT MainGame::Init()
 {
@@ -10,8 +11,10 @@ HRESULT MainGame::Init()
 	SceneManager::GetSingleton()->Init();
 
 	SceneManager::GetSingleton()->AddScene("TileMapTool", new TileMapToolScene);
+	SceneManager::GetSingleton()->AddScene("PlayInStage", new PlayInStageScene);
 
-	SceneManager::GetSingleton()->ChangeScene("TileMapTool");
+	SceneManager::GetSingleton()->ChangeScene("PlayInStage");
+
 
 	// 타이머 셋팅
 	hTimer = (HANDLE)SetTimer(g_hWnd, 0, 10, NULL);
@@ -23,8 +26,12 @@ HRESULT MainGame::Init()
 
 	backBuffer->Init("Image/mapImage.bmp", maxSizeX, maxSizeY);
 
+	//Input Init ----------------<<<<<<<<<
+
 	return S_OK;
 }
+
+//MainGame::ProacessInput-----------<<<<<<Input update
 
 void MainGame::Update()
 {
@@ -36,6 +43,8 @@ void MainGame::Update()
 void MainGame::Render(HDC hdc)
 {
 	HDC hBackBufferDC = backBuffer->GetMemDC();
+
+	PatBlt(hBackBufferDC, 0, 0, backBuffer->GetWidth(), backBuffer->GetHeight(), WHITENESS);
 
 	wsprintf(text, "MousePosX : %d", mousePosX);
 	TextOut(hBackBufferDC, 200, 10, text, strlen(text));

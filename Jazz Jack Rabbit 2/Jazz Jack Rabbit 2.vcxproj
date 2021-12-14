@@ -142,12 +142,10 @@
     <ClCompile Include="Ammo.cpp" />
     <ClCompile Include="BasicTurtle.cpp" />
     <ClCompile Include="CharacterSelectScene.cpp" />
-    <ClCompile Include="DifficultySelectScene.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gun.cpp" />
-    <ClCompile Include="HighScoreScene.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Jazz.cpp" />
@@ -157,13 +155,13 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="PlayInStageScene.cpp" />
     <ClCompile Include="RetryScene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="ScoreObject.cpp" />
     <ClCompile Include="Spaz.cpp" />
-    <ClCompile Include="StageSelectScene.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TileMapToolScene.cpp" />
     <ClCompile Include="TiltleScene.cpp" />
@@ -177,12 +175,10 @@
     <ClInclude Include="CharacterSelectScene.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="Config.h" />
-    <ClInclude Include="DifficultySelectScene.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gun.h" />
-    <ClInclude Include="HighScoreScene.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Jazz.h" />
@@ -191,6 +187,7 @@
     <ClInclude Include="Lori.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MainMenuScene.h" />
+    <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="PlayInStageScene.h" />
     <ClInclude Include="RetryScene.h" />
     <ClInclude Include="SceneManager.h" />
@@ -198,7 +195,6 @@
     <ClInclude Include="ScoreObject.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Spaz.h" />
-    <ClInclude Include="StageSelectScene.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileMapToolScene.h" />
     <ClInclude Include="TiltleScene.h" />

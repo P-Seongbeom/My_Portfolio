@@ -108,13 +108,7 @@
     <ClCompile Include="MainMenuScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="StageSelectScene.cpp">
-      <Filter>MainGame\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="CharacterSelectScene.cpp">
-      <Filter>MainGame\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="DifficultySelectScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="PlayInStageScene.cpp">
@@ -125,9 +119,6 @@
     </ClCompile>
     <ClCompile Include="MainGame.cpp">
       <Filter>MainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="HighScoreScene.cpp">
-      <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="ImageManager.cpp">
       <Filter>2D Framework\Manager</Filter>
@@ -140,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="KeyManager.cpp">
       <Filter>2D Framework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>MainGame\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,13 +197,7 @@
     <ClInclude Include="MainMenuScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="StageSelectScene.h">
-      <Filter>MainGame\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="CharacterSelectScene.h">
-      <Filter>MainGame\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="DifficultySelectScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="PlayInStageScene.h">
@@ -220,9 +208,6 @@
     </ClInclude>
     <ClInclude Include="MainGame.h">
       <Filter>MainGame</Filter>
-    </ClInclude>
-    <ClInclude Include="HighScoreScene.h">
-      <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="CommonFunction.h">
       <Filter>헤더 파일</Filter>
@@ -241,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="KeyManager.h">
       <Filter>2D Framework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>MainGame\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
