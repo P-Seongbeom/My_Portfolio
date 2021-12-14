@@ -233,7 +233,7 @@ void TileMapToolScene::MapSave()
         NULL);
 
     DWORD writtenByte;
-    if (WriteFile(hFile, tileInfo, sizeof(tagTile) * TILE_COUNT_X * TILE_COUNT_Y, &writtenByte, NULL) == false)
+    if (WriteFile(hFile, tileInfo, sizeof(tileInfo), &writtenByte, NULL) == false)
     {
         MessageBox(g_hWnd, "맵 데이터 저장 실패", "에러", MB_OK);
     }
@@ -260,7 +260,7 @@ void TileMapToolScene::MapLoad()
         NULL);
 
     DWORD readByte;
-    if (ReadFile(hFile, tileInfo, sizeof(tagTile) * TILE_COUNT_X * TILE_COUNT_Y, &readByte, NULL) == false)
+    if (ReadFile(hFile, tileInfo, sizeof(tileInfo), &readByte, NULL) == false)
     {
         MessageBox(g_hWnd, "맵 데이터 불러오기 실패", "에러", MB_OK);
     }

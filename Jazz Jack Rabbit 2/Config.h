@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include <stdlib.h>
 #include <math.h>
 #include <vector>
 #include <map>
@@ -7,6 +8,8 @@
 #include <string>
 
 using namespace std;
+
+#pragma comment(lib, "winmm.lib")
 
 #define WIN_START_POS_X 400
 #define WIN_START_POS_Y 100
@@ -27,6 +30,7 @@ typedef struct ArgumentFuncPtr
 #include "ImageManager.h"
 #include "SceneManager.h"
 #include "KeyManager.h"
+#include "TimeManager.h"
 
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;

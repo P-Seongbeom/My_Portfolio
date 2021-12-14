@@ -1,5 +1,20 @@
 #pragma once
-class TimeManager
+#include "Config.h"
+#include "Singleton.h"
+
+class Timer;
+class TimeManager : public Singleton<TimeManager>
 {
+private:
+	Timer* timer;
+	char szText[256];
+
+public:
+	void Init();
+	void Update();
+	void Render(HDC hdc);
+	void Release();
+
+	float GetDeltaTime();
 };
 

@@ -6,7 +6,7 @@ class PlayerManager;
 class PlayInStageScene : public GameEntity
 {
 private:
-	PlayerManager* jumpTest;
+	PlayerManager* jumpTest = nullptr;
 
 public:
 	virtual HRESULT Init() override;

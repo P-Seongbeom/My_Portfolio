@@ -22,6 +22,7 @@ public:
 	void Update();
 	void Render(HDC hdc);
 	void Release();
+	virtual ~MainGame() = default;
 
 	LRESULT MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 };

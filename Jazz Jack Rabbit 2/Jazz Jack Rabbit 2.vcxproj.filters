@@ -43,7 +43,10 @@
     <Filter Include="MainGame\Item">
       <UniqueIdentifier>{9c437b83-887d-41f6-bbb5-42b948cefdaf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\UIManager">
+    <Filter Include="2D Framework\Timer">
+      <UniqueIdentifier>{a751eca1-b532-4a08-bd94-6c0109b96d91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI">
       <UniqueIdentifier>{780c10e8-dd28-4382-9efd-e52cc7976fc2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -57,13 +60,7 @@
     <ClCompile Include="Image.cpp">
       <Filter>2D Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Jazz.cpp">
-      <Filter>MainGame\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Spaz.cpp">
-      <Filter>MainGame\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Lori.cpp">
       <Filter>MainGame\Character</Filter>
     </ClCompile>
     <ClCompile Include="Turtle.cpp">
@@ -76,19 +73,19 @@
       <Filter>MainGame\Map</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
-      <Filter>MainGame\UIManager</Filter>
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
     <ClCompile Include="Ammo.cpp">
       <Filter>MainGame\Ammo</Filter>
     </ClCompile>
     <ClCompile Include="Score.cpp">
-      <Filter>MainGame\UIManager</Filter>
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
     <ClCompile Include="Life.cpp">
-      <Filter>MainGame\UIManager</Filter>
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
     <ClCompile Include="Gun.cpp">
-      <Filter>MainGame\UIManager</Filter>
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
     <ClCompile Include="ScoreObject.cpp">
       <Filter>MainGame\Item</Filter>
@@ -135,24 +132,18 @@
     <ClCompile Include="PlayerManager.cpp">
       <Filter>MainGame\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>2D Framework\Timer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Config.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>2D Framework</Filter>
     </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>2D Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Jazz.h">
-      <Filter>MainGame\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Spaz.h">
-      <Filter>MainGame\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Lori.h">
       <Filter>MainGame\Character</Filter>
     </ClInclude>
     <ClInclude Include="Turtle.h">
@@ -165,19 +156,19 @@
       <Filter>MainGame\Map</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
-      <Filter>MainGame\UIManager</Filter>
+      <Filter>MainGame\UI</Filter>
     </ClInclude>
     <ClInclude Include="Ammo.h">
       <Filter>MainGame\Ammo</Filter>
     </ClInclude>
     <ClInclude Include="Score.h">
-      <Filter>MainGame\UIManager</Filter>
+      <Filter>MainGame\UI</Filter>
     </ClInclude>
     <ClInclude Include="Gun.h">
-      <Filter>MainGame\UIManager</Filter>
+      <Filter>MainGame\UI</Filter>
     </ClInclude>
     <ClInclude Include="Life.h">
-      <Filter>MainGame\UIManager</Filter>
+      <Filter>MainGame\UI</Filter>
     </ClInclude>
     <ClInclude Include="ScoreObject.h">
       <Filter>MainGame\Item</Filter>
@@ -229,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="PlayerManager.h">
       <Filter>MainGame\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>2D Framework\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
