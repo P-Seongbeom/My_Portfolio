@@ -5,6 +5,12 @@
 #include "CommonFunction.h"
 #include "MainGame.h"
 
+#ifdef UNICODE
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+#else
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+#endif
+
 POINT		g_ptMouse;
 HINSTANCE	g_hInstance;
 HWND		g_hWnd;
@@ -81,6 +87,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_TIMER:
 		if (isUpdate)
 		{
+			//Input 업데이트 -------------<<<<
 			g_mainGame.Update();
 		}
 		break;
