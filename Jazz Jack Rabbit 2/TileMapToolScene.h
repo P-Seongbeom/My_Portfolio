@@ -6,7 +6,7 @@ enum class Terrain { Earth, Wall, Water, Grass, Breakablewall, End };
 
 #define TILE_SIZE	32
 #define TILE_COUNT_X	20
-#define TILE_COUNT_Y	20
+#define TILE_COUNT_Y	15
 #define SAMPLE_TILE_COUNT_X		25
 #define SAMPLE_TILE_COUNT_Y		15
 #define SAMPLE_IMAGE_COUNT		6
@@ -35,11 +35,15 @@ private:
 
 	int posX = 0;
 	int	posY = 0;
-	int posX2, posY2 = 0;
-	int selectedIdX, selectedIdY = 0;
-	int selectedIdX2, selectedIdY2 = 0;
-	int selectedTileCountX, selectedTileCountY = 0;
-	int sampleAreaIdx = 1;
+	int posX2 = 0;
+	int posY2 = 0;
+	int selectedIdX = 0;
+	int	selectedIdY = 0;
+	int selectedIdX2 = 0;
+	int selectedIdY2 = 0;
+	int selectedTileCountX = 0;
+	int selectedTileCountY = 0;
+	int sampleAreaIdx = 0;
 
 	SAMPLE_TILE_INFO	selectedSampleTile;
 

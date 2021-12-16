@@ -9,6 +9,7 @@ HRESULT MainGame::Init()
 
 	KeyManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
+	TimeManager::GetSingleton()->Init();
 
 	SceneManager::GetSingleton()->AddScene("TileMapTool", new TileMapToolScene);
 	SceneManager::GetSingleton()->AddScene("PlayInStage", new PlayInStageScene);
@@ -35,6 +36,7 @@ HRESULT MainGame::Init()
 
 void MainGame::Update()
 {
+	TimeManager::GetSingleton()->Update();
 	SceneManager::GetSingleton()->Update();
 
 	InvalidateRect(g_hWnd, NULL, false);
@@ -52,6 +54,8 @@ void MainGame::Render(HDC hdc)
 	wsprintf(text, "MousePosY : %d", mousePosY);
 	TextOut(hBackBufferDC, 200, 40, text, strlen(text));
 
+	TimeManager::GetSingleton()->Render(hBackBufferDC);
+
 	SceneManager::GetSingleton()->Render(hBackBufferDC);
 
 	backBuffer->Render(hdc);
@@ -60,6 +64,9 @@ void MainGame::Render(HDC hdc)
 void MainGame::Release()
 {
 	SAFE_RELEASE(backBuffer);
+
+	TimeManager::GetSingleton()->Release();
+	TimeManager::GetSingleton()->ReleaseSingleton();
 
 	SceneManager::GetSingleton()->Release();
 	SceneManager::GetSingleton()->ReleaseSingleton();
