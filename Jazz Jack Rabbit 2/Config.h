@@ -13,8 +13,8 @@ using namespace std;
 
 #define WIN_START_POS_X 400
 #define WIN_START_POS_Y 100
-#define WIN_SIZE_X	1000
-#define WIN_SIZE_Y	800
+#define WIN_SIZE_X	640
+#define WIN_SIZE_Y	480
 #define TILEMAPTOOL_SIZE_X 1600
 #define TILEMAPTOOL_SIZE_Y 900
 
@@ -35,3 +35,31 @@ typedef struct ArgumentFuncPtr
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;
 extern POINT g_ptMouse;
+extern int windowSizeX;
+extern int windowSizeY;
+
+//타일맵 관련
+#define TILE_SIZE	32
+#define TILE_COUNT_X	20
+#define TILE_COUNT_Y	15
+#define SAMPLE_TILE_COUNT_X		25
+#define SAMPLE_TILE_COUNT_Y		15
+#define SAMPLE_IMAGE_COUNT		6
+
+typedef struct tagTile
+{
+	//Terrain terrain;
+	RECT rc;
+	int frameX, frameY;
+}TILE_INFO;
+
+//플레이어 관련
+enum class playerState { Stand, Walk, Run, Jump, Rope };
+//enum class moveDir {Left, Right, Up, Down};
+
+typedef struct player_Info
+{
+	playerState state;
+	RECT rc;
+	int frameX, frameY;
+}RABBIT;

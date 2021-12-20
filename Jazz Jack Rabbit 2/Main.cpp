@@ -16,11 +16,16 @@ HINSTANCE	g_hInstance;
 HWND		g_hWnd;
 LPSTR		g_lpszClass = (LPSTR)TEXT("Imitate_Jazz JackRabbit 2");
 MainGame	g_mainGame;
+int windowSizeX;
+int windowSizeY;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 
 int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpszCmdParam, int nCmdShow)
 {
+	windowSizeX = WIN_SIZE_X;
+	windowSizeY = WIN_SIZE_Y;
+
 	g_hInstance = _hInstance;
 	WNDCLASS wndClass;
 	wndClass.cbClsExtra = 0;
@@ -41,8 +46,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpsz
 		WIN_START_POS_X, WIN_START_POS_Y, WIN_SIZE_X, WIN_SIZE_Y,
 		NULL, NULL, _hInstance, NULL);
 
-	SetWindowSize(WIN_START_POS_X, WIN_START_POS_Y,
-		WIN_SIZE_X, WIN_SIZE_Y);
+	SetWindowSize(WIN_START_POS_X, WIN_START_POS_Y, WIN_SIZE_X, WIN_SIZE_Y);
 
 	// 메인게임 초기화
 	g_mainGame.Init();
@@ -71,6 +75,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
 	PAINTSTRUCT ps;
+	
 
 	static bool isUpdate = true;
 
@@ -93,6 +98,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_PAINT:		// 윈도우 화면이 다시 그려지는 경우 발생하는 메시지
 		hdc = BeginPaint(g_hWnd, &ps);
+		RECT rect;
+		SetMapMode(hdc, MM_ANISOTROPIC);
+		SetWindowExtEx(hdc, windowSizeX, windowSizeY, NULL);
+		GetClientRect(g_hWnd, &rect);
+		SetViewportExtEx(hdc, rect.right, rect.bottom, NULL);
 
 		g_mainGame.Render(hdc);
 

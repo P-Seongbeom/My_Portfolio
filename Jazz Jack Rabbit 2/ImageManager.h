@@ -36,7 +36,7 @@ public:
 
 	*/
 
-	void AddImage(const char* fileName, int width, int height,
+	Image* AddImage(const char* fileName, int width, int height,
 		bool isTrans = false, COLORREF transColor = NULL);	// 사용할 이미지를 등록하는 기능
 
 	Image* AddImage(const char* fileName, int width, int height,

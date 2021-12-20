@@ -67,10 +67,17 @@ public:
 
 	HDC GetMemDC() { if (imageInfo) return imageInfo->hMemDc; return NULL; }
 
+	int GetCurrFrameX() { return imageInfo->currFrameX; }
+	void SetCurrFrameX(int frame) { imageInfo->currFrameX = frame; }
+	int GetCurrFrameY() { return imageInfo->currFrameY; }
+	void SetCurrFrameY(int frame) { imageInfo->currFrameY = frame; }
+
 	int GetWidth() { return imageInfo->width; }
 	int GetHeight() { return imageInfo->height; }
 
 	int GetFrameWidth() { return imageInfo->frameWidth; }
+	void SetFrameWidth(int frame) { imageInfo->frameWidth = frame; }
 	int GetFrameHeight() { return imageInfo->frameHeight; }
+	void SetFrameHeight(int frame) { imageInfo->frameHeight = frame; }
 };
 

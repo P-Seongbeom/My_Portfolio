@@ -16,21 +16,23 @@ void ImageManager::Release()
     mapImages.clear();
 }
 
-void ImageManager::AddImage(const char* fileName, int width, int height, bool isTrans, COLORREF transColor)
+Image* ImageManager::AddImage(const char* fileName, int width, int height, bool isTrans, COLORREF transColor)
 {
     if (FindImage(fileName))
     {
-        return;
+        return nullptr;
     }
 
     Image* img = new Image;
     if (FAILED(img->Init(fileName, width, height, isTrans, transColor)))
     {
         SAFE_RELEASE(img);
-        return;
+        return nullptr;
     }
 
     mapImages.emplace(make_pair(fileName, img));
+
+    return img;
 }
 
 Image* ImageManager::AddImage(const char* fileName, int width, int height, int maxFrameX, int maxFrameY, bool isTrans, COLORREF transColor)

@@ -5,12 +5,14 @@
 HRESULT TileMapToolScene::Init()
 {
     SetWindowSize(20, 20, TILEMAPTOOL_SIZE_X, TILEMAPTOOL_SIZE_Y);
+    windowSizeX = TILEMAPTOOL_SIZE_X;
+    windowSizeY = TILEMAPTOOL_SIZE_Y;
     
     sampleImage[0] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage1.bmp", 320, 192, 10, 6, true, RGB(255, 0, 255));
     sampleImage[1] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage2.bmp", 160, 160, 5, 5, true, RGB(255, 0, 255));
     sampleImage[2] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage3.bmp", 160, 160, 5, 5, true, RGB(255, 0, 255));
     sampleImage[3] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage4.bmp", 800, 480, 25, 15, true, RGB(255, 0, 255));
-    sampleImage[4] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage5.bmp", 224, 320, 7, 10, true, RGB(255, 0, 255));
+    sampleImage[4] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage5.bmp", 290, 320, 9, 10, true, RGB(255, 0, 255));
     sampleImage[5] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage6.bmp", 320, 224, 10, 7, true, RGB(255, 0, 255));
     
     //960, 608, 30, 19, true, RGB(255, 0, 255)
@@ -170,11 +172,11 @@ void TileMapToolScene::Update()
 
     if (KeyManager::GetSingleton()->IsOnceKeyDown('O'))
     {
-        MapSave();
+        SaveMap();
     }
     if (KeyManager::GetSingleton()->IsOnceKeyDown('P'))
     {
-        MapLoad();
+        LoadMap();
     }
 
 }
@@ -188,7 +190,7 @@ void TileMapToolScene::Render(HDC hdc)
             Rectangle(hdc, tileInfo[sampleAreaIdx][i][j].rc.left, tileInfo[sampleAreaIdx][i][j].rc.top, tileInfo[sampleAreaIdx][i][j].rc.right, tileInfo[sampleAreaIdx][i][j].rc.bottom);
             sampleImage[sampleAreaIdx]->Render(hdc,
                 tileInfo[sampleAreaIdx][i][j].rc.left + TILE_SIZE / 2,
-                tileInfo[sampleAreaIdx][i][j].rc.top + TILE_SIZE / 2,
+                tileInfo[sampleAreaIdx][i][j].rc.top + TILE_SIZE,
                 tileInfo[sampleAreaIdx][i][j].frameX,
                 tileInfo[sampleAreaIdx][i][j].frameY);
         }
@@ -216,7 +218,7 @@ void TileMapToolScene::Release()
 {
 }
 
-void TileMapToolScene::MapSave()
+void TileMapToolScene::SaveMap()
 {
     int saveNum;
     cout << "저장할 맵 번호 입력" << endl;
@@ -243,7 +245,7 @@ void TileMapToolScene::MapSave()
     CloseHandle(hFile);
 }
 
-void TileMapToolScene::MapLoad()
+void TileMapToolScene::LoadMap()
 {
     int loadNum;
     cout << "불러올 맵 번호 입력" << endl;
