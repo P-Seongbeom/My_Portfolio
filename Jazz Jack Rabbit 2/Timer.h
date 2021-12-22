@@ -18,14 +18,13 @@ public:
 	static void		Init() noexcept;
 	static bool		CanUpdate() noexcept;
 
-	static unsigned long GetFPS() { return fps; }
+	static unsigned long		GetFPS() { return _fps; }
 
 private:
 	static TimePoint	_prevTime;
 	static float		_deltaTime;
 	static float		_timeScale;
-
-	static float fpsTimeElapsed;
-	static unsigned long fpsFrameCount;
-	static unsigned long fps;
+	static unsigned long	_fps;
+	static unsigned long _fpsFrameCount;
+	static float		_fpsTimeElapsed;
 };

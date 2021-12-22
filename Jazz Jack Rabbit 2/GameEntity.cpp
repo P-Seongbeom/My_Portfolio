@@ -16,3 +16,7 @@ void GameEntity::Render(HDC hdc)
 void GameEntity::Release()
 {
 }
+
+void GameEntity::PhysicsUpdate()
+{
+}

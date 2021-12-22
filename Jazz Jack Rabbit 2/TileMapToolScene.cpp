@@ -12,12 +12,12 @@ HRESULT TileMapToolScene::Init()
     sampleImage[1] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage2.bmp");
     sampleImage[2] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage3.bmp");
     sampleImage[3] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage4.bmp");
-    sampleImage[4] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage5.bmp");
-    sampleImage[5] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage6.bmp");
+    sampleImage[4] = ImageManager::GetSingleton()->FindImage("Image/tilemap/CollisionPixel.bmp");
+    sampleImage[5] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage5.bmp");
+    sampleImage[6] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage6.bmp");
     
     if (sampleImage == nullptr)
     {
-        cout << "로드 실패" << endl;
         return E_FAIL;
     }
 
@@ -93,26 +93,30 @@ void TileMapToolScene::Update()
     {
         sampleAreaIdx = 5;
     }
+    else if (Input::GetButtonDown(VK_F7))
+    {
+        sampleAreaIdx = 6;
+    }
 
-    if (PtInRect(&sampleArea[sampleAreaIdx], g_ptMouse))
+    if (PtInRect(&sampleArea[sampleAreaIdx], Input::GetMousePosition()))
     {
         if (Input::GetButtonDown(VK_LBUTTON))
         {
             selectedTileCountX = 1;
             selectedTileCountY = 1;
 
-            posX = g_ptMouse.x - sampleArea[sampleAreaIdx].left;
+            posX = Input::GetMousePosition().x - sampleArea[sampleAreaIdx].left;
             selectedIdX = posX / TILE_SIZE;
 
-            posY = g_ptMouse.y - sampleArea[sampleAreaIdx].top;
+            posY = Input::GetMousePosition().y - sampleArea[sampleAreaIdx].top;
             selectedIdY = posY / TILE_SIZE;
         }
         if (Input::GetButtonUp(VK_LBUTTON))
         {
-            posX2 = g_ptMouse.x - sampleArea[sampleAreaIdx].left;
+            posX2 = Input::GetMousePosition().x - sampleArea[sampleAreaIdx].left;
             selectedIdX2 = posX2 / TILE_SIZE;
 
-            posY2 = g_ptMouse.y - sampleArea[sampleAreaIdx].top;
+            posY2 = Input::GetMousePosition().y - sampleArea[sampleAreaIdx].top;
             selectedIdY2 = posY2 / TILE_SIZE;
 
 
@@ -149,7 +153,7 @@ void TileMapToolScene::Update()
     for (int i = 0; i < TILE_COUNT_Y; ++i)
     {
         for(int j = 0; j < TILE_COUNT_X; ++j)
-        if (PtInRect(&(tileInfo[sampleAreaIdx][i][j].rc), g_ptMouse))
+        if (PtInRect(&(tileInfo[sampleAreaIdx][i][j].rc), Input::GetMousePosition()))
         {
             if (Input::GetButton(VK_LBUTTON))
             {
@@ -208,21 +212,18 @@ void TileMapToolScene::Render(HDC hdc)
         for (int i = 0; i < selectedTileCountX; ++i)
         {
             sampleImage[sampleAreaIdx]->Render(hdc,
-                TILEMAPTOOL_SIZE_X - sampleImage[sampleAreaIdx]->GetWidth() + sampleImage[sampleAreaIdx]->GetFrameWidth() / 2 - (sampleImage[sampleAreaIdx]->GetFrameWidth() * i),
+                TILEMAPTOOL_SIZE_X  - sampleImage[sampleAreaIdx]->GetFrameWidth()/2 - (sampleImage[sampleAreaIdx]->GetFrameWidth() * i),
                 sampleImage[sampleAreaIdx]->GetHeight() + sampleImage[sampleAreaIdx]->GetFrameHeight() / 2 - (sampleImage[sampleAreaIdx]->GetFrameHeight() * j) + 200,
                 selectedSampleTile.frameX - i, 
                 selectedSampleTile.frameY - j, 1.0f);
         }
 
     }
+
 }
 
 void TileMapToolScene::Release()
 {
-    for (int i = 0; i < sampleAreaIdx; ++i)
-    {
-         SAFE_RELEASE(sampleImage[sampleAreaIdx]);
-    }
 }
 
 void TileMapToolScene::SaveMap()

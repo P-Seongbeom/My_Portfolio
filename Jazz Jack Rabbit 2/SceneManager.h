@@ -24,5 +24,7 @@ public:
 
 	HRESULT ChangeScene(string sceneName);
 	HRESULT ChangeScene(string sceneName, string loadingSceneName);
+
+	void PhysicsUpdate();
 };
 

@@ -144,13 +144,11 @@
     <ClCompile Include="BasicTurtle.cpp" />
     <ClCompile Include="CharacterSelectScene.cpp" />
     <ClCompile Include="GameEntity.cpp" />
-    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Life.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
@@ -175,13 +173,11 @@
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="GameEntity.h" />
-    <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Life.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="MainMenuScene.h" />

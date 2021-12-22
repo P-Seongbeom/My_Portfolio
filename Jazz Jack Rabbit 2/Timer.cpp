@@ -6,6 +6,9 @@ using namespace std::chrono;
 high_resolution_clock::time_point Timer::_prevTime = {};
 float Timer::_deltaTime = 0.0f;
 float Timer::_timeScale = 1.0f;
+unsigned long Timer::_fps = 0;
+unsigned long Timer::_fpsFrameCount = 0;
+float Timer::_fpsTimeElapsed = 0.0f;
 
 void Timer::SetTimeScale(float timeScale)
 {
@@ -40,14 +43,14 @@ bool Timer::CanUpdate() noexcept
 
 	_deltaTime = elapsed.count();
 
-	//++fpsFrameCount;
-	//fpsTimeElapsed += _deltaTime;
-	//if (fpsTimeElapsed >= 1.0f)
-	//{
-	//	fps = fpsFrameCount;
-	//	fpsFrameCount = 0;
-	//	fpsTimeElapsed = 0.0f;
-	//}
+	++_fpsFrameCount;
+	_fpsTimeElapsed += _deltaTime * _timeScale;
+	if (_fpsTimeElapsed >= 1.0f)
+	{
+		_fps = _fpsFrameCount;
+		_fpsFrameCount = 0;
+		_fpsTimeElapsed = 0.0f;
+	}
 
 	_prevTime = current;
 

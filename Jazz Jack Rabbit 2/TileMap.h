@@ -12,6 +12,7 @@ private:
 
 	void LoadMapFile(int mapNum);
 public:
+	virtual ~TileMap() = default;
 	virtual HRESULT Init() override;
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
