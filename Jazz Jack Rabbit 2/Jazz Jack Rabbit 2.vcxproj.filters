@@ -22,9 +22,6 @@
     <Filter Include="MainGame">
       <UniqueIdentifier>{e999a759-dc02-46e0-bab3-1e132a4eea45}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Character">
-      <UniqueIdentifier>{5b16cb32-d68d-44f7-bd46-53b037c6fcc9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\Enemy">
       <UniqueIdentifier>{94291b94-ae94-45ac-bb98-fee626481e3e}</UniqueIdentifier>
     </Filter>
@@ -49,19 +46,19 @@
     <Filter Include="MainGame\UI">
       <UniqueIdentifier>{780c10e8-dd28-4382-9efd-e52cc7976fc2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Player">
+      <UniqueIdentifier>{d886923b-2e7b-4937-9b65-32734074760c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Main">
+      <UniqueIdentifier>{5fd89c39-db70-438b-abe0-148f8dda5674}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>2D Framework</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
       <Filter>2D Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Spaz.cpp">
-      <Filter>MainGame\Character</Filter>
     </ClCompile>
     <ClCompile Include="Turtle.cpp">
       <Filter>MainGame\Enemy\Turtle</Filter>
@@ -96,9 +93,6 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>2D Framework\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="TimeManager.cpp">
-      <Filter>2D Framework\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="TiltleScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
@@ -114,9 +108,6 @@
     <ClCompile Include="RetryScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame.cpp">
-      <Filter>MainGame</Filter>
-    </ClCompile>
     <ClCompile Include="ImageManager.cpp">
       <Filter>2D Framework\Manager</Filter>
     </ClCompile>
@@ -129,11 +120,20 @@
     <ClCompile Include="KeyManager.cpp">
       <Filter>2D Framework\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerManager.cpp">
-      <Filter>MainGame\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>2D Framework\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>MainGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>2D Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicGameFramework.cpp">
+      <Filter>MainGame\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>MainGame\Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,9 +142,6 @@
     </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>2D Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Spaz.h">
-      <Filter>MainGame\Character</Filter>
     </ClInclude>
     <ClInclude Include="Turtle.h">
       <Filter>MainGame\Enemy\Turtle</Filter>
@@ -179,9 +176,6 @@
     <ClInclude Include="SceneManager.h">
       <Filter>2D Framework\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="TimeManager.h">
-      <Filter>2D Framework\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="TiltleScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
@@ -196,9 +190,6 @@
     </ClInclude>
     <ClInclude Include="RetryScene.h">
       <Filter>MainGame\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="MainGame.h">
-      <Filter>MainGame</Filter>
     </ClInclude>
     <ClInclude Include="CommonFunction.h">
       <Filter>헤더 파일</Filter>
@@ -218,14 +209,31 @@
     <ClInclude Include="KeyManager.h">
       <Filter>2D Framework\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerManager.h">
-      <Filter>MainGame\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>2D Framework\Timer</Filter>
     </ClInclude>
     <ClInclude Include="Config.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>MainGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>2D Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicGameFramework.h">
+      <Filter>MainGame\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>MainGame\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>MainGame\Main</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Jazz Jack Rabbit 2.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

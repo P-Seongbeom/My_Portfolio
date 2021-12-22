@@ -2,7 +2,7 @@
 
 HRESULT Image::Init(int width, int height)
 {
-	HDC hdc = GetDC(g_hWnd);		// 권한이 굉장히 많은 총지배인
+	HDC hdc = GetDC(_hWnd);		// 권한이 굉장히 많은 총지배인
 
 	// 빈 비트맵 생성
 	imageInfo = new IMAGE_INFO;
@@ -15,7 +15,7 @@ HRESULT Image::Init(int width, int height)
 	imageInfo->hOldBit =
 		(HBITMAP)SelectObject(imageInfo->hMemDc, imageInfo->hBitmap);
 
-	ReleaseDC(g_hWnd, hdc);
+	ReleaseDC(_hWnd, hdc);
 
 	if (imageInfo->hBitmap == NULL)	// 비트맵 생성에 실패했을 때
 	{
@@ -29,20 +29,20 @@ HRESULT Image::Init(int width, int height)
 HRESULT Image::Init(const char* fileName, int width, int height,
 	bool isTrans/* = false*/, COLORREF transColor/* = NULL*/)
 {
-	HDC hdc = GetDC(g_hWnd);
+	HDC hdc = GetDC(_hWnd);
 
 	imageInfo = new IMAGE_INFO;
 	imageInfo->width = width;
 	imageInfo->height = height;
 	imageInfo->loadType = ImageLoadType::File;
-	imageInfo->hBitmap = (HBITMAP)LoadImage(g_hInstance, fileName, IMAGE_BITMAP, width, height,
+	imageInfo->hBitmap = (HBITMAP)LoadImage(_hInst, fileName, IMAGE_BITMAP, width, height,
 		LR_LOADFROMFILE);
 	imageInfo->hMemDc = CreateCompatibleDC(hdc);	// 새로 생성된 DC 
 											// 기본적으로 Bitmap에 연결되어 있다.
 	imageInfo->hOldBit =
 		(HBITMAP)SelectObject(imageInfo->hMemDc, imageInfo->hBitmap);
 
-	ReleaseDC(g_hWnd, hdc);
+	ReleaseDC(_hWnd, hdc);
 
 	this->isTransparent = isTrans;
 	this->transColor = transColor;
@@ -59,20 +59,20 @@ HRESULT Image::Init(const char* fileName, int width, int height,
 HRESULT Image::Init(const char* fileName, int width, int height, int maxFrameX, int maxFrameY,
 	bool isTrans, COLORREF transColor)
 {
-	HDC hdc = GetDC(g_hWnd);
+	HDC hdc = GetDC(_hWnd);
 
 	imageInfo = new IMAGE_INFO;
 	imageInfo->width = width;
 	imageInfo->height = height;
 	imageInfo->loadType = ImageLoadType::File;
-	imageInfo->hBitmap = (HBITMAP)LoadImage(g_hInstance, fileName, IMAGE_BITMAP, width, height,
+	imageInfo->hBitmap = (HBITMAP)LoadImage(_hInst, fileName, IMAGE_BITMAP, width, height,
 		LR_LOADFROMFILE);
 	imageInfo->hMemDc = CreateCompatibleDC(hdc);	// 새로 생성된 DC 
 											// 기본적으로 Bitmap에 연결되어 있다.
 	imageInfo->hOldBit =
 		(HBITMAP)SelectObject(imageInfo->hMemDc, imageInfo->hBitmap);
 
-	ReleaseDC(g_hWnd, hdc);
+	ReleaseDC(_hWnd, hdc);
 
 	this->isTransparent = isTrans;
 	this->transColor = transColor;
@@ -162,7 +162,7 @@ void Image::Render(HDC hdc, int destX, int destY, int frameX, int frameY, float 
 		GdiTransparentBlt(
 			hdc,
 			destX - (imageInfo->frameWidth / 2),
-			destY - (imageInfo->frameHeight / 2),
+			destY - (imageInfo->frameHeight),
 			imageInfo->frameWidth * scale,
 			imageInfo->frameHeight * scale,	// 전체 프레임 수
 			imageInfo->hMemDc,
@@ -176,7 +176,7 @@ void Image::Render(HDC hdc, int destX, int destY, int frameX, int frameY, float 
 	{
 		BitBlt(hdc,				// 복사 목적지 DC
 			destX - (imageInfo->frameWidth / 2),		// 복사될 비트맵의 시작 위치 x
-			destY - (imageInfo->frameHeight / 2),		// 복사될 비트맵의 시작 위치 y
+			destY - (imageInfo->frameHeight),		// 복사될 비트맵의 시작 위치 y
 			imageInfo->frameWidth,	// 원본 복사할 가로 크기
 			imageInfo->frameHeight,	// 원본 복사할 세로 크기
 			imageInfo->hMemDc,	// 원본 DC
