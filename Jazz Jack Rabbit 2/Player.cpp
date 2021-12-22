@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "Image.h"
+#include "Ammo.h"
+
 
 HRESULT Player::Init()
 {
@@ -14,9 +16,9 @@ HRESULT Player::Init()
         return E_FAIL;
     }
     
-    player_Jazz.state = EplayerState::Stand;
-    player_Jazz.frameX = 0;
-    player_Jazz.frameY = 0;
+    SetPlayerInfo(EplayerState::Stand, EmoveDir::Right);
+    renderFrameX = 0;
+    renderFrameY = 0;
 
     pos.x = 50;
     pos.y = 375;
@@ -28,6 +30,12 @@ HRESULT Player::Init()
     minVelocity = -JUMP_VELOCITY;
     gravity = GRAVITY;
 
+    ammo = new Ammo[AMMO_PACK_COUNT];
+    for (int i = 0; i < AMMO_PACK_COUNT; ++i)
+    {
+        ammo[i].Init();
+    }
+
     return S_OK;
 }
 
@@ -35,15 +43,15 @@ void Player::Update()
 {
     inputAction();
 
-    if (player_Jazz.state == EplayerState::Stand)
+    if (playerState == EplayerState::Stand)
     {
         motionAnimator((int)EplayerState::Stand, 2, (float)0.1, 27);
     }
-    else if (player_Jazz.state == EplayerState::Walk)
+    else if (playerState == EplayerState::Walk)
     {
         motionAnimator((int)EplayerState::Walk, 0, (float)0.1, 8);
     }
-    else if (player_Jazz.state == EplayerState::Run)
+    else if (playerState == EplayerState::Run)
     {
         motionAnimator((int)EplayerState::Run, 0, (float)0, 4);
     }
@@ -51,7 +59,14 @@ void Player::Update()
     playerJump();
     
     quickDownAnimation();
-    
+
+    for (int i = 0; i < AMMO_PACK_COUNT; ++i)
+    {
+
+        ammo[i].Update();
+    }
+
+    renderPos.x = pos.x;
 }
 
 void Player::Render(HDC hdc)
@@ -60,29 +75,23 @@ void Player::Render(HDC hdc)
 
     Rectangle(hdc, (int)pos.x - 10, (int)renderPos.y - 32, (int)pos.x + 10, (int)renderPos.y);
 
-    //if(player_Jazz.state == EplayerState::Stand)
-    //{
-    //    rabbitMotion[(int)EplayerState::Stand]->Render(hdc, (int)pos.x, (int)renderPos.y, rabbitMotion[0]->GetCurrFrameX(), rabbitMotion[0]->GetCurrFrameY());
-    //}
-    //else if(player_Jazz.state == EplayerState::Walk)
-    //{
-    //    rabbitMotion[(int)EplayerState::Walk]->Render(hdc, (int)pos.x + 3, (int)renderPos.y, rabbitMotion[1]->GetCurrFrameX(), rabbitMotion[1]->GetCurrFrameY());
-    //}
-    //else if (player_Jazz.state == EplayerState::Run)
-    //{
-    //    rabbitMotion[(int)EplayerState::Run]->Render(hdc, (int)pos.x, (int)renderPos.y, rabbitMotion[2]->GetCurrFrameX(), rabbitMotion[2]->GetCurrFrameY());
-    //}
-    //else if (player_Jazz.state == EplayerState::Jump)
-    //{
-    //    rabbitMotion[(int)EplayerState::Jump]->Render(hdc, (int)pos.x, (int)renderPos.y, rabbitMotion[3]->GetCurrFrameX(), rabbitMotion[3]->GetCurrFrameY());
-    //}
-    rabbitMotion[(int)player_Jazz.state]->Render(hdc, 
-                                                (int)pos.x + 3, (int)renderPos.y, 
-                                                rabbitMotion[(int)player_Jazz.state]->GetCurrFrameX(), 
-                                                rabbitMotion[(int)player_Jazz.state]->GetCurrFrameY());
+    //rabbitMotion[(int)playerState]->Render(hdc, 
+    //                                            (int)pos.x + 3, (int)renderPos.y, 
+    //                                            rabbitMotion[(int)playerState]->GetCurrFrameX(), 
+    //                                            rabbitMotion[(int)playerState]->GetCurrFrameY());
+    rabbitMotion[(int)playerState]->Render(hdc,
+                                         WIN_SIZE_X / 2, WIN_SIZE_Y / 2,
+                                          rabbitMotion[(int)playerState]->GetCurrFrameX(),
+                                          rabbitMotion[(int)playerState]->GetCurrFrameY());
 
-    wsprintf(test, "캐릭터 상태 : %d", player_Jazz.state);
-    TextOut(hdc, WIN_SIZE_X/2, 400, test, strlen(test));
+    for (int i = 0; i < AMMO_PACK_COUNT; ++i)
+    {
+        if (ammo[i].GetAlive())
+        ammo[i].Render(hdc);
+    }
+
+    //wsprintf(test, "캐릭터 상태 : %d", playerState);
+    //TextOut(hdc, WIN_SIZE_X/2, 450, test, strlen(test));
 }
 
 
@@ -102,7 +111,7 @@ void Player::inputAction()
     {
         inputShiftKey = false;
         moveSpeed = PLAYER_MOVE_SPEED;
-        InitMotion();
+        initMotion();
     }
 
     if (canMove)
@@ -110,30 +119,30 @@ void Player::inputAction()
         if (Input::GetButton(VK_LEFT))
         {
             pos.x -= moveSpeed * Timer::GetDeltaTime();
-            player_Jazz.frameY = 1;
+            //renderFrameY = 1;
 
-            if(!inputShiftKey)player_Jazz.state = EplayerState::Walk;
-            else if(inputShiftKey) player_Jazz.state = EplayerState::Run;
+            if(!inputShiftKey)SetPlayerInfo(EplayerState::Walk, EmoveDir::Left);
+            else if(inputShiftKey) SetPlayerInfo(EplayerState::Run, EmoveDir::Left);
 
         }
         if (Input::GetButtonUp(VK_LEFT))
         {
-            player_Jazz.state = EplayerState::Stand;
-            InitMotion();
+            playerState = EplayerState::Stand;
+            initMotion();
         }
         if (Input::GetButton(VK_RIGHT))
         {
             pos.x += moveSpeed * Timer::GetDeltaTime();
-            player_Jazz.frameY = 0;
+            //renderFrameY = 0;
 
-            if (!inputShiftKey)player_Jazz.state = EplayerState::Walk;
-            else if (inputShiftKey) player_Jazz.state = EplayerState::Run;
+            if (!inputShiftKey)SetPlayerInfo(EplayerState::Walk, EmoveDir::Right);
+            else if (inputShiftKey) SetPlayerInfo(EplayerState::Run, EmoveDir::Right);
 
         }
         if (Input::GetButtonUp(VK_RIGHT))
         {
-            player_Jazz.state = EplayerState::Stand;
-            InitMotion();
+            playerState = EplayerState::Stand;
+            initMotion();
         }
     }
 
@@ -160,13 +169,18 @@ void Player::inputAction()
     {
         if (!quickDown)jumpKeyPressed = true;
     }
+
+    if (Input::GetButtonDown(VK_LCONTROL))
+    {
+        fire();
+    }
 }
 
 void Player::playerJump()
 {
     if (!jumpKeyPressed) return;
 
-    player_Jazz.state = EplayerState::Jump;
+    playerState = EplayerState::Jump;
 
     if (stayGetDown)
     {
@@ -186,7 +200,7 @@ void Player::playerJump()
             canMove = true;
             jumpKeyPressed = false;
             jumpHeight = 0;
-            player_Jazz.state = EplayerState::Stand;
+            playerState = EplayerState::Stand;
         }
     }
 
@@ -225,25 +239,50 @@ void Player::motionAnimator(int playerState,float waitingTime, float frameTerm, 
 
     if (motionFrameTime > frameTerm)
     {
-        ++player_Jazz.frameX;
+        ++renderFrameX;
         motionFrameTime = 0;
     }
 
-    if (player_Jazz.frameX >= maxFrameX)
+    if (renderFrameX >= maxFrameX)
     {
-        player_Jazz.frameX = 0;
+        renderFrameX = 0;
         playerWatingTime = 0;
     }
 
-    rabbitMotion[playerState]->SetCurrFrameX(player_Jazz.frameX);
-    rabbitMotion[playerState]->SetCurrFrameY(player_Jazz.frameY);
+    if (playerMoveDir == EmoveDir::Right)
+    {
+        renderFrameY = 0;
+    }
+    else if (playerMoveDir == EmoveDir::Left)
+    {
+        renderFrameY = 1;
+    }
+
+    rabbitMotion[playerState]->SetCurrFrameX(renderFrameX);
+    rabbitMotion[playerState]->SetCurrFrameY(renderFrameY);
 }
 
-void Player::InitMotion()
+void Player::initMotion()
 {
     playerWatingTime = 0;
     motionFrameTime = 0;
-    player_Jazz.frameX = 0;
+    renderFrameX = 0;
+ 
 }
 
+void Player::fire()
+{
+    for (int i = 0; i < AMMO_PACK_COUNT; ++i)
+    {
+        if (ammo[i].GetIsFire() && ammo[i].GetAlive())
+            continue;
+        
+            ammo[i].SetAlive(true);
+            ammo[i].SetPos(renderPos);
+            ammo[i].SetIsFire(true);
+        
+            break;
+    }
+
+}
 

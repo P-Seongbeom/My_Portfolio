@@ -4,9 +4,9 @@
 #include "Game.h"
 
 #include "Timer.h"
-//#include "Manager/SceneManager.h"
 
-POINT				g_ptMouse;
+//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+
 HINSTANCE			_hInst;
 HWND				_hWnd;
 int                 windowSizeX;
@@ -60,10 +60,6 @@ bool Game::Init(HINSTANCE hInst)
 
     SetWindowSize(WIN_START_POS_X, WIN_START_POS_Y, WIN_SIZE_X, WIN_SIZE_Y);
 
-    //RECT cr = { 0, 0, _res.Width, _res.Height };
-    //AdjustWindowRect(&cr, WS_OVERLAPPEDWINDOW, FALSE);
-    //SetWindowPos(_hWnd, HWND_TOPMOST, 100, 100, cr.right - cr.left, cr.bottom - cr.top, SWP_NOMOVE | SWP_NOZORDER);
-
     ShowWindow(_hWnd, SW_SHOW);
     UpdateWindow(_hWnd);
 
@@ -76,10 +72,8 @@ bool Game::Init(HINSTANCE hInst)
     SelectObject(_backDC, _backBitmap);
 
     Input::Init(_hWnd);
-    //SceneManager::GetInstance()->Init();
     ImageManager::GetSingleton()->Init();
     SceneManager::GetSingleton()->Init();
-    //TimeManager::GetSingleton()->Init();
 
     return true;
 }
@@ -101,6 +95,7 @@ INT32 Game::Run()
 
             TranslateMessage(&msg);
             DispatchMessage(&msg);
+            //Release();
         }
         else
         {
@@ -116,6 +111,7 @@ INT32 Game::Run()
 
     return static_cast<INT32>(msg.wParam);
 }
+
 
 ATOM Game::registerClass()
 {
@@ -149,10 +145,10 @@ void Game::update()
     SceneManager::GetSingleton()->Update();
 }
 
-//void Game::physicsUpdate()
-//{
-//    SceneManager::GetSingleton()->PhysicsUpdate();
-//}
+void Game::physicsUpdate()
+{
+    SceneManager::GetSingleton()->PhysicsUpdate();
+}
 
 void Game::render()
 {
@@ -166,6 +162,21 @@ void Game::render()
 
     SceneManager::GetSingleton()->Render(_backDC);
 
+    char test[128] = { 0 };
+    wsprintf(test, "fps : %d", Timer::GetFPS());
+    TextOut(_backDC, WIN_SIZE_X / 2, 450, test, strlen(test));
+
     BitBlt(_hDC, 0, 0, windowMaxSizeX, windowMaxSizeY,
         _backDC, 0, 0, SRCCOPY);
+}
+
+void Game::Release()
+{
+    ImageManager::GetSingleton()->Release();
+    ImageManager::GetSingleton()->ReleaseSingleton();
+
+    SceneManager::GetSingleton()->Release();
+    SceneManager::GetSingleton()->ReleaseSingleton();
+
+
 }

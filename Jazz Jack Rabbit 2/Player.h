@@ -6,13 +6,22 @@
 #define JUMP_VELOCITY		500.0f
 #define GRAVITY				965.0f
 
+class Ammo;
 class Image;
 class Player : public GameObject
 {
-private:
+	enum class Echaracter { jazz, spaz, Lori };
+	enum class EplayerState { Stand, Walk, Run, Jump, Rope };
+	enum class EmoveDir { Left, Right, Up, Down };
 
-	Image* rabbitMotion[5];
-	RABBIT player_Jazz = {};
+private:
+	Ammo* ammo = nullptr;
+
+	Image* rabbitMotion[5] = {};
+
+	Echaracter playerCharacter = {};
+	EplayerState playerState = {};
+	EmoveDir playerMoveDir = {};
 
 	POINTFLOAT renderPos = {};
 
@@ -35,11 +44,17 @@ private:
 	bool quickDown = false;
 
 	void motionAnimator(int playerState, float waitMotionTime, float frameTerm, int maxFrameX);
-	
+	int renderFrameX = 0;
+	int renderFrameY = 0;
+
 	//타이머 관련
-	void InitMotion();
+	void initMotion();
 	float motionFrameTime = 0.0f;
 	float playerWatingTime = 0.0f;
+
+	//총알
+	void fire();
+	bool fireAmmo = false;
 
 public:
 	virtual HRESULT Init() override;
@@ -48,5 +63,7 @@ public:
 	virtual void Release() override;
 	virtual ~Player() = default;
 
+	void SetPlayerInfo(EplayerState state, EmoveDir dir) { this->playerState = state; 
+														   this->playerMoveDir = dir; }
 };
 

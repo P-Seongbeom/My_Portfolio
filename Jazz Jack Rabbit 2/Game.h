@@ -11,6 +11,7 @@ public:
 
 	bool				Init(HINSTANCE hInst);
 	INT32				Run();
+	void				Release();
 
 private:
 	HANDLE				hTimer;
@@ -22,7 +23,7 @@ private:
 
 	void				processInput();
 	void				update();
-	//void				physicsUpdate();
+	void				physicsUpdate();
 	void				render();
 private:
 

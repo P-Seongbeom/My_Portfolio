@@ -31,6 +31,24 @@ void SceneManager::Init()
 
 void SceneManager::Release()
 {
+	for (map<string, GameEntity*>::iterator it = mapScenes.begin();
+		it != mapScenes.end();)
+	{
+		SAFE_RELEASE(it->second);
+		it = mapScenes.erase(it);
+	}
+	mapScenes.clear();
+
+	for (map<string, GameEntity*>::iterator it = mapLoadingScenes.begin();
+		it != mapLoadingScenes.end();)
+	{
+		SAFE_RELEASE(it->second);
+		it = mapLoadingScenes.erase(it);
+	}
+	mapLoadingScenes.clear();
+
+	SAFE_RELEASE(readyScene);
+	SAFE_RELEASE(loadingScene);
 }
 
 void SceneManager::Update()
@@ -121,4 +139,10 @@ HRESULT SceneManager::ChangeScene(string sceneName, string loadingSceneName)
 		return S_OK;
 	}
 	return E_FAIL;
+}
+
+void SceneManager::PhysicsUpdate()
+{
+	if (currScene)
+		currScene->PhysicsUpdate();
 }

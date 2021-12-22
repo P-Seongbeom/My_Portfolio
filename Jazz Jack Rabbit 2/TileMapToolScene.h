@@ -36,6 +36,7 @@ private:
 	//RECT sampleArea[SAMPLE_IMAGE_COUNT];
 
 public:
+	virtual ~TileMapToolScene() = default;
 	virtual HRESULT Init() override;
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;

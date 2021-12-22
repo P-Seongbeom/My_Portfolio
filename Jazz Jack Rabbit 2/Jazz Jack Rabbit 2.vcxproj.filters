@@ -87,9 +87,6 @@
     <ClCompile Include="ScoreObject.cpp">
       <Filter>MainGame\Item</Filter>
     </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>2D Framework\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>2D Framework\Manager</Filter>
     </ClCompile>
@@ -116,9 +113,6 @@
     </ClCompile>
     <ClCompile Include="TileMapToolScene.cpp">
       <Filter>MainGame\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyManager.cpp">
-      <Filter>2D Framework\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>2D Framework\Timer</Filter>
@@ -170,9 +164,6 @@
     <ClInclude Include="ScoreObject.h">
       <Filter>MainGame\Item</Filter>
     </ClInclude>
-    <ClInclude Include="GameManager.h">
-      <Filter>2D Framework\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>2D Framework\Manager</Filter>
     </ClInclude>
@@ -205,9 +196,6 @@
     </ClInclude>
     <ClInclude Include="TileMapToolScene.h">
       <Filter>MainGame\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyManager.h">
-      <Filter>2D Framework\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>2D Framework\Timer</Filter>
