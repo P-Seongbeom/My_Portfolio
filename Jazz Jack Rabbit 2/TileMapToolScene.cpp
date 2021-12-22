@@ -8,14 +8,13 @@ HRESULT TileMapToolScene::Init()
     windowSizeX = TILEMAPTOOL_SIZE_X;
     windowSizeY = TILEMAPTOOL_SIZE_Y;
     
-    sampleImage[0] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage1.bmp", 320, 192, 10, 6, true, RGB(255, 0, 255));
-    sampleImage[1] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage2.bmp", 160, 160, 5, 5, true, RGB(255, 0, 255));
-    sampleImage[2] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage3.bmp", 160, 160, 5, 5, true, RGB(255, 0, 255));
-    sampleImage[3] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage4.bmp", 800, 480, 25, 15, true, RGB(255, 0, 255));
-    sampleImage[4] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage5.bmp", 290, 320, 9, 10, true, RGB(255, 0, 255));
-    sampleImage[5] = ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage6.bmp", 320, 224, 10, 7, true, RGB(255, 0, 255));
+    sampleImage[0] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage1.bmp");
+    sampleImage[1] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage2.bmp");
+    sampleImage[2] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage3.bmp");
+    sampleImage[3] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage4.bmp");
+    sampleImage[4] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage5.bmp");
+    sampleImage[5] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage6.bmp");
     
-    //960, 608, 30, 19, true, RGB(255, 0, 255)
     if (sampleImage == nullptr)
     {
         cout << "로드 실패" << endl;
@@ -70,34 +69,34 @@ void TileMapToolScene::Update()
         sampleArea[i].bottom = sampleImage[i]->GetHeight();
     }
 
-    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_F1))
+    if (Input::GetButtonDown(VK_F1))
     {
         sampleAreaIdx = 0;
     }
-    else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_F2))
+    else if (Input::GetButtonDown(VK_F2))
     {
         sampleAreaIdx = 1;
     }
-    else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_F3))
+    else if (Input::GetButtonDown(VK_F3))
     {
         sampleAreaIdx = 2;
     }
-    else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_F4))
+    else if (Input::GetButtonDown(VK_F4))
     {
         sampleAreaIdx = 3;
     }
-    else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_F5))
+    else if (Input::GetButtonDown(VK_F5))
     {
         sampleAreaIdx = 4;
     }
-    else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_F6))
+    else if (Input::GetButtonDown(VK_F6))
     {
         sampleAreaIdx = 5;
     }
 
     if (PtInRect(&sampleArea[sampleAreaIdx], g_ptMouse))
     {
-        if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+        if (Input::GetButtonDown(VK_LBUTTON))
         {
             selectedTileCountX = 1;
             selectedTileCountY = 1;
@@ -108,7 +107,7 @@ void TileMapToolScene::Update()
             posY = g_ptMouse.y - sampleArea[sampleAreaIdx].top;
             selectedIdY = posY / TILE_SIZE;
         }
-        if (KeyManager::GetSingleton()->IsOnceKeyUP(VK_LBUTTON))
+        if (Input::GetButtonUp(VK_LBUTTON))
         {
             posX2 = g_ptMouse.x - sampleArea[sampleAreaIdx].left;
             selectedIdX2 = posX2 / TILE_SIZE;
@@ -152,7 +151,7 @@ void TileMapToolScene::Update()
         for(int j = 0; j < TILE_COUNT_X; ++j)
         if (PtInRect(&(tileInfo[sampleAreaIdx][i][j].rc), g_ptMouse))
         {
-            if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
+            if (Input::GetButton(VK_LBUTTON))
             {
                 for (int x = 0; x < selectedTileCountX; ++x)
                 {
@@ -170,13 +169,17 @@ void TileMapToolScene::Update()
         }
     }
 
-    if (KeyManager::GetSingleton()->IsOnceKeyDown('O'))
+    if (Input::GetButtonDown('O'))
     {
         SaveMap();
     }
-    if (KeyManager::GetSingleton()->IsOnceKeyDown('P'))
+    if (Input::GetButtonDown('P'))
     {
         LoadMap();
+    }
+    if(Input::GetButtonDown('0'))
+    {
+        SceneManager::GetSingleton()->ChangeScene("PlayInStage");
     }
 
 }
@@ -187,7 +190,7 @@ void TileMapToolScene::Render(HDC hdc)
     {
         for (int j = 0; j < TILE_COUNT_X; ++j)
         {
-            Rectangle(hdc, tileInfo[sampleAreaIdx][i][j].rc.left, tileInfo[sampleAreaIdx][i][j].rc.top, tileInfo[sampleAreaIdx][i][j].rc.right, tileInfo[sampleAreaIdx][i][j].rc.bottom);
+            //Rectangle(hdc, tileInfo[sampleAreaIdx][i][j].rc.left, tileInfo[sampleAreaIdx][i][j].rc.top, tileInfo[sampleAreaIdx][i][j].rc.right, tileInfo[sampleAreaIdx][i][j].rc.bottom);
             sampleImage[sampleAreaIdx]->Render(hdc,
                 tileInfo[sampleAreaIdx][i][j].rc.left + TILE_SIZE / 2,
                 tileInfo[sampleAreaIdx][i][j].rc.top + TILE_SIZE,
@@ -216,6 +219,10 @@ void TileMapToolScene::Render(HDC hdc)
 
 void TileMapToolScene::Release()
 {
+    for (int i = 0; i < sampleAreaIdx; ++i)
+    {
+         SAFE_RELEASE(sampleImage[sampleAreaIdx]);
+    }
 }
 
 void TileMapToolScene::SaveMap()
@@ -237,10 +244,10 @@ void TileMapToolScene::SaveMap()
     DWORD writtenByte;
     if (WriteFile(hFile, tileInfo, sizeof(tileInfo), &writtenByte, NULL) == false)
     {
-        MessageBox(g_hWnd, "맵 데이터 저장 실패", "에러", MB_OK);
+        MessageBox(_hWnd, "맵 데이터 저장 실패", "에러", MB_OK);
     }
 
-    MessageBox(g_hWnd, saveFileName.c_str() , "저장 완료", MB_OK);
+    MessageBox(_hWnd, saveFileName.c_str() , "저장 완료", MB_OK);
 
     CloseHandle(hFile);
 }
@@ -264,7 +271,7 @@ void TileMapToolScene::LoadMap()
     DWORD readByte;
     if (ReadFile(hFile, tileInfo, sizeof(tileInfo), &readByte, NULL) == false)
     {
-        MessageBox(g_hWnd, "맵 데이터 불러오기 실패", "에러", MB_OK);
+        MessageBox(_hWnd, "맵 데이터 불러오기 실패", "에러", MB_OK);
     }
 
     CloseHandle(hFile);

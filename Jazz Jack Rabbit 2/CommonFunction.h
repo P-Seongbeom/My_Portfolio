@@ -14,5 +14,5 @@ inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
 
 	// 계산된 값으로 윈도우를 이동시키면서 크기도 함께 변환
-	MoveWindow(g_hWnd, startX, startY, rc.right - rc.left, rc.bottom - rc.top, true);
+	MoveWindow(_hWnd, startX, startY, rc.right - rc.left, rc.bottom - rc.top, true);
 }

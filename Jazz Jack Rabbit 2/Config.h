@@ -7,9 +7,12 @@
 #include <iostream>
 #include <string>
 
+#include "Input.h"
+#include "Timer.h"
+
 using namespace std;
 
-#pragma comment(lib, "winmm.lib")
+//#pragma comment(lib, "winmm.lib")
 
 #define WIN_START_POS_X 400
 #define WIN_START_POS_Y 100
@@ -30,11 +33,11 @@ typedef struct ArgumentFuncPtr
 #include "ImageManager.h"
 #include "SceneManager.h"
 #include "KeyManager.h"
-#include "TimeManager.h"
 
-extern HWND g_hWnd;
-extern HINSTANCE g_hInstance;
+extern HWND _hWnd;
+extern HINSTANCE _hInst;
 extern POINT g_ptMouse;
+
 extern int windowSizeX;
 extern int windowSizeY;
 
@@ -54,12 +57,14 @@ typedef struct tagTile
 }TILE_INFO;
 
 //플레이어 관련
-enum class playerState { Stand, Walk, Run, Jump, Rope };
+enum class Echaracter { jazz, spaz, Lori };
+enum class EplayerState { Stand, Walk, Run, Jump, Rope };
 //enum class moveDir {Left, Right, Up, Down};
 
-typedef struct player_Info
+struct RABBIT
 {
-	playerState state;
+	Echaracter character;
+	EplayerState state;
 	RECT rc;
 	int frameX, frameY;
-}RABBIT;
+};

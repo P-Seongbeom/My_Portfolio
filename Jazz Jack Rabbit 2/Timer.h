@@ -1,27 +1,31 @@
 #pragma once
-#include "Config.h"
-#include <time.h>
+
+#include <chrono>
 
 class Timer
 {
-private:
-	bool isHardware = false;
-	__int64 periodFrequency = 0;
+	using TimePoint = std::chrono::high_resolution_clock::time_point;
 
-	float timeScale = 0.0f;
-	__int64 currTime = 0;
-	__int64 lastTime = 0;
-	float deltaTime = 0.0f;
-
-	float fpsTimeElapsed = 0.0f;
-	unsigned long fpsFrameCount = 0;
-	unsigned long fps = 0;
-
+	static constexpr INT32 FPS = 60;
+	static constexpr float MS_PER_UPDATE = 1000.0f / static_cast<float>(FPS) - 0.1f;
 public:
-	void Init();
-	void Tick();
+	Timer() = delete;
 
-	inline unsigned long GetFPS() { return fps; }
-	inline float GetDeltaTime() { return deltaTime; }
+	static void		SetTimeScale(float timeScale);
+	static float	GetTimeScale() noexcept;
+	static float	GetDeltaTime() noexcept;
+
+	static void		Init() noexcept;
+	static bool		CanUpdate() noexcept;
+
+	static unsigned long GetFPS() { return fps; }
+
+private:
+	static TimePoint	_prevTime;
+	static float		_deltaTime;
+	static float		_timeScale;
+
+	static float fpsTimeElapsed;
+	static unsigned long fpsFrameCount;
+	static unsigned long fps;
 };
-

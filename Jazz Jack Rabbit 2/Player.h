@@ -11,37 +11,36 @@ class Player : public GameObject
 {
 private:
 
-	Image* rabbit[3][5];
+	Image* rabbitMotion[5];
 	RABBIT player_Jazz = {};
 
-	POINTFLOAT currPos = {};
+	POINTFLOAT renderPos = {};
 
 	float moveSpeed = 0.0f;
-	float velocity = 0.0f;
-	float minVelocity = 0.0f;
-	float gravity = 0.0f;
-	float jumpHeight = 0.0f;
 
-	//타이머 관련
-	float jazzsFrameTime = 0.0f;
-	float jazzsTime = 0.0f;
 
-	//임시
-	float prevPosY = 0.0f;
-
-	bool jumpKeyPressed = false;
-	bool stayGetDown = false;
-	bool quickDown = false;
+	void inputAction();
 	bool canMove = true;
+	bool stayGetDown = false;
 	bool inputShiftKey = false;
 
-	void StandBy();
-	void Action();
-	void Walk();
-	void Run();
-	void Jump();
-	void QuickDown();
+	void playerJump();
+	bool jumpKeyPressed = false;
+	float jumpHeight = 0.0f;
+	float gravity = 0.0f;
+	float velocity = 0.0f;
+	float minVelocity = 0.0f;
+
+	void quickDownAnimation();
+	bool quickDown = false;
+
+	void motionAnimator(int playerState, float waitMotionTime, float frameTerm, int maxFrameX);
 	
+	//타이머 관련
+	void InitMotion();
+	float motionFrameTime = 0.0f;
+	float playerWatingTime = 0.0f;
+
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;

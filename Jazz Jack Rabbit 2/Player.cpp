@@ -3,87 +3,86 @@
 
 HRESULT Player::Init()
 {
-    rabbit[0][0] = ImageManager::GetSingleton()->AddImage("Image/character/jazz_stand.bmp", 1296, 110, 27, 2, true, RGB(44, 102, 150));
-    rabbit[0][1] = ImageManager::GetSingleton()->AddImage("Image/character/jazz_walk.bmp", 448, 106, 8, 2, true, RGB(44, 102, 150));
-    rabbit[0][2] = ImageManager::GetSingleton()->AddImage("Image/character/jazz_run.bmp", 277, 106, 4, 2, true, RGB(44, 102, 150));
+    rabbitMotion[(int)EplayerState::Stand] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_stand.bmp");
+    rabbitMotion[(int)EplayerState::Walk] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_walk.bmp");
+    rabbitMotion[(int)EplayerState::Run] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_run.bmp");
+    rabbitMotion[(int)EplayerState::Jump] = ImageManager::GetSingleton()->FindImage("Image/character/jump.bmp");
 
-    if (rabbit == nullptr)
+    if (rabbitMotion == nullptr)
     {
         cout << "로드 실패" << endl;
         return E_FAIL;
     }
-
-    player_Jazz.state = playerState::Stand;
+    
+    player_Jazz.state = EplayerState::Stand;
     player_Jazz.frameX = 0;
     player_Jazz.frameY = 0;
 
-    pos.x = 10;
-    pos.y = 350;
+    pos.x = 50;
+    pos.y = 375;
 
-    currPos.y = pos.y;
+    renderPos.y = pos.y;
 
     moveSpeed = PLAYER_MOVE_SPEED;
     velocity = JUMP_VELOCITY;
     minVelocity = -JUMP_VELOCITY;
     gravity = GRAVITY;
 
-    //점프 높이 갱신
-    prevPosY = pos.y + jumpHeight;
-
     return S_OK;
 }
 
 void Player::Update()
 {
-    Action();
+    inputAction();
 
-    if (player_Jazz.state == playerState::Stand)
+    if (player_Jazz.state == EplayerState::Stand)
     {
-        StandBy();
+        motionAnimator((int)EplayerState::Stand, 2, (float)0.1, 27);
     }
-    else if (player_Jazz.state == playerState::Walk)
+    else if (player_Jazz.state == EplayerState::Walk)
     {
-        Walk();
+        motionAnimator((int)EplayerState::Walk, 0, (float)0.1, 8);
     }
-    else if (player_Jazz.state == playerState::Run)
+    else if (player_Jazz.state == EplayerState::Run)
     {
-        Run();
+        motionAnimator((int)EplayerState::Run, 0, (float)0, 4);
     }
 
-    Jump();
-    QuickDown();
-
-    //점프 높이 갱신
-    if (prevPosY > pos.y + jumpHeight)
-    {
-        prevPosY = pos.y + jumpHeight;
-    }
+    playerJump();
+    
+    quickDownAnimation();
+    
 }
 
 void Player::Render(HDC hdc)
 {
     char test[128] = { 0 };
-    wsprintf(test, "Up Power : %d  y좌표 : %d", (int)velocity, (int)currPos.y);
-    TextOut(hdc, 300, 500, test, strlen(test));
-    wsprintf(test, "최대 점프 높이 : %d", (int)prevPosY);
-    TextOut(hdc, 300, 525, test, strlen(test));
-    wsprintf(test, "현재 점프 높이 : %d", -(int)jumpHeight);
-    TextOut(hdc, 300, 550, test, strlen(test));
 
-    Rectangle(hdc, (int)pos.x - 16, (int)currPos.y - 32, (int)pos.x + 16, (int)currPos.y);
+    Rectangle(hdc, (int)pos.x - 10, (int)renderPos.y - 32, (int)pos.x + 10, (int)renderPos.y);
 
-    if(player_Jazz.state == playerState::Stand)
-    {
-        rabbit[0][0]->Render(hdc, (int)pos.x, (int)currPos.y, rabbit[0][0]->GetCurrFrameX(), rabbit[0][0]->GetCurrFrameY());
-    }
-    else if(player_Jazz.state == playerState::Walk)
-    {
-        rabbit[0][1]->Render(hdc, (int)pos.x, (int)currPos.y, rabbit[0][1]->GetCurrFrameX(), rabbit[0][1]->GetCurrFrameY());
-    }
-    else if (player_Jazz.state == playerState::Run)
-    {
-        rabbit[0][2]->Render(hdc, (int)pos.x, (int)currPos.y, rabbit[0][2]->GetCurrFrameX(), rabbit[0][2]->GetCurrFrameY());
-    }
+    //if(player_Jazz.state == EplayerState::Stand)
+    //{
+    //    rabbitMotion[(int)EplayerState::Stand]->Render(hdc, (int)pos.x, (int)renderPos.y, rabbitMotion[0]->GetCurrFrameX(), rabbitMotion[0]->GetCurrFrameY());
+    //}
+    //else if(player_Jazz.state == EplayerState::Walk)
+    //{
+    //    rabbitMotion[(int)EplayerState::Walk]->Render(hdc, (int)pos.x + 3, (int)renderPos.y, rabbitMotion[1]->GetCurrFrameX(), rabbitMotion[1]->GetCurrFrameY());
+    //}
+    //else if (player_Jazz.state == EplayerState::Run)
+    //{
+    //    rabbitMotion[(int)EplayerState::Run]->Render(hdc, (int)pos.x, (int)renderPos.y, rabbitMotion[2]->GetCurrFrameX(), rabbitMotion[2]->GetCurrFrameY());
+    //}
+    //else if (player_Jazz.state == EplayerState::Jump)
+    //{
+    //    rabbitMotion[(int)EplayerState::Jump]->Render(hdc, (int)pos.x, (int)renderPos.y, rabbitMotion[3]->GetCurrFrameX(), rabbitMotion[3]->GetCurrFrameY());
+    //}
+    rabbitMotion[(int)player_Jazz.state]->Render(hdc, 
+                                                (int)pos.x + 3, (int)renderPos.y, 
+                                                rabbitMotion[(int)player_Jazz.state]->GetCurrFrameX(), 
+                                                rabbitMotion[(int)player_Jazz.state]->GetCurrFrameY());
+
+    wsprintf(test, "캐릭터 상태 : %d", player_Jazz.state);
+    TextOut(hdc, WIN_SIZE_X/2, 400, test, strlen(test));
 }
 
 
@@ -91,85 +90,54 @@ void Player::Release()
 {
 }
 
-void Player::StandBy()
+
+void Player::inputAction()
 {
-    jazzsTime += TimeManager::GetSingleton()->GetDeltaTime();
-
-    if (jazzsTime > 2)
-    {
-        jazzsFrameTime += TimeManager::GetSingleton()->GetDeltaTime();
-    }
-
-    if (jazzsFrameTime > 0.1)
-    {
-        ++player_Jazz.frameX;
-        jazzsFrameTime = 0;
-    }
-
-    if (player_Jazz.frameX >= 27)
-    {
-        player_Jazz.frameX = 0;
-        jazzsTime = 0;
-    }
-
-    rabbit[0][0]->SetCurrFrameX(player_Jazz.frameX);
-    rabbit[0][0]->SetCurrFrameY(player_Jazz.frameY);
-}
-
-void Player::Action()
-{
-    if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LSHIFT))
+    if (Input::GetButton(VK_LSHIFT))
     {
         inputShiftKey = true;
         moveSpeed = PLAYER_MOVE_SPEED * 2;
     }
-    if (KeyManager::GetSingleton()->IsOnceKeyUP(VK_LSHIFT))
+    if (Input::GetButtonUp(VK_LSHIFT))
     {
         inputShiftKey = false;
         moveSpeed = PLAYER_MOVE_SPEED;
-        jazzsTime = 0;
-        jazzsFrameTime = 0;
-        player_Jazz.frameX = 0;
-        player_Jazz.frameY = 0;
+        InitMotion();
     }
 
     if (canMove)
     {
-        if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT))
+        if (Input::GetButton(VK_LEFT))
         {
-            pos.x -= moveSpeed * TimeManager::GetSingleton()->GetDeltaTime();
+            pos.x -= moveSpeed * Timer::GetDeltaTime();
             player_Jazz.frameY = 1;
 
-            if(!inputShiftKey)player_Jazz.state = playerState::Walk;
-            else if(inputShiftKey) player_Jazz.state = playerState::Run;
+            if(!inputShiftKey)player_Jazz.state = EplayerState::Walk;
+            else if(inputShiftKey) player_Jazz.state = EplayerState::Run;
 
         }
-        if (KeyManager::GetSingleton()->IsOnceKeyUP(VK_LEFT))
+        if (Input::GetButtonUp(VK_LEFT))
         {
-            player_Jazz.state = playerState::Stand;
-            jazzsTime = 0;
-            jazzsFrameTime = 0;
-            player_Jazz.frameX = 0;
+            player_Jazz.state = EplayerState::Stand;
+            InitMotion();
         }
-        if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))
+        if (Input::GetButton(VK_RIGHT))
         {
-            pos.x += moveSpeed * TimeManager::GetSingleton()->GetDeltaTime();
+            pos.x += moveSpeed * Timer::GetDeltaTime();
             player_Jazz.frameY = 0;
 
-            if (inputShiftKey) player_Jazz.state = playerState::Run;
-            else player_Jazz.state = playerState::Walk;
+            if (!inputShiftKey)player_Jazz.state = EplayerState::Walk;
+            else if (inputShiftKey) player_Jazz.state = EplayerState::Run;
 
         }
-        if (KeyManager::GetSingleton()->IsOnceKeyUP(VK_RIGHT))
+        if (Input::GetButtonUp(VK_RIGHT))
         {
-            player_Jazz.state = playerState::Stand;
-            jazzsTime = 0;
-            jazzsFrameTime = 0;
-            player_Jazz.frameX = 0;
+            player_Jazz.state = EplayerState::Stand;
+            InitMotion();
         }
     }
 
-    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_DOWN))
+    if (Input::GetButtonDown(VK_DOWN))
     {
         if (!jumpKeyPressed)
         {
@@ -183,62 +151,22 @@ void Player::Action()
             canMove = false;
         }
     }
-    else if (KeyManager::GetSingleton()->IsOnceKeyUP(VK_DOWN))
+    else if (Input::GetButtonUp(VK_DOWN))
     {
         stayGetDown = false;
     }
 
-    if (KeyManager::GetSingleton()->IsStayKeyDown(VK_SPACE))
+    if (Input::GetButton(VK_SPACE))
     {
-       if(!quickDown) jumpKeyPressed = true;
+        if (!quickDown)jumpKeyPressed = true;
     }
 }
 
-void Player::Walk()
-{
-    jazzsFrameTime += TimeManager::GetSingleton()->GetDeltaTime();
-
-    if (jazzsFrameTime > 0.1)
-    {
-        ++player_Jazz.frameX;
-        jazzsFrameTime = 0;
-    }
-
-    if (player_Jazz.frameX >= 8)
-    {
-        player_Jazz.frameX = 0;
-        jazzsTime = 0;
-    }
-
-    rabbit[0][1]->SetCurrFrameX(player_Jazz.frameX);
-    rabbit[0][1]->SetCurrFrameY(player_Jazz.frameY);
-}
-
-void Player::Run()
-{
-    jazzsFrameTime += TimeManager::GetSingleton()->GetDeltaTime();
-
-    if (jazzsFrameTime > 0.1)
-    {
-        ++player_Jazz.frameX;
-        jazzsFrameTime = 0;
-    }
-
-    if (player_Jazz.frameX >= 4)
-    {
-        player_Jazz.frameX = 0;
-        jazzsTime = 0;
-    }
-
-    rabbit[0][2]->SetCurrFrameX(player_Jazz.frameX);
-    rabbit[0][2]->SetCurrFrameY(player_Jazz.frameY);
-}
-
-void Player::Jump()
+void Player::playerJump()
 {
     if (!jumpKeyPressed) return;
 
-    player_Jazz.state = playerState::Jump;
+    player_Jazz.state = EplayerState::Jump;
 
     if (stayGetDown)
     {
@@ -258,26 +186,25 @@ void Player::Jump()
             canMove = true;
             jumpKeyPressed = false;
             jumpHeight = 0;
-            player_Jazz.state = playerState::Stand;
+            player_Jazz.state = EplayerState::Stand;
         }
     }
 
-    jumpHeight -= velocity * TimeManager::GetSingleton()->GetDeltaTime();
-    velocity -= gravity * TimeManager::GetSingleton()->GetDeltaTime();
+    jumpHeight -= velocity * Timer::GetDeltaTime();
+    velocity -= gravity * Timer::GetDeltaTime();
     
-    currPos.y = pos.y + jumpHeight;
+    renderPos.y = pos.y + jumpHeight;
 }
 
-void Player::QuickDown()
+void Player::quickDownAnimation()
 {
     if (!quickDown) return;
 
-    currPos.y += 500 * TimeManager::GetSingleton()->GetDeltaTime();
-    pos.y = currPos.y;
+    renderPos.y += 450 * Timer::GetDeltaTime();
 
-    if (currPos.y >= 500)
+    if (renderPos.y >= pos.y)
     {
-        currPos.y = 500;
+        renderPos.y = pos.y;
         
         velocity = JUMP_VELOCITY;
         minVelocity = -JUMP_VELOCITY;
@@ -287,5 +214,36 @@ void Player::QuickDown()
     }
 }
 
+void Player::motionAnimator(int playerState,float waitingTime, float frameTerm, int maxFrameX)
+{
+    playerWatingTime += Timer::GetDeltaTime();
+
+    if (playerWatingTime > waitingTime)
+    {
+        motionFrameTime += Timer::GetDeltaTime();
+    }
+
+    if (motionFrameTime > frameTerm)
+    {
+        ++player_Jazz.frameX;
+        motionFrameTime = 0;
+    }
+
+    if (player_Jazz.frameX >= maxFrameX)
+    {
+        player_Jazz.frameX = 0;
+        playerWatingTime = 0;
+    }
+
+    rabbitMotion[playerState]->SetCurrFrameX(player_Jazz.frameX);
+    rabbitMotion[playerState]->SetCurrFrameY(player_Jazz.frameY);
+}
+
+void Player::InitMotion()
+{
+    playerWatingTime = 0;
+    motionFrameTime = 0;
+    player_Jazz.frameX = 0;
+}
 
 
