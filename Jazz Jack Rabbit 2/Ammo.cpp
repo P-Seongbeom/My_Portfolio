@@ -5,9 +5,6 @@ HRESULT Ammo::Init()
 {
     ammo = ImageManager::GetSingleton()->FindImage("Image/object/temp_Ammo.bmp");
 
-    pos.x = 0;
-    pos.y = 0;
-
     ammoType = EammoType::Normal;
 
     return S_OK;
@@ -37,7 +34,14 @@ void Ammo::Fire()
         if (ammoType == EammoType::Normal)
         {
             fireTimer += Timer::GetDeltaTime();
-            pos.x += AMMO_SPEED * Timer::GetDeltaTime();
+            if (ammoDir == EmoveDir::Right)
+            {
+                pos.x += AMMO_SPEED * Timer::GetDeltaTime();
+            }
+            else if (ammoDir == EmoveDir::Left)
+            {
+                pos.x -= AMMO_SPEED * Timer::GetDeltaTime();
+            }
         
             if (fireTimer > 0.5)
             {

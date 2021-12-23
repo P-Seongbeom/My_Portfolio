@@ -20,8 +20,8 @@ HRESULT Player::Init()
     renderFrameX = 0;
     renderFrameY = 0;
 
-    pos.x = 50;
-    pos.y = 375;
+    pos.x = WIN_SIZE_X/2;
+    pos.y = WIN_SIZE_Y/2;
 
     renderPos.y = pos.y;
 
@@ -66,23 +66,34 @@ void Player::Update()
         ammo[i].Update();
     }
 
-    renderPos.x = pos.x;
+    if (pos.x < WIN_SIZE_X / 2 || pos.x > ((TILE_COUNT_X * TILE_SIZE) - WIN_SIZE_X/2))
+    {
+        renderPos.x = pos.x;
+        endOfHorizontal = true;
+    }
+    else
+    {
+        renderPos.x = WIN_SIZE_X / 2;
+        endOfHorizontal = false;
+    }
+    cout << "posx : " << pos.x << endl;
+    cout << "posy : " << pos.y << endl;
 }
 
 void Player::Render(HDC hdc)
 {
     char test[128] = { 0 };
 
-    Rectangle(hdc, (int)pos.x - 10, (int)renderPos.y - 32, (int)pos.x + 10, (int)renderPos.y);
+    Rectangle(hdc, (int)renderPos.x - 10, (int)renderPos.y - 32, (int)renderPos.x + 10, (int)renderPos.y);
 
-    //rabbitMotion[(int)playerState]->Render(hdc, 
-    //                                            (int)pos.x + 3, (int)renderPos.y, 
-    //                                            rabbitMotion[(int)playerState]->GetCurrFrameX(), 
-    //                                            rabbitMotion[(int)playerState]->GetCurrFrameY());
     rabbitMotion[(int)playerState]->Render(hdc,
-                                         WIN_SIZE_X / 2, WIN_SIZE_Y / 2,
+                                         renderPos.x, renderPos.y,
                                           rabbitMotion[(int)playerState]->GetCurrFrameX(),
                                           rabbitMotion[(int)playerState]->GetCurrFrameY());
+    //rabbitMotion[(int)playerState]->Render(hdc,
+    //                                      renderPos.x, renderPos.y,
+    //                                      rabbitMotion[(int)playerState]->GetCurrFrameX(),
+    //                                       rabbitMotion[(int)playerState]->GetCurrFrameY());
 
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
     {
@@ -130,10 +141,10 @@ void Player::inputAction()
             playerState = EplayerState::Stand;
             initMotion();
         }
+
         if (Input::GetButton(VK_RIGHT))
         {
             pos.x += moveSpeed * Timer::GetDeltaTime();
-            //renderFrameY = 0;
 
             if (!inputShiftKey)SetPlayerInfo(EplayerState::Walk, EmoveDir::Right);
             else if (inputShiftKey) SetPlayerInfo(EplayerState::Run, EmoveDir::Right);
@@ -279,6 +290,7 @@ void Player::fire()
         
             ammo[i].SetAlive(true);
             ammo[i].SetPos(renderPos);
+            ammo[i].SetAmmoDir(playerMoveDir);
             ammo[i].SetIsFire(true);
         
             break;

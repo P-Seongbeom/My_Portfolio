@@ -11,6 +11,7 @@ private:
 	TILE_INFO tileInfo[SAMPLE_IMAGE_COUNT][TILE_COUNT_Y][TILE_COUNT_X] = {};
 
 	void LoadMapFile(int mapNum);
+	void adjustRenderRatio(HDC hdc, int renderIdx, float cameraX, float cameraY, float ratio, float scale = (1.0F));
 public:
 	virtual ~TileMap() = default;
 	virtual HRESULT Init() override;
@@ -18,7 +19,7 @@ public:
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
 
-	void BackGroundRender(HDC hdc);
-	void FrontStructureRender(HDC hdc);
+	void BackGroundRender(HDC hdc, float cameraX, float cameraY);
+	void FrontStructureRender(HDC hdc, float cameraX, float cameraY);
 };
 

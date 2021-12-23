@@ -12,7 +12,7 @@ class Player : public GameObject
 {
 	enum class Echaracter { jazz, spaz, Lori };
 	enum class EplayerState { Stand, Walk, Run, Jump, Rope };
-	enum class EmoveDir { Left, Right, Up, Down };
+
 
 private:
 	Ammo* ammo = nullptr;
@@ -32,6 +32,8 @@ private:
 	bool canMove = true;
 	bool stayGetDown = false;
 	bool inputShiftKey = false;
+	bool endOfHorizontal = false;
+	bool endOfVertical = false;
 
 	void playerJump();
 	bool jumpKeyPressed = false;
@@ -65,5 +67,9 @@ public:
 
 	void SetPlayerInfo(EplayerState state, EmoveDir dir) { this->playerState = state; 
 														   this->playerMoveDir = dir; }
+	bool GetEndOfHorizntal() { return this->endOfHorizontal; }
+	bool GetEndOfVertical() { return this->endOfVertical; }
+
+	EmoveDir GetMoveDir() { return this->playerMoveDir = playerMoveDir; }
 };
 
