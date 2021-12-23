@@ -5,7 +5,7 @@
 
 #include "Timer.h"
 
-//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
 
 HINSTANCE			_hInst;
 HWND				_hWnd;

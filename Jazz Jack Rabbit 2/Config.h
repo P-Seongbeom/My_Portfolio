@@ -40,11 +40,14 @@ extern int windowSizeY;
 
 //타일맵 관련
 #define TILE_SIZE	32
-#define TILE_COUNT_X	40
-#define TILE_COUNT_Y	30
+#define TILE_COUNT_X	40	//타일맵 툴
+#define TILE_COUNT_Y	30	//타일맵 툴
 #define SAMPLE_TILE_COUNT_X		10
 #define SAMPLE_TILE_COUNT_Y		30
 #define SAMPLE_IMAGE_COUNT		7
+#define RENDER_TILE_COUNT_X		20
+#define RENDER_TILE_COUNT_Y		15
+
 
 typedef struct tagTile
 {
@@ -52,6 +55,9 @@ typedef struct tagTile
 	RECT rc;
 	int frameX, frameY;
 }TILE_INFO;
+
+//이동하는 object 관련
+enum class EmoveDir { Left, Right, Up, Down };
 
 //총알 관련
 #define AMMO_PACK_COUNT		10

@@ -21,6 +21,8 @@ private:
 	bool jumpKeyPressed = false;
 
 	void cameraMove();
+	bool moveHorizontal = true;
+	bool moveVertical = true;
 	
 public:
 	virtual HRESULT Init() override;

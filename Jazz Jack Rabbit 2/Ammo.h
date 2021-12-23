@@ -6,12 +6,15 @@ class Image;
 class Ammo : public GameObject
 {
 	enum class EammoType{ Normal, Bounce };
+
 private:
 	Image* ammo = nullptr;
 
 	EammoType ammoType = {};
 
 	POINTFLOAT firedPos = {};
+
+	EmoveDir ammoDir = {};
 
 	float fireTimer = 0.0f;
 	bool isFire = false;
@@ -31,6 +34,6 @@ public:
 	bool GetIsFire() { return isFire; }
 	void SetAlive(bool alive) { this->ammoAlive = alive; }
 	bool GetAlive() { return ammoAlive; }
-
+	void SetAmmoDir(EmoveDir dir) { this->ammoDir = dir; };
 };
 
