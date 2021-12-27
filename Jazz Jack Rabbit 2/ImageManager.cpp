@@ -9,12 +9,17 @@ void ImageManager::Init()
     ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage4.bmp", 288, 960, 9, 30, true, RGB(87, 0, 203));
     ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage5.bmp", 288, 320, 9, 10, true, RGB(87, 0, 203));
     ImageManager::GetSingleton()->AddImage("Image/tilemap/TileMapImage6.bmp", 320, 224, 10, 7, true, RGB(87, 0, 203));
-    ImageManager::GetSingleton()->AddImage("Image/tilemap/CollisionPixel.bmp", 96, 192, 3, 6, true, RGB(87, 0, 203));
+    ImageManager::GetSingleton()->AddImage("Image/tilemap/CollisionPixel.bmp", 96, 224, 3, 7, true, RGB(87, 0, 203));
+    ImageManager::GetSingleton()->AddImage("Image/tilemap/pixelMap1.bmp", 1280, 960, 1, 1, true, RGB(87, 0, 203));
 
     ImageManager::GetSingleton()->AddImage("Image/character/jazz_stand.bmp", 1296, 110, 27, 2, true, RGB(44, 102, 150));
     ImageManager::GetSingleton()->AddImage("Image/character/jazz_walk.bmp", 448, 106, 8, 2, true, RGB(44, 102, 150));
     ImageManager::GetSingleton()->AddImage("Image/character/jazz_run.bmp", 277, 106, 4, 2, true, RGB(44, 102, 150));
-    ImageManager::GetSingleton()->AddImage("Image/character/jump.bmp", 32, 32, 1, 1, true, RGB(44, 102, 150));
+    ImageManager::GetSingleton()->AddImage("Image/character/jump.bmp", 522, 168, 9, 3, true, RGB(44, 102, 150));
+    ImageManager::GetSingleton()->AddImage("Image/character/rope.bmp", 360, 268, 8, 4, true, RGB(44, 102, 150));
+    ImageManager::GetSingleton()->AddImage("Image/character/falling.bmp", 174, 168, 3, 3, true, RGB(44, 102, 150));
+
+    ImageManager::GetSingleton()->AddImage("Image/character/collisionRect.bmp", 20, 32, 1, 1, false, RGB(127, 127, 127));
 
     ImageManager::GetSingleton()->AddImage("Image/object/temp_Ammo.bmp", 10, 10, false, RGB(255, 0, 255));
 }

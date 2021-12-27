@@ -19,7 +19,7 @@ void Ammo::Update()
 void Ammo::Render(HDC hdc)
 {
 
-    ammo->Render(hdc, pos.x, pos.y - 20);
+    ammo->Render(hdc, pos.x, pos.y - 30);
 
 }
 

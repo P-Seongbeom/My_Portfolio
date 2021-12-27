@@ -13,6 +13,8 @@ HRESULT TileMap::Init()
     mapTile[5] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage5.bmp");
     mapTile[6] = ImageManager::GetSingleton()->FindImage("Image/tilemap/TileMapImage6.bmp");
 
+    pixelImage = ImageManager::GetSingleton()->FindImage("Image/tilemap/pixelMap1.bmp");
+
     LoadMapFile(1);
 
     return S_OK;
@@ -20,6 +22,15 @@ HRESULT TileMap::Init()
 
 void TileMap::Update()
 {
+    if (Input::GetButtonDown('0') && renderOnOff == false)
+    {
+        renderOnOff = true;
+    }
+    else if (Input::GetButtonDown('0') && renderOnOff == true)
+    {
+        renderOnOff = false;
+    }
+        
 }
 
 void TileMap::Render(HDC hdc)
@@ -37,10 +48,8 @@ void TileMap::BackGroundRender(HDC hdc, float cameraX, float cameraY)
     adjustRenderRatio(hdc, 2, cameraX, cameraY, 0.8);
     adjustRenderRatio(hdc, 3, cameraX, cameraY, 1);
 
-    if (Input::GetButton('0'))
-    {
-        adjustRenderRatio(hdc, 4, cameraX, cameraY, 1);
-    }
+    if (renderOnOff)
+    pixelImage->Render(hdc, pixelImage->GetWidth()/2 - cameraX * 32, pixelImage->GetHeight()/2 - cameraY * 32);
 }
 
 void TileMap::FrontStructureRender(HDC hdc, float cameraX, float cameraY)
@@ -78,7 +87,7 @@ void TileMap::adjustRenderRatio(HDC hdc, int renderIdx, float cameraX, float cam
         {
             mapTile[renderIdx]->Render(hdc,
                 tileInfo[renderIdx][i][j].rc.left + TILE_SIZE / 2 - cameraX * TILE_SIZE * ratio,
-                tileInfo[renderIdx][i][j].rc.top + TILE_SIZE,
+                tileInfo[renderIdx][i][j].rc.top + TILE_SIZE - cameraY * TILE_SIZE * ratio,
                 tileInfo[renderIdx][i][j].frameX,
                 tileInfo[renderIdx][i][j].frameY,
                 scale);

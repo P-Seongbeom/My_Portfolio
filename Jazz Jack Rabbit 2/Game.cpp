@@ -65,7 +65,7 @@ bool Game::Init(HINSTANCE hInst)
 
     windowMaxSizeX = WIN_SIZE_X > TILEMAPTOOL_SIZE_X ? WIN_SIZE_X : TILEMAPTOOL_SIZE_X;
     windowMaxSizeY = WIN_SIZE_Y > TILEMAPTOOL_SIZE_Y ? WIN_SIZE_Y : TILEMAPTOOL_SIZE_Y;
-
+    
     _hDC = GetDC(_hWnd);
     _backDC = CreateCompatibleDC(_hDC);
     _backBitmap = CreateCompatibleBitmap(_hDC, windowMaxSizeX, windowMaxSizeY);
@@ -103,7 +103,7 @@ INT32 Game::Run()
             {
                 processInput();
                 update();
-                //physicsUpdate();
+                physicsUpdate();
                 render();
             }
         }

@@ -52,6 +52,9 @@
     <Filter Include="MainGame\Main">
       <UniqueIdentifier>{5fd89c39-db70-438b-abe0-148f8dda5674}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Physics">
+      <UniqueIdentifier>{aba7da21-f111-4d03-bad3-6858aba0b8d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -61,9 +64,6 @@
       <Filter>2D Framework</Filter>
     </ClCompile>
     <ClCompile Include="Turtle.cpp">
-      <Filter>MainGame\Enemy\Turtle</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicTurtle.cpp">
       <Filter>MainGame\Enemy\Turtle</Filter>
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
@@ -129,6 +129,9 @@
     <ClCompile Include="Game.cpp">
       <Filter>MainGame\Main</Filter>
     </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>MainGame\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -138,9 +141,6 @@
       <Filter>2D Framework</Filter>
     </ClInclude>
     <ClInclude Include="Turtle.h">
-      <Filter>MainGame\Enemy\Turtle</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicTurtle.h">
       <Filter>MainGame\Enemy\Turtle</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
@@ -217,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>MainGame\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>MainGame\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
