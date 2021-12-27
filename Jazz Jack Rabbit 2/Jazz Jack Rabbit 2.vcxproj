@@ -141,8 +141,8 @@
   <ItemGroup>
     <ClCompile Include="Ammo.cpp" />
     <ClCompile Include="BasicGameFramework.cpp" />
-    <ClCompile Include="BasicTurtle.cpp" />
     <ClCompile Include="CharacterSelectScene.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gun.cpp" />
@@ -168,8 +168,8 @@
   <ItemGroup>
     <ClInclude Include="Ammo.h" />
     <ClInclude Include="BasicGameFramework.h" />
-    <ClInclude Include="BasicTurtle.h" />
     <ClInclude Include="CharacterSelectScene.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="GameEntity.h" />

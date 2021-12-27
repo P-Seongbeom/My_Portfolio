@@ -12,7 +12,7 @@ private:
 
 	EammoType ammoType = {};
 
-	POINTFLOAT firedPos = {};
+	POINT firedPos = {};
 
 	EmoveDir ammoDir = {};
 

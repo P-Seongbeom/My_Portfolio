@@ -2,8 +2,10 @@
 #include "GameEntity.h"
 #include "Config.h"
 
+class Physics;
 class TileMap;
 class Player;
+class Image;
 class PlayInStageScene : public GameEntity
 {
 private:
@@ -11,6 +13,10 @@ private:
 	TILE_INFO tileInfo[SAMPLE_IMAGE_COUNT][TILE_COUNT_Y][TILE_COUNT_X] = { 0 };
 
 	Player* jumpTest = nullptr;
+
+	RECT* cameraMoveXZone = {};
+	RECT* cameraMoveYZone = {};
+	POINT playerPos = {};
 
 	bool canMove = true;
 	POINTFLOAT cameraRenderPos = {};
@@ -20,9 +26,21 @@ private:
 
 	bool jumpKeyPressed = false;
 
-	void cameraMove();
+	void moveCamera();
 	bool moveHorizontal = true;
 	bool moveVertical = true;
+
+	void returnCamera();
+	bool activateReturnCamera = false;
+
+
+	void collision(HDC hdc, int checkPosX, int checkPosY, COLORREF color);
+	bool collidedLeft = false;
+	bool collidedRight = false;
+	bool collidedTop = false;
+	bool collidedBottomL = false;
+	bool collidedBottomR = false;
+	bool collidedBottomC = false;
 	
 public:
 	virtual HRESULT Init() override;
