@@ -38,8 +38,6 @@ bool Game::Init(HINSTANCE hInst)
     windowSizeX = WIN_SIZE_X;
     windowSizeY = WIN_SIZE_Y;
 
-    hTimer = (HANDLE)SetTimer(_hWnd, 0, 10, NULL);
-
     LoadStringW(hInst, IDS_APP_TITLE, _title, MAX_LOADSTRING);
     LoadStringW(hInst, IDC_BASICGAMEFRAMEWORK, _windowName, MAX_LOADSTRING);
 
@@ -51,7 +49,7 @@ bool Game::Init(HINSTANCE hInst)
     }
 
     _hWnd = CreateWindowW(_windowName, _title, WS_OVERLAPPEDWINDOW,
-        WIN_START_POS_X, WIN_START_POS_Y, WIN_SIZE_X, WIN_SIZE_Y, NULL, NULL, _hInst, NULL);
+        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, _hInst, nullptr);
 
     if (_hWnd == NULL)
     {

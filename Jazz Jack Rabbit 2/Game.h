@@ -14,8 +14,6 @@ public:
 	void				Release();
 
 private:
-	HANDLE				hTimer;
-
 	int					windowMaxSizeX = 0;
 	int					windowMaxSizeY = 0;
 
@@ -26,13 +24,10 @@ private:
 	void				physicsUpdate();
 	void				render();
 private:
-
+	
 	WCHAR				_title[MAX_LOADSTRING] = {};
 	WCHAR				_windowName[MAX_LOADSTRING] = {};
 	HDC					_hDC = {};
 	HDC					_backDC = {};
 	HBITMAP				_backBitmap = {};
-	//LPSTR				_lpszClass = (LPSTR)TEXT("Imitate_Jazz JackRabbit 2");
-
-	//Resolution			_res = { 1280, 720 };
 };

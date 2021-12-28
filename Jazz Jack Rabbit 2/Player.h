@@ -11,7 +11,7 @@ class Image;
 class Player : public GameObject
 {
 	enum class Echaracter { jazz, spaz, Lori };
-	enum class EplayerState { Stand, Walk, Run, Jump, Rope, LookUp, LookDown, Falling };
+	enum class EplayerState { Stand, Walk, Run, Jump, Rope, LookUp, LookDown, Falling, QuickDown };
 
 
 private:
@@ -25,6 +25,8 @@ private:
 	EmoveDir playerMoveDir = {};
 
 	POINTFLOAT renderPos = {};
+
+	RECT* playerRect = {};
 
 	float moveSpeed = 0.0f;
 	float t = 0;
@@ -42,7 +44,7 @@ private:
 	void playerJump();
 	bool jumpKeyPressed = false;
 	float jumpHeight = 0.0f;
-	float velocity = 0.0f;
+	float jumpVelocity = 0.0f;
 	float minVelocity = 0.0f;
 	float jumpPosY = 0;
 	float gravity = 0.0f;
@@ -57,6 +59,7 @@ private:
 
 	void quickDown();
 	bool quickDownState = false;
+	float quickDownWatingTime = 0.0f;
 
 	void motionAnimator(int playerState, float waitMotionTime, float frameTerm, int maxFrameX);
 	void jumpMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX);
