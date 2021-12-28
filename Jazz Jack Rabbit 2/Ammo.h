@@ -17,6 +17,7 @@ private:
 	EmoveDir ammoDir = {};
 
 	float fireTimer = 0.0f;
+	int ammoMoveDis = 0;
 	bool isFire = false;
 	bool ammoAlive = false;
 	bool changeAmmo = false;
@@ -26,6 +27,7 @@ public:
 	virtual void Update();
 	virtual void Render(HDC hdc);
 	virtual void Release();
+	virtual ~Ammo() = default;
 
 	void Fire();
 	void ChangeAmmoType(EammoType type);
@@ -34,6 +36,7 @@ public:
 	bool GetIsFire() { return isFire; }
 	void SetAlive(bool alive) { this->ammoAlive = alive; }
 	bool GetAlive() { return ammoAlive; }
-	void SetAmmoDir(EmoveDir dir) { this->ammoDir = dir; };
+	void SetAmmoDir(EmoveDir dir) { this->ammoDir = dir; }
+	void SetPosY(int posy) { this->pos.y = posy; }
 };
 

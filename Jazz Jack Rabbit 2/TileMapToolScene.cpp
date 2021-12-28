@@ -98,6 +98,7 @@ void TileMapToolScene::Update()
         sampleAreaIdx = 6;
     }
 
+    //드래그로 원하는 만큼 타일 선택
     if (PtInRect(&sampleArea[sampleAreaIdx], Input::GetMousePosition()))
     {
         if (Input::GetButtonDown(VK_LBUTTON))
@@ -150,25 +151,28 @@ void TileMapToolScene::Update()
         }
     }
 
+    //칠하기
     for (int i = 0; i < TILE_COUNT_Y; ++i)
     {
-        for(int j = 0; j < TILE_COUNT_X; ++j)
-        if (PtInRect(&(tileInfo[sampleAreaIdx][i][j].rc), Input::GetMousePosition()))
+        for (int j = 0; j < TILE_COUNT_X; ++j)
         {
-            if (Input::GetButton(VK_LBUTTON))
+            if (PtInRect(&(tileInfo[sampleAreaIdx][i][j].rc), Input::GetMousePosition()))
             {
-                for (int x = 0; x < selectedTileCountX; ++x)
+                if (Input::GetButton(VK_LBUTTON))
                 {
-                    for (int y = 0; y < selectedTileCountY; ++y)
+                    for (int x = 0; x < selectedTileCountX; ++x)
                     {
-                        if (!(j - x < 0) && !(i - y < 0))
+                        for (int y = 0; y < selectedTileCountY; ++y)
                         {
-                            tileInfo[sampleAreaIdx][i - y][j - x].frameX = selectedSampleTile.frameX - x;
-                            tileInfo[sampleAreaIdx][i - y][j - x].frameY = selectedSampleTile.frameY - y;
+                            if (!(j - x < 0) && !(i - y < 0))
+                            {
+                                tileInfo[sampleAreaIdx][i - y][j - x].frameX = selectedSampleTile.frameX - x;
+                                tileInfo[sampleAreaIdx][i - y][j - x].frameY = selectedSampleTile.frameY - y;
+                            }
                         }
                     }
+                    break;
                 }
-                break;
             }
         }
     }
@@ -181,20 +185,16 @@ void TileMapToolScene::Update()
     {
         LoadMap();
     }
-    if(Input::GetButtonDown('0'))
-    {
-        SceneManager::GetSingleton()->ChangeScene("PlayInStage");
-    }
 
 }
 
 void TileMapToolScene::Render(HDC hdc)
 {
+    //타일맵툴
     for (int i = 0; i < TILE_COUNT_Y; ++i)
     {
         for (int j = 0; j < TILE_COUNT_X; ++j)
         {
-            //Rectangle(hdc, tileInfo[sampleAreaIdx][i][j].rc.left, tileInfo[sampleAreaIdx][i][j].rc.top, tileInfo[sampleAreaIdx][i][j].rc.right, tileInfo[sampleAreaIdx][i][j].rc.bottom);
             sampleImage[sampleAreaIdx]->Render(hdc,
                 tileInfo[sampleAreaIdx][i][j].rc.left + TILE_SIZE / 2,
                 tileInfo[sampleAreaIdx][i][j].rc.top + TILE_SIZE,
@@ -203,10 +203,12 @@ void TileMapToolScene::Render(HDC hdc)
         }
     }
 
+    //우측 샘플 이미지
     sampleImage[sampleAreaIdx]->Render(hdc, 
         TILEMAPTOOL_SIZE_X - sampleImage[sampleAreaIdx]->GetWidth() + sampleImage[sampleAreaIdx]->GetWidth() / 2,
         sampleImage[sampleAreaIdx]->GetHeight() / 2);
 
+    //선택된 샘플 이미지
     for (int j = 0; j < selectedTileCountY; ++j)
     {
         for (int i = 0; i < selectedTileCountX; ++i)

@@ -1,6 +1,5 @@
 #include "TileMap.h"
 #include "Image.h"
-//#include "TileMapToolScene.h"
 
 
 HRESULT TileMap::Init()
@@ -22,6 +21,7 @@ HRESULT TileMap::Init()
 
 void TileMap::Update()
 {
+    //디버깅용 pixel이미지 온오프
     if (Input::GetButtonDown('0') && renderOnOff == false)
     {
         renderOnOff = true;
@@ -48,6 +48,7 @@ void TileMap::BackGroundRender(HDC hdc, float cameraX, float cameraY)
     adjustRenderRatio(hdc, 2, cameraX, cameraY, 0.8);
     adjustRenderRatio(hdc, 3, cameraX, cameraY, 1);
 
+    //디버깅용 pixel이미지 온오프
     if (renderOnOff)
     pixelImage->Render(hdc, pixelImage->GetWidth()/2 - cameraX * 32, pixelImage->GetHeight()/2 - cameraY * 32);
 }
@@ -55,7 +56,7 @@ void TileMap::BackGroundRender(HDC hdc, float cameraX, float cameraY)
 void TileMap::FrontStructureRender(HDC hdc, float cameraX, float cameraY)
 {
     adjustRenderRatio(hdc, 5, cameraX, cameraY, 1);
-    adjustRenderRatio(hdc, 6, cameraX, cameraY, 1.5, 1.5);
+    adjustRenderRatio(hdc, 6, cameraX, cameraY, 1.5);
 }
 
 void TileMap::LoadMapFile(int mapNum)
@@ -79,7 +80,7 @@ void TileMap::LoadMapFile(int mapNum)
     CloseHandle(hFile);
 }
 
-void TileMap::adjustRenderRatio(HDC hdc, int renderIdx, float cameraX, float cameraY, float ratio, float scale)
+void TileMap::adjustRenderRatio(HDC hdc, int renderIdx, float cameraX, float cameraY, float ratio)
 {
     for (int i = cameraY * ratio; i < RENDER_TILE_COUNT_Y + cameraY * ratio; ++i)
     {
@@ -89,8 +90,7 @@ void TileMap::adjustRenderRatio(HDC hdc, int renderIdx, float cameraX, float cam
                 tileInfo[renderIdx][i][j].rc.left + TILE_SIZE / 2 - cameraX * TILE_SIZE * ratio,
                 tileInfo[renderIdx][i][j].rc.top + TILE_SIZE - cameraY * TILE_SIZE * ratio,
                 tileInfo[renderIdx][i][j].frameX,
-                tileInfo[renderIdx][i][j].frameY,
-                scale);
+                tileInfo[renderIdx][i][j].frameY);
         }
     }
 }

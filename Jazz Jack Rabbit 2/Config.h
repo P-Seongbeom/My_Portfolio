@@ -48,10 +48,8 @@ extern int windowSizeY;
 #define RENDER_TILE_COUNT_X		20
 #define RENDER_TILE_COUNT_Y		15
 
-
 typedef struct tagTile
 {
-	//Terrain terrain;
 	RECT rc;
 	int frameX, frameY;
 }TILE_INFO;

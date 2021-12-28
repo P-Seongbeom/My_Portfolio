@@ -2,6 +2,7 @@
 #include "GameEntity.h"
 #include "PlayInStageScene.h"
 #include "TileMapToolScene.h"
+#include "TiltleScene.h"
 
 //static으로 함수를 선언하면 함수외적인 곳에서 초기화를 꼭 시켜줘야한다.
 GameEntity* SceneManager::currScene = nullptr;
@@ -24,6 +25,7 @@ DWORD CALLBACK LoadingThread(LPVOID pvParam)	//함수 이름은 바뀌어도 됨, 나머지는
 void SceneManager::Init()
 {
 	SceneManager::GetSingleton()->AddScene("TileMapTool", new TileMapToolScene);
+	SceneManager::GetSingleton()->AddScene("TiltleScene", new TiltleScene);
 	SceneManager::GetSingleton()->AddScene("PlayInStage", new PlayInStageScene);
 
 	SceneManager::GetSingleton()->ChangeScene("PlayInStage");

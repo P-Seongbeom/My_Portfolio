@@ -11,6 +11,8 @@ HRESULT Player::Init()
     rabbitMotion[(int)EplayerState::Jump] = ImageManager::GetSingleton()->FindImage("Image/character/jump.bmp");
     rabbitMotion[(int)EplayerState::Rope] = ImageManager::GetSingleton()->FindImage("Image/character/rope.bmp");
     rabbitMotion[(int)EplayerState::Falling] = ImageManager::GetSingleton()->FindImage("Image/character/falling.bmp");
+    rabbitMotion[(int)EplayerState::QuickDown] = ImageManager::GetSingleton()->FindImage("Image/character/quick_down.bmp");
+    rabbitMotion[(int)EplayerState::UpperCut] = ImageManager::GetSingleton()->FindImage("Image/character/uppercut.bmp");
 
     collisionRect = ImageManager::GetSingleton()->FindImage("Image/character/collisionRect.bmp");
 
@@ -24,21 +26,19 @@ HRESULT Player::Init()
     renderFrameX = 0;
     renderFrameY = 0;
 
-    //플레이어의 위치값 x : 캐릭터 중앙
-    //플레이어의 위치값 y : 캐릭터 발밑
     pos.x = WIN_SIZE_X/2;
     pos.y = WIN_SIZE_Y/2;
 
     renderPos.x = pos.x;
     renderPos.y = pos.y;
 
-    playerRect = new RECT;
-    playerRect->left = pos.x - 10;
-    playerRect->right = pos.x + 10;
-    playerRect->top = pos.y - 32;
-    playerRect->bottom = pos.y;
+    //playerRect = new RECT;
+    //playerRect->left = pos.x - 10;
+    //playerRect->right = pos.x + 10;
+    //playerRect->top = pos.y - 32;
+    //playerRect->bottom = pos.y;
 
-    fallingSpeed = 1;
+    fallingSpeed = 0;
     fallingMaxSpeed = 500;
 
     moveSpeed = PLAYER_MOVE_SPEED;
@@ -57,8 +57,9 @@ HRESULT Player::Init()
 void Player::Update()
 {
     inputAction();
-
     playerJump();
+    freeFall();
+
     if (playerState == EplayerState::Stand)
     {
         motionAnimator((int)EplayerState::Stand, 2, 0.1f, 27);
@@ -83,32 +84,20 @@ void Player::Update()
     {
         jumpMotionAnimator((int)EplayerState::Falling, 0, 0.06f, 3);
     }
-
-    quickDown();
-    freeFall();
-
+    else if (playerState == EplayerState::QuickDown)
+    {
+        motionAnimator((int)EplayerState::QuickDown, 0, 0.0f, 8);
+    }
+    else if (playerState == EplayerState::UpperCut)
+    {
+        motionAnimator((int)EplayerState::UpperCut, 0, 0.05f, 10);
+    }
 
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
     {
 
         ammo[i].Update();
     }
-
-
-    //cout << "posx : " << pos.x << endl;
-    //cout << "redposx : " << renderPos.x << endl;
-    //cout << "posy : " << pos.y << endl;
-    //cout << "redposy : " << renderPos.y << endl;
-    ////cout << endOfVertical << endl;
-    //cout << canfalling << endl;
-    //cout << "점프속도 : " << velocity << endl;
-    //cout << "점프 키 : " << jumpKeyPressed << endl;
-    //cout << " fallingspeed : " << fallingSpeed << endl;
-    //cout << "무브키 : " << moveKeyPressed << endl;
-    //if(playerState == EplayerState::Rope)
-    cout << "상태 : " << (int)playerState << endl;
-    //cout << "속도 : " << moveSpeed << endl;
-    //cout << playerRect->bottom << endl;
 }
 
 void Player::Render(HDC hdc)
@@ -116,8 +105,8 @@ void Player::Render(HDC hdc)
     char test[128] = { 0 };
 
     collisionRect->Render(hdc, (int)renderPos.x, (int)renderPos.y - 16);
-    //collisionRect->Render(hdc, (int)pos.x, (int)pos.y);
-    if (playerState == EplayerState::Rope)
+
+    if (playerState == EplayerState::Rope)  //귀로 매달리게
     {
         rabbitMotion[(int)playerState]->Render(hdc,
                                               (int)renderPos.x, (int)renderPos.y + 16,
@@ -137,52 +126,55 @@ void Player::Render(HDC hdc)
         if (ammo[i].GetAlive())
         ammo[i].Render(hdc);
     }
-
-
-    //wsprintf(test, "캐릭터 상태 : %d", playerState);
-    //TextOut(hdc, WIN_SIZE_X/2, 450, test, strlen(test));
 }
 
 
 void Player::Release()
 {
+    delete[] ammo;
+    ammo = nullptr;
 }
 
 
-void Player::inputAction()
+void Player::inputAction()  //플레이어 행동 입력
 {
-    //if (!stayKeyDownTime && !releasing)
-    if(!stayKeyDownTime)
-        unlockingCenterPlayer();
+    unlockingCenterPlayer();
 
     if (Input::GetButton(VK_LSHIFT))
     {
-        inputShiftKey = true;
+        shiftKeyPressed = true;
         moveSpeed = PLAYER_MOVE_SPEED * 2;
     }
     if (Input::GetButtonUp(VK_LSHIFT))
     {
-        inputShiftKey = false;
+        shiftKeyPressed = false;
         moveSpeed = PLAYER_MOVE_SPEED;
         initMotionFrame();
     }
 
-    if (canMove)
+    if (canMove == true)
     {
         if (Input::GetButton(VK_LEFT))
         {
             moveKeyPressed = true;
-            if(collidedLeft == false)
-            pos.x -= moveSpeed * Timer::GetDeltaTime();
 
-            if (!(playerState == EplayerState::Jump || playerState == EplayerState::Rope))
+            if (!collidedLeft)
             {
-                if(!inputShiftKey && !canfalling)
-                    SetPlayerInfo(EplayerState::Walk, EmoveDir::Left);
-                else if(inputShiftKey && !canfalling) 
-                    SetPlayerInfo(EplayerState::Run, EmoveDir::Left);
+                pos.x -= moveSpeed * Timer::GetDeltaTime();
             }
-            else if (playerState == EplayerState::Jump || playerState == EplayerState::Rope || playerState == EplayerState::Falling)
+
+            if (collideBottom)
+            {
+                if (!shiftKeyPressed)
+                {
+                    SetPlayerInfo(EplayerState::Walk, EmoveDir::Left);
+                }
+                else if (shiftKeyPressed)
+                {
+                    SetPlayerInfo(EplayerState::Run, EmoveDir::Left);
+                }
+            }
+            else if (!collideBottom)
             {
                 playerMoveDir = EmoveDir::Left;
             }
@@ -190,12 +182,10 @@ void Player::inputAction()
         if (Input::GetButtonUp(VK_LEFT))
         {
             moveKeyPressed = false;
-            if (!canfalling)
+
+            if (collideBottom)
             {
-                if (playerState != EplayerState::Rope)
-                {
-                    playerState = EplayerState::Stand;
-                }
+                playerState = EplayerState::Stand;
             }
             initMotionFrame();
         }
@@ -203,35 +193,34 @@ void Player::inputAction()
         if (Input::GetButton(VK_RIGHT))
         {
             moveKeyPressed = true;
-            if(collidedRight == false)
-            pos.x += moveSpeed * Timer::GetDeltaTime();
 
-            if (!(playerState == EplayerState::Jump || playerState == EplayerState::Rope))
+            if (!collidedRight)
             {
-                if (!inputShiftKey && !canfalling)
-                    SetPlayerInfo(EplayerState::Walk, EmoveDir::Right);
-                else if (inputShiftKey && !canfalling)
-                    SetPlayerInfo(EplayerState::Run, EmoveDir::Right);
+                pos.x += moveSpeed * Timer::GetDeltaTime();
             }
-            else if (playerState == EplayerState::Jump || playerState == EplayerState::Rope || playerState == EplayerState::Falling)
+
+            if (collideBottom)
+            {
+                if (!shiftKeyPressed)
+                {
+                    SetPlayerInfo(EplayerState::Walk, EmoveDir::Right);
+                }
+                else if (shiftKeyPressed)
+                {
+                    SetPlayerInfo(EplayerState::Run, EmoveDir::Right);
+                }
+            }
+            else if (!collideBottom)
             {
                 playerMoveDir = EmoveDir::Right;
             }
-            //else if (canfalling)
-            //{
-            //    SetPlayerInfo(EplayerState::Falling, EmoveDir::Right);
-            //}
-
         }
         if (Input::GetButtonUp(VK_RIGHT))
         {
             moveKeyPressed = false;
-            if (!canfalling)
+            if (collideBottom)
             {
-                if (playerState != EplayerState::Rope)
-                {
-                    playerState = EplayerState::Stand;
-                }
+                playerState = EplayerState::Stand;
             }
             initMotionFrame();
         }
@@ -240,10 +229,18 @@ void Player::inputAction()
     if (Input::GetButtonDown(VK_DOWN))
     {
         initMotionFrame();
-        if (!jumpKeyPressed)
+
+        if (playerState == EplayerState::Jump || playerState == EplayerState::Falling)
+        {
+            quickDownSwitch = true;
+            jumpSwitch = false;
+            canMove = false;
+            stayGetDown = false;
+        }
+        if (playerState != EplayerState::Jump)
         {
             stayGetDown = true;
-            collideTop = false;
+
             if (collideRope)
             {
                 playerState = EplayerState::Falling;
@@ -251,37 +248,31 @@ void Player::inputAction()
                 pos.y += 10;
             }
         }
-        if (playerState == EplayerState::Jump || playerState == EplayerState::Falling)
-        {
-            cout << "아래키------------" << endl;
-            jumpKeyPressed = false;
-            stayGetDown = false;
-            quickDownState = true;
-            canMove = false;
-        }
     }
     else if (Input::GetButtonUp(VK_DOWN))
     {
-        //canMove = true;
         stayGetDown = false;
-        //releasing = true;
-        stayKeyDownTime = 0;
     }
-
-    //if (Input::GetButtonUp(VK_UP))
-    //{
-    //    canMove = true;
-    //    stayGetDown = false;
-    //    //releasing = true;
-    //    stayKeyDownTime = 0;
-    //}
 
     if (Input::GetButton(VK_SPACE))
     {
-        if (!quickDownState && !jumpKeyPressed && (collideBottom))
+        stayJumpKeyTime += Timer::GetDeltaTime();
+
+        if (collideBottom == true)
         {
-            jumpKeyPressed = true;
+            jumpSwitch = true;
             playerState = EplayerState::Jump;
+        }
+    }
+    if (Input::GetButtonUp(VK_SPACE))
+    {
+        if (stayJumpKeyTime > 0.1 && playerState != EplayerState::UpperCut)
+        {
+            jumpSwitch = false;
+            canfalling = true;
+            jumpVelocity = JUMP_VELOCITY;
+            stayJumpKeyTime = 0;
+            initMotionFrame();
         }
     }
 
@@ -296,110 +287,98 @@ void Player::inputAction()
 
 void Player::playerJump()
 {
-    if (!jumpKeyPressed) return;
+    if (!jumpSwitch) return;
 
-    playerState = EplayerState::Jump;
-
-    if (collideRope)
+    if (!upperCut)
     {
-        cout << "로프" << endl;
-        //cout << "충돌!!!!!!" << endl;
-        canMove = true;
-        jumpVelocity = JUMP_VELOCITY;
-        jumpKeyPressed = false;
-        //canfalling = true;
-        playerState = EplayerState::Rope;
-        fallingSpeed = 0;
+        playerState = EplayerState::Jump;
+    }
+    else if (upperCut)
+    {
+        playerState = EplayerState::UpperCut;
     }
 
-    if (playerState == EplayerState::Jump)
+    if (collideRope)    //점프 중 로프가 머리와 충돌
     {
-        if (jumpVelocity > 0)
+        canMove = true;
+        initJump();
+        fallingSpeed = 0;
+        playerState = EplayerState::Rope;
+    }
+
+    if (stayGetDown)    //아래 입력 후 점프 = jazz 특수공격
+    {
+        canMove = false;
+        upperCut = true;
+        jumpVelocity = JUMP_VELOCITY + 150;
+        stayGetDown = false;
+        playerState = EplayerState::UpperCut;
+    }
+
+    if (playerState == EplayerState::Jump || playerState == EplayerState::UpperCut)
+    {
+        if (jumpVelocity > 0)   //점프
         {
-            canfalling = false;
             pos.y -= jumpVelocity * Timer::GetDeltaTime();
             jumpVelocity -= gravity * Timer::GetDeltaTime();
         }
 
-        if (stayGetDown)    //아래 입력 후 점프 = 특수공격
+        if (jumpVelocity <= 0)  //점프높이 최대치
         {
-            jumpVelocity = JUMP_VELOCITY + 150;
-            canMove = false;
-            stayGetDown = false;
-        }
-
-        if (jumpVelocity <= 0)
-        {
-            canfalling = true;
             canMove = true;
-            jumpKeyPressed = false;
-            playerState = EplayerState::Falling;
+            upperCut = false;
+            initJump();
             initMotionFrame();
-            jumpVelocity = JUMP_VELOCITY;
-        }
-        if (collideTop)
-        {
-            cout << "낙하시작" << endl;
-            //cout << "충돌!!!!!!" << endl;
-            canMove = true;
-            jumpVelocity = JUMP_VELOCITY;
-            jumpKeyPressed = false;
-            canfalling = true;
             playerState = EplayerState::Falling;
+        }
+        if (collideTop)     //점프 도중 머리 충돌
+        {
+            canMove = true;
+            upperCut = false;
+            initJump();
             fallingSpeed = 0;
+            playerState = EplayerState::Falling;
         }
     }
-
-    
-    t += Timer::GetDeltaTime();
-    //cout << pos.y << endl;
-    //cout << "상태 : " << (int)playerState << endl;
-    //cout << "낙하 속도 : " << fallingSpeed << endl;
-    //cout << velocity << endl;
-    //cout << t << endl;
-    //cout << canMove << endl << endl;
 }
 
+void Player::initJump()
+{
+    jumpVelocity = JUMP_VELOCITY;
+    jumpSwitch = false;
+}
+
+//자유낙하
 void Player::freeFall()
 {
-    if (quickDownState) return;
+    quickDown();
 
-    if (collideBottom || jumpKeyPressed || playerState == EplayerState::Rope)
+    if (quickDownSwitch) return;
+
+    if (collideBottom || jumpSwitch || playerState == EplayerState::Rope)
     {
         canfalling = false;
         fallingSpeed = 0;
     }
     else canfalling = true;
 
-    if (collideTop)
-    {
-        canfalling = true;
-        collideTop = false;
-    }
-
-    if (collideRope)
-    {
-        fallingSpeed = 0;
-        canMove = true;
-    }
-
+    //자유낙하 가능
     if (canfalling)
     {
-        //cout << "낙하" << endl;
-        playerState = EplayerState::Falling;
-
         fallingSpeed += gravity * Timer::GetDeltaTime();
         fallingSpeed = min(fallingSpeed, fallingMaxSpeed);
 
         pos.y += fallingSpeed * Timer::GetDeltaTime();
  
-        //checkCollsion = false;
+        playerState = EplayerState::Falling;
     }
     else if (!canfalling)
     {
-        //cout << "바꿈~~~" << endl;
         fallingSpeed = 0;
-        if (!(playerState == EplayerState::Walk || playerState == EplayerState::Run || playerState == EplayerState::Jump || playerState == EplayerState::Rope))
+
+        if (!(playerState == EplayerState::Walk || playerState == EplayerState::Run || 
+              playerState == EplayerState::Jump || playerState == EplayerState::Rope||
+              playerState == EplayerState::UpperCut))
         {
             if (playerState != EplayerState::Stand)
             {
@@ -412,28 +391,26 @@ void Player::freeFall()
 
 void Player::quickDown()
 {
-    if (!quickDownState) return;
+    if (!quickDownSwitch ) return;
 
     quickDownWatingTime += Timer::GetDeltaTime();
     playerState = EplayerState::QuickDown;
 
     if (quickDownWatingTime > 0.5)
     {
-        pos.y += 400 * Timer::GetDeltaTime();
+        pos.y += 500 * Timer::GetDeltaTime();
     }
 
     if (collideBottom)
     {
-        cout << "-------" << endl;
-        //cout << "충돌!!!!!!" << endl;
         quickDownWatingTime = 0;
         jumpVelocity = JUMP_VELOCITY;
         canMove = true;
-        jumpKeyPressed = false;
+        jumpSwitch = false;
         canfalling = false;
         playerState = EplayerState::Stand;
         fallingSpeed = 0;
-        quickDownState = false;
+        quickDownSwitch = false;
         initMotionFrame();
     }
 }
@@ -497,11 +474,11 @@ void Player::jumpMotionAnimator(int playerState, float waitingTime, float frameT
     {
         renderFrameY = 2;
     }
-    if (moveKeyPressed == true && playerMoveDir == EmoveDir::Right)
+    else if (moveKeyPressed == true && playerMoveDir == EmoveDir::Right)
     {
         renderFrameY = 1;
     }
-    if(moveKeyPressed == false)
+    else if(moveKeyPressed == false)
     {
         renderFrameY = 0;
     }
@@ -552,12 +529,12 @@ void Player::ropeMotionAnimator(int playerState, float waitingTime, float frameT
     rabbitMotion[playerState]->SetCurrFrameY(renderFrameY);
 }
 
+//도중에 동작이 취소되었을 때 모션과 관련된 값 초기화
 void Player::initMotionFrame()
 {
     playerWatingTime = 0;
     motionFrameTime = 0;
     renderFrameX = 0;
- 
 }
 
 void Player::fire()
@@ -568,7 +545,15 @@ void Player::fire()
             continue;
         
             ammo[i].SetAlive(true);
-            ammo[i].SetPos(renderPos);
+            if (playerState == EplayerState::Rope)
+            {
+                ammo[i].SetPos(renderPos);
+                ammo[i].SetPosY(renderPos.y + 10);
+            }
+            else
+            {
+                ammo[i].SetPos(renderPos);
+            }
             ammo[i].SetAmmoDir(playerMoveDir);
             ammo[i].SetIsFire(true);
         
@@ -579,6 +564,8 @@ void Player::fire()
         //motionAnimator
     }
 }
+
+//맵 가장자리부분에서 캐릭터 화면 중앙고정 풀기
 
 void Player::unlockingCenterPlayer()
 {

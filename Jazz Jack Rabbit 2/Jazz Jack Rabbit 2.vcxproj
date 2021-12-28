@@ -50,7 +50,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -142,7 +142,6 @@
     <ClCompile Include="Ammo.cpp" />
     <ClCompile Include="BasicGameFramework.cpp" />
     <ClCompile Include="CharacterSelectScene.cpp" />
-    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gun.cpp" />
@@ -151,10 +150,8 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Life.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayInStageScene.cpp" />
-    <ClCompile Include="RetryScene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="ScoreObject.cpp" />
@@ -169,7 +166,6 @@
     <ClInclude Include="Ammo.h" />
     <ClInclude Include="BasicGameFramework.h" />
     <ClInclude Include="CharacterSelectScene.h" />
-    <ClInclude Include="Physics.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="GameEntity.h" />
@@ -180,11 +176,9 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Life.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayInStageScene.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="RetryScene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="ScoreObject.h" />

@@ -6,7 +6,7 @@ class Image;
 class Turtle : public GameObject
 {
 private:
-	Image* Turtle;
+	//Image* Turtle;
 
 	
 	

@@ -56,7 +56,7 @@ bool Game::Init(HINSTANCE hInst)
         return false;
     }
 
-    SetWindowSize(WIN_START_POS_X, WIN_START_POS_Y, WIN_SIZE_X, WIN_SIZE_Y);
+    SetWindowSize(WIN_START_POS_X, WIN_START_POS_Y, WIN_SIZE_X * 1.5, WIN_SIZE_Y * 1.5);
 
     ShowWindow(_hWnd, SW_SHOW);
     UpdateWindow(_hWnd);
@@ -93,7 +93,6 @@ INT32 Game::Run()
 
             TranslateMessage(&msg);
             DispatchMessage(&msg);
-            //Release();
         }
         else
         {
@@ -160,9 +159,9 @@ void Game::render()
 
     SceneManager::GetSingleton()->Render(_backDC);
 
-    char test[128] = { 0 };
-    wsprintf(test, "fps : %d", Timer::GetFPS());
-    TextOut(_backDC, WIN_SIZE_X / 2, 450, test, strlen(test));
+    //char test[128] = { 0 };
+    //wsprintf(test, "fps : %d", Timer::GetFPS());
+    //TextOut(_backDC, WIN_SIZE_X / 2, 450, test, strlen(test));
 
     BitBlt(_hDC, 0, 0, windowMaxSizeX, windowMaxSizeY,
         _backDC, 0, 0, SRCCOPY);
@@ -170,11 +169,11 @@ void Game::render()
 
 void Game::Release()
 {
-    ImageManager::GetSingleton()->Release();
-    ImageManager::GetSingleton()->ReleaseSingleton();
 
     SceneManager::GetSingleton()->Release();
     SceneManager::GetSingleton()->ReleaseSingleton();
 
+    ImageManager::GetSingleton()->Release();
+    ImageManager::GetSingleton()->ReleaseSingleton();
 
 }

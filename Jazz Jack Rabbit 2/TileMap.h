@@ -14,7 +14,8 @@ private:
 	bool renderOnOff = false;
 
 	void LoadMapFile(int mapNum);
-	void adjustRenderRatio(HDC hdc, int renderIdx, float cameraX, float cameraY, float ratio, float scale = (1.0F));
+	void adjustRenderRatio(HDC hdc, int renderIdx, float cameraX, float cameraY, float ratio);
+
 public:
 	virtual ~TileMap() = default;
 	virtual HRESULT Init() override;

@@ -44,7 +44,4 @@ public:
 
 	void SaveMap();
 	void LoadMap();
-
-	//inline void SetTileInfo(TILE_INFO tileInfo, int idx, int y, int x) { this->tileInfo[idx][y][x] = tileInfo; }
-	//inline TILE_INFO GetTileInfo(int idx, int y, int x) { return tileInfo[idx][y][x]; }
 };

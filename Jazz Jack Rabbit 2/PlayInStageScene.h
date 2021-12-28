@@ -12,7 +12,7 @@ private:
 	TileMap* tileMap = nullptr;
 	TILE_INFO tileInfo[SAMPLE_IMAGE_COUNT][TILE_COUNT_Y][TILE_COUNT_X] = { 0 };
 
-	Player* jumpTest = nullptr;
+	Player* player = nullptr;
 
 	RECT* cameraMoveXZone = {};
 	RECT* cameraMoveYZone = {};
@@ -24,7 +24,7 @@ private:
 	float glanceSpeed = 0.0f;
 	float stayKeyDownTime = 0.0f;
 
-	bool jumpKeyPressed = false;
+	bool jumpSwitch = false;
 
 	void moveCamera();
 	bool moveHorizontal = true;
@@ -32,7 +32,6 @@ private:
 
 	void returnCamera();
 	bool activateReturnCamera = false;
-
 
 	void collision(HDC hdc, int checkPosX, int checkPosY, COLORREF color);
 	bool collidedLeft = false;

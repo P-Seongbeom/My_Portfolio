@@ -52,9 +52,6 @@
     <Filter Include="MainGame\Main">
       <UniqueIdentifier>{5fd89c39-db70-438b-abe0-148f8dda5674}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Physics">
-      <UniqueIdentifier>{aba7da21-f111-4d03-bad3-6858aba0b8d8}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -93,16 +90,10 @@
     <ClCompile Include="TiltleScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenuScene.cpp">
-      <Filter>MainGame\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="CharacterSelectScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="PlayInStageScene.cpp">
-      <Filter>MainGame\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="RetryScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="ImageManager.cpp">
@@ -128,9 +119,6 @@
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>MainGame\Main</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics.cpp">
-      <Filter>MainGame\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,16 +158,10 @@
     <ClInclude Include="TiltleScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenuScene.h">
-      <Filter>MainGame\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="CharacterSelectScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="PlayInStageScene.h">
-      <Filter>MainGame\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="RetryScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="CommonFunction.h">
@@ -217,9 +199,6 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>MainGame\Main</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics.h">
-      <Filter>MainGame\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -11,13 +11,12 @@ class Image;
 class Player : public GameObject
 {
 	enum class Echaracter { jazz, spaz, Lori };
-	enum class EplayerState { Stand, Walk, Run, Jump, Rope, LookUp, LookDown, Falling, QuickDown };
-
+	enum class EplayerState { Stand, Walk, Run, Jump, Rope, LookUp, LookDown, Falling, QuickDown, UpperCut };
 
 private:
 	Ammo* ammo = nullptr;
 
-	Image* rabbitMotion[8] = {};
+	Image* rabbitMotion[10] = {};
 	Image* collisionRect = {};
 
 	Echaracter playerCharacter = {};
@@ -29,12 +28,11 @@ private:
 	RECT* playerRect = {};
 
 	float moveSpeed = 0.0f;
-	float t = 0;
 
 	void inputAction();
 	bool canMove = true;
 	bool stayGetDown = false;
-	bool inputShiftKey = false;
+	bool shiftKeyPressed = false;
 	bool endOfHorizontal = false;
 	bool endOfVertical = false;
 	bool collidedLeft = false;
@@ -42,7 +40,8 @@ private:
 	bool moveKeyPressed = false;
 
 	void playerJump();
-	bool jumpKeyPressed = false;
+	void initJump();
+	bool jumpSwitch = false;
 	float jumpHeight = 0.0f;
 	float jumpVelocity = 0.0f;
 	float minVelocity = 0.0f;
@@ -50,6 +49,8 @@ private:
 	float gravity = 0.0f;
 	bool collideTop = false;
 	bool collideRope = false;
+	bool upperCut = false;
+	float stayJumpKeyTime = 0;
 
 	void freeFall();
 	float fallingSpeed = 0.0f;
@@ -58,7 +59,7 @@ private:
 	bool collideBottom = false;
 
 	void quickDown();
-	bool quickDownState = false;
+	bool quickDownSwitch = false;
 	float quickDownWatingTime = 0.0f;
 
 	void motionAnimator(int playerState, float waitMotionTime, float frameTerm, int maxFrameX);
@@ -67,11 +68,10 @@ private:
 	int renderFrameX = 0;
 	int renderFrameY = 0;
 
-	//타이머 관련
+	//모션 프레임 관련
 	void initMotionFrame();
 	float motionFrameTime = 0.0f;
 	float playerWatingTime = 0.0f;
-	float stayKeyDownTime = 0.0f;
 
 	//총알
 	void fire();
@@ -93,11 +93,9 @@ public:
 
 	void SetPlayerInfo(EplayerState state, EmoveDir dir) { this->playerState = state; 
 														   this->playerMoveDir = dir; }
-	bool GetEndOfHorizntal() { return this->endOfHorizontal; }
-	bool GetEndOfVertical() { return this->endOfVertical; }
-	bool GetJumpKeyPressed() { return this->jumpKeyPressed; }
+	bool GetjumpSwitch() { return this->jumpSwitch; }
 	void SetFalling(bool fall) { this->canfalling = fall; }
-	void SetCollisionState(bool collision) { this->collideBottom = collision; }
+	void SetBottomCollision(bool collision) { this->collideBottom = collision; }
 	void SetLeftCollision(bool collision) { this->collidedLeft = collision; }
 	void SetRightCollision(bool collision) { this->collidedRight = collision; }
 	void SetTopCollision(bool collision) { this->collideTop = collision; }

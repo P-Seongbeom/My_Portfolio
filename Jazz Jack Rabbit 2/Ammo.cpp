@@ -37,17 +37,20 @@ void Ammo::Fire()
             if (ammoDir == EmoveDir::Right)
             {
                 pos.x += AMMO_SPEED * Timer::GetDeltaTime();
+                ammoMoveDis += AMMO_SPEED * Timer::GetDeltaTime();
             }
             else if (ammoDir == EmoveDir::Left)
             {
                 pos.x -= AMMO_SPEED * Timer::GetDeltaTime();
+                ammoMoveDis += AMMO_SPEED * Timer::GetDeltaTime();
             }
         
-            if (fireTimer > 0.5)
+            if (ammoMoveDis > 280)
             {
                 isFire = false;
                 ammoAlive = false;
                 fireTimer = 0;
+                ammoMoveDis = 0;
             }
         }
     }
