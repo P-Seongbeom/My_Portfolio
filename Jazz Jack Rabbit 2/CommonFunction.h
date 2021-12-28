@@ -11,8 +11,9 @@ inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
 	rc.right = sizeX;	rc.bottom = sizeY;
 
 	// 스타일이 포함된 실제 윈도우 크기 계산
-	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
+	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
 	// 계산된 값으로 윈도우를 이동시키면서 크기도 함께 변환
-	MoveWindow(_hWnd, startX, startY, rc.right - rc.left, rc.bottom - rc.top, true);
+	//MoveWindow(_hWnd, startX, startY, rc.right - rc.left, rc.bottom - rc.top, SWP_NOMOVE | SWP_NOZORDER);
+	SetWindowPos(_hWnd, HWND_TOPMOST, 100, 100, rc.right - rc.left, rc.bottom - rc.top, SWP_NOMOVE | SWP_NOZORDER);
 }
