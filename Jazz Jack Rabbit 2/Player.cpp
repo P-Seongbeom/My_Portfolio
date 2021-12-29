@@ -59,39 +59,7 @@ void Player::Update()
     inputAction();
     playerJump();
     freeFall();
-
-    if (playerState == EplayerState::Stand)
-    {
-        motionAnimator((int)EplayerState::Stand, 2, 0.1f, 27);
-    }
-    else if (playerState == EplayerState::Walk)
-    {
-        motionAnimator((int)EplayerState::Walk, 0, 0.1f, 8);
-    }
-    else if (playerState == EplayerState::Run)
-    {
-        motionAnimator((int)EplayerState::Run, 0, 0.0f, 4);
-    }
-    else if (playerState == EplayerState::Jump)
-    {
-        jumpMotionAnimator((int)EplayerState::Jump, 0, 0.065f , 9);
-    }
-    else if (playerState == EplayerState::Rope)
-    {
-        ropeMotionAnimator((int)EplayerState::Rope, 0, 0.1f, 8);
-    }
-    else if (playerState == EplayerState::Falling)
-    {
-        jumpMotionAnimator((int)EplayerState::Falling, 0, 0.06f, 3);
-    }
-    else if (playerState == EplayerState::QuickDown)
-    {
-        motionAnimator((int)EplayerState::QuickDown, 0, 0.0f, 8);
-    }
-    else if (playerState == EplayerState::UpperCut)
-    {
-        motionAnimator((int)EplayerState::UpperCut, 0, 0.05f, 10);
-    }
+    characterMotion();
 
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
     {
@@ -415,6 +383,42 @@ void Player::quickDown()
     }
 }
 
+void Player::characterMotion()
+{
+    if (playerState == EplayerState::Stand)
+    {
+        motionAnimator((int)EplayerState::Stand, 2, 0.1f, 27);
+    }
+    else if (playerState == EplayerState::Walk)
+    {
+        motionAnimator((int)EplayerState::Walk, 0, 0.1f, 8);
+    }
+    else if (playerState == EplayerState::Run)
+    {
+        motionAnimator((int)EplayerState::Run, 0, 0.0f, 4);
+    }
+    else if (playerState == EplayerState::Jump)
+    {
+        jumpMotionAnimator((int)EplayerState::Jump, 0, 0.065f, 9);
+    }
+    else if (playerState == EplayerState::Rope)
+    {
+        ropeMotionAnimator((int)EplayerState::Rope, 0, 0.1f, 8);
+    }
+    else if (playerState == EplayerState::Falling)
+    {
+        jumpMotionAnimator((int)EplayerState::Falling, 0, 0.06f, 3);
+    }
+    else if (playerState == EplayerState::QuickDown)
+    {
+        motionAnimator((int)EplayerState::QuickDown, 0, 0.0f, 8);
+    }
+    else if (playerState == EplayerState::UpperCut)
+    {
+        motionAnimator((int)EplayerState::UpperCut, 0, 0.05f, 10);
+    }
+}
+
 void Player::motionAnimator(int playerState,float waitingTime, float frameTerm, int maxFrameX)
 {
     playerWatingTime += Timer::GetDeltaTime();
@@ -572,33 +576,27 @@ void Player::unlockingCenterPlayer()
     if (pos.x < WIN_SIZE_X / 2)
     {
         renderPos.x = pos.x;
-        endOfHorizontal = true;
     }
     else if (pos.x > ((TILE_COUNT_X * TILE_SIZE) - WIN_SIZE_X / 2))
     {
         renderPos.x = pos.x - (TILE_COUNT_X * TILE_SIZE) + WIN_SIZE_X;
-        endOfHorizontal = true;
     }
     else
     {
         renderPos.x = WIN_SIZE_X / 2;
-        endOfHorizontal = false;
     }
 
     if (pos.y < WIN_SIZE_Y / 2)
     {
         renderPos.y = pos.y;
-        endOfVertical = true;
     }
     else if (pos.y > ((TILE_COUNT_Y * TILE_SIZE) - WIN_SIZE_Y / 2))
     {
         renderPos.y = pos.y - (TILE_COUNT_Y * TILE_SIZE) + WIN_SIZE_Y;
-        endOfVertical = true;
     }
     else
     {
         renderPos.y = WIN_SIZE_Y / 2;
-        endOfVertical = false;
     }
     
 }

@@ -33,8 +33,6 @@ private:
 	bool canMove = true;
 	bool stayGetDown = false;
 	bool shiftKeyPressed = false;
-	bool endOfHorizontal = false;
-	bool endOfVertical = false;
 	bool collidedLeft = false;
 	bool collidedRight = false;
 	bool moveKeyPressed = false;
@@ -45,7 +43,6 @@ private:
 	float jumpHeight = 0.0f;
 	float jumpVelocity = 0.0f;
 	float minVelocity = 0.0f;
-	float jumpPosY = 0;
 	float gravity = 0.0f;
 	bool collideTop = false;
 	bool collideRope = false;
@@ -62,6 +59,7 @@ private:
 	bool quickDownSwitch = false;
 	float quickDownWatingTime = 0.0f;
 
+	void characterMotion();
 	void motionAnimator(int playerState, float waitMotionTime, float frameTerm, int maxFrameX);
 	void jumpMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX);
 	void ropeMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX);

@@ -204,7 +204,6 @@ void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF
             collidedRight = true;
             player->SetPosX(player->GetPos().x - 1);
             player->SetRightCollision(true);
-            cout << "우충돌" << endl;
             break;
         }
         else
@@ -252,7 +251,6 @@ void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF
             {
                 collidedTop = true;
                 player->SetTopCollision(true);
-                cout << "머리" << endl;
                 break;
             }
             else if(r == 34 && g == 177 && b == 76)//로프일때 r == 34 && g == 177 && b == 76
