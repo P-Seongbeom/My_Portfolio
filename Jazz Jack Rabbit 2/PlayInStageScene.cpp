@@ -30,7 +30,7 @@ HRESULT PlayInStageScene::Init()
     cameraRenderPos.x = player->GetPos().x - WIN_SIZE_X / 2;
     cameraRenderPos.y = player->GetPos().y - WIN_SIZE_Y / 2;
 
-    cameraSpeed = PLAYER_MOVE_SPEED;
+    cameraSpeed = PLAYER_MAX_SPEED;
     glanceSpeed = TILE_SIZE * 2;
 
 	return S_OK;
@@ -73,29 +73,13 @@ void PlayInStageScene::moveCamera()
 {
     if (PtInRect(cameraMoveXZone, playerPos))
     {
-        if (Input::GetButton(VK_LEFT))
-        {
-            activateReturnCamera = true;
-            if (cameraRenderPos.x < 0) cameraRenderPos.x = 0;
+        if (cameraRenderPos.x < 0) cameraRenderPos.x = 0;
     
-            cameraRenderPos.x = player->GetPos().x - WIN_SIZE_X / 2;
-        }
-        if (Input::GetButtonUp(VK_LEFT))
-        {
-            activateReturnCamera = false;
-        }
+        cameraRenderPos.x = player->GetPos().x - WIN_SIZE_X / 2;
+        
+        if (cameraRenderPos.x > WIN_SIZE_X) cameraRenderPos.x = WIN_SIZE_X;
     
-        if (Input::GetButton(VK_RIGHT))
-        {
-            activateReturnCamera = true;
-            if (cameraRenderPos.x > WIN_SIZE_X) cameraRenderPos.x = WIN_SIZE_X;
-    
-            cameraRenderPos.x = player->GetPos().x - WIN_SIZE_X / 2;
-        }
-        if (Input::GetButtonUp(VK_RIGHT))
-        {
-            activateReturnCamera = false;
-        }
+        cameraRenderPos.x = player->GetPos().x - WIN_SIZE_X / 2;
     }
     
     if (PtInRect(cameraMoveYZone, playerPos))

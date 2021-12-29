@@ -3,7 +3,7 @@
 
 HRESULT Ammo::Init()
 {
-    ammo = ImageManager::GetSingleton()->FindImage("Image/object/temp_Ammo.bmp");
+    ammo = ImageManager::GetSingleton()->FindImage("Image/object/Ammo.bmp");
 
     ammoType = EammoType::Normal;
 

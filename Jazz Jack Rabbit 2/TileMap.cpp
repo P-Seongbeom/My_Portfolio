@@ -44,8 +44,8 @@ void TileMap::Release()
 void TileMap::BackGroundRender(HDC hdc, float cameraX, float cameraY)
 {
     adjustRenderRatio(hdc, 0, cameraX, cameraY, 0);
-    adjustRenderRatio(hdc, 1, cameraX, cameraY, 0.5);
-    adjustRenderRatio(hdc, 2, cameraX, cameraY, 0.8);
+    adjustRenderRatio(hdc, 1, cameraX, cameraY, 0.5f);
+    adjustRenderRatio(hdc, 2, cameraX, cameraY, 0.8f);
     adjustRenderRatio(hdc, 3, cameraX, cameraY, 1);
 
     //디버깅용 pixel이미지 온오프

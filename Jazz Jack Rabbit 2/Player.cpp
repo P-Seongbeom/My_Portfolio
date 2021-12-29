@@ -38,10 +38,12 @@ HRESULT Player::Init()
     //playerRect->top = pos.y - 32;
     //playerRect->bottom = pos.y;
 
-    fallingSpeed = 0;
-    fallingMaxSpeed = 500;
+    fallingSpeed = 0.0f;
+    fallingMaxSpeed = 500.0f;
 
-    moveSpeed = PLAYER_MOVE_SPEED;
+    moveSpeed = 0.0f;
+    moveMaxSpeed = PLAYER_MAX_SPEED;
+    accel = PLAYER_ACCELATE;
     jumpVelocity = JUMP_VELOCITY;
     gravity = GRAVITY;
 
@@ -57,7 +59,7 @@ HRESULT Player::Init()
 void Player::Update()
 {
     inputAction();
-    playerJump();
+    jumpPlayer();
     freeFall();
     characterMotion();
 
@@ -72,19 +74,19 @@ void Player::Render(HDC hdc)
 {
     char test[128] = { 0 };
 
-    collisionRect->Render(hdc, (int)renderPos.x, (int)renderPos.y - 16);
+    collisionRect->Render(hdc, renderPos.x, renderPos.y - 16);
 
     if (playerState == EplayerState::Rope)  //귀로 매달리게
     {
         rabbitMotion[(int)playerState]->Render(hdc,
-                                              (int)renderPos.x, (int)renderPos.y + 16,
+                                              renderPos.x, renderPos.y + 16,
                                               rabbitMotion[(int)playerState]->GetCurrFrameX(),
                                               rabbitMotion[(int)playerState]->GetCurrFrameY());
     }
     else
     {
         rabbitMotion[(int)playerState]->Render(hdc,
-                                              (int)renderPos.x, (int)renderPos.y,
+                                              renderPos.x, renderPos.y,
                                                rabbitMotion[(int)playerState]->GetCurrFrameX(),
                                                rabbitMotion[(int)playerState]->GetCurrFrameY());
     }
@@ -106,17 +108,19 @@ void Player::Release()
 
 void Player::inputAction()  //플레이어 행동 입력
 {
-    unlockingCenterPlayer();
+
 
     if (Input::GetButton(VK_LSHIFT))
     {
         shiftKeyPressed = true;
-        moveSpeed = PLAYER_MOVE_SPEED * 2;
+        moveMaxSpeed = PLAYER_MAX_SPEED * 2;
+        accel = PLAYER_ACCELATE * 2;
     }
     if (Input::GetButtonUp(VK_LSHIFT))
     {
         shiftKeyPressed = false;
-        moveSpeed = PLAYER_MOVE_SPEED;
+        moveMaxSpeed = PLAYER_MAX_SPEED;
+        accel = PLAYER_ACCELATE;
         initMotionFrame();
     }
 
@@ -125,8 +129,15 @@ void Player::inputAction()  //플레이어 행동 입력
         if (Input::GetButton(VK_LEFT))
         {
             moveKeyPressed = true;
+            if (playerMoveDir == EmoveDir::Right)
+            {
+                moveSpeed = 0;
+            }
 
-            if (!collidedLeft)
+            moveSpeed += accel * Timer::GetDeltaTime();
+            moveSpeed = min(moveSpeed, moveMaxSpeed);
+
+            if (!collideLeft)
             {
                 pos.x -= moveSpeed * Timer::GetDeltaTime();
             }
@@ -161,8 +172,15 @@ void Player::inputAction()  //플레이어 행동 입력
         if (Input::GetButton(VK_RIGHT))
         {
             moveKeyPressed = true;
+            if (playerMoveDir == EmoveDir::Left)
+            {
+                moveSpeed = 0;
+            }
 
-            if (!collidedRight)
+            moveSpeed += accel * Timer::GetDeltaTime();
+            moveSpeed = min(moveSpeed, moveMaxSpeed);
+
+            if (!collideRight)
             {
                 pos.x += moveSpeed * Timer::GetDeltaTime();
             }
@@ -186,6 +204,7 @@ void Player::inputAction()  //플레이어 행동 입력
         if (Input::GetButtonUp(VK_RIGHT))
         {
             moveKeyPressed = false;
+
             if (collideBottom)
             {
                 playerState = EplayerState::Stand;
@@ -193,6 +212,7 @@ void Player::inputAction()  //플레이어 행동 입력
             initMotionFrame();
         }
     }
+
 
     if (Input::GetButtonDown(VK_DOWN))
     {
@@ -249,11 +269,37 @@ void Player::inputAction()  //플레이어 행동 입력
         fire();
     }
 
-    //releaseLooking();
+    unlockingCenterPlayer();
+    skiddingPlayer();
+}
+
+void Player::skiddingPlayer()
+{
+    if (moveKeyPressed || moveSpeed < 0) return;
+
+    if (moveSpeed > 0)
+    {
+        moveSpeed -= accel * Timer::GetDeltaTime();
+    }
+    else if (moveSpeed < 0)
+    {
+        moveSpeed = 0;
+    }
+    if (playerState != EplayerState::Rope)
+    {
+        if (playerMoveDir == EmoveDir::Left && !collideLeft)
+        {
+            pos.x -= moveSpeed * Timer::GetDeltaTime();
+        }
+        else if (playerMoveDir == EmoveDir::Right && !collideRight)
+        {
+            pos.x += moveSpeed * Timer::GetDeltaTime();
+        }
+    }
 
 }
 
-void Player::playerJump()
+void Player::jumpPlayer()
 {
     if (!jumpSwitch) return;
 

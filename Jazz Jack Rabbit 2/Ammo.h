@@ -37,6 +37,6 @@ public:
 	void SetAlive(bool alive) { this->ammoAlive = alive; }
 	bool GetAlive() { return ammoAlive; }
 	void SetAmmoDir(EmoveDir dir) { this->ammoDir = dir; }
-	void SetPosY(int posy) { this->pos.y = posy; }
+	void SetPosY(float posy) { this->pos.y = posy; }
 };
 

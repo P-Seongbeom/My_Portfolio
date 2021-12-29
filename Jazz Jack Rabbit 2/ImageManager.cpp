@@ -25,7 +25,7 @@ void ImageManager::Init()
 
     ImageManager::GetSingleton()->AddImage("Image/character/collisionRect.bmp", 20, 32, 1, 1, false, RGB(127, 127, 127));
 
-    ImageManager::GetSingleton()->AddImage("Image/object/temp_Ammo.bmp", 10, 10, false, RGB(255, 0, 255));
+    ImageManager::GetSingleton()->AddImage("Image/object/Ammo.bmp", 10, 10, true, RGB(0, 128, 255));
 
     ImageManager::GetSingleton()->AddImage("Image/title/title_x-mas.bmp", 640, 480, false, RGB(149, 177, 200));
     ImageManager::GetSingleton()->AddImage("Image/title/press_space.bmp", 482, 40, true, RGB(0, 128, 255));

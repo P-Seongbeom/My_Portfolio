@@ -37,9 +37,9 @@ bool Game::Init(HINSTANCE hInst)
 {
     windowSizeX = WIN_SIZE_X;
     windowSizeY = WIN_SIZE_Y;
-
-    LoadStringW(hInst, IDS_APP_TITLE, _title, MAX_LOADSTRING);
-    LoadStringW(hInst, IDC_BASICGAMEFRAMEWORK, _windowName, MAX_LOADSTRING);
+    
+    LoadString(hInst, IDS_APP_TITLE, _title, MAX_LOADSTRING);
+    LoadString(hInst, IDC_BASICGAMEFRAMEWORK, _windowName, MAX_LOADSTRING);
 
     _hInst = hInst;
 
@@ -48,7 +48,7 @@ bool Game::Init(HINSTANCE hInst)
         return false;
     }
 
-    _hWnd = CreateWindowW(_windowName, _title, WS_OVERLAPPEDWINDOW,
+    _hWnd = CreateWindow(_windowName, _title, WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, _hInst, nullptr);
 
     if (_hWnd == NULL)
@@ -113,7 +113,7 @@ INT32 Game::Run()
 ATOM Game::registerClass()
 {
 
-    WNDCLASSEXW wcex;
+    WNDCLASSEX wcex;
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
@@ -129,7 +129,7 @@ ATOM Game::registerClass()
     wcex.lpszClassName = _windowName;
     wcex.hIconSm = LoadIcon(wcex.hInstance, IDI_APPLICATION);
 
-    return RegisterClassExW(&wcex);
+    return RegisterClassEx(&wcex);
 }
 
 void Game::processInput()

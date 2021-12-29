@@ -24,8 +24,8 @@ private:
 	void				physicsUpdate();
 	void				render();
 private:
-	WCHAR				_title[MAX_LOADSTRING] = {};
-	WCHAR				_windowName[MAX_LOADSTRING] = {};
+	CHAR				_title[MAX_LOADSTRING] = {};
+	CHAR				_windowName[MAX_LOADSTRING] = {};
 	HDC					_hDC = {};
 	HDC					_backDC = {};
 	HBITMAP				_backBitmap = {};

@@ -2,7 +2,8 @@
 #include "GameObject.h"
 #include "Config.h"
 
-#define PLAYER_MOVE_SPEED	200.0f
+#define PLAYER_MAX_SPEED	200.0f
+#define PLAYER_ACCELATE		400.0f
 #define JUMP_VELOCITY		500.0f
 #define GRAVITY				1000.0f
 
@@ -11,12 +12,12 @@ class Image;
 class Player : public GameObject
 {
 	enum class Echaracter { jazz, spaz, Lori };
-	enum class EplayerState { Stand, Walk, Run, Jump, Rope, LookUp, LookDown, Falling, QuickDown, UpperCut };
+	enum class EplayerState { Stand, Walk, Run, Jump, Rope, LookUp, LookDown, Falling, QuickDown, UpperCut, Skidding };
 
 private:
 	Ammo* ammo = nullptr;
 
-	Image* rabbitMotion[10] = {};
+	Image* rabbitMotion[11] = {};
 	Image* collisionRect = {};
 
 	Echaracter playerCharacter = {};
@@ -27,22 +28,23 @@ private:
 
 	RECT* playerRect = {};
 
-	float moveSpeed = 0.0f;
-
 	void inputAction();
+	void skiddingPlayer();
+	float moveSpeed = 0.0f;
+	float moveMaxSpeed = 0.0f;
+	float accel = 0.0f;
+	float moveKeyPressTime = 0.0f;
 	bool canMove = true;
 	bool stayGetDown = false;
 	bool shiftKeyPressed = false;
-	bool collidedLeft = false;
-	bool collidedRight = false;
 	bool moveKeyPressed = false;
+	bool collideLeft = false;
+	bool collideRight = false;
 
-	void playerJump();
+	void jumpPlayer();
 	void initJump();
 	bool jumpSwitch = false;
-	float jumpHeight = 0.0f;
 	float jumpVelocity = 0.0f;
-	float minVelocity = 0.0f;
 	float gravity = 0.0f;
 	bool collideTop = false;
 	bool collideRope = false;
@@ -94,12 +96,12 @@ public:
 	bool GetjumpSwitch() { return this->jumpSwitch; }
 	void SetFalling(bool fall) { this->canfalling = fall; }
 	void SetBottomCollision(bool collision) { this->collideBottom = collision; }
-	void SetLeftCollision(bool collision) { this->collidedLeft = collision; }
-	void SetRightCollision(bool collision) { this->collidedRight = collision; }
+	void SetLeftCollision(bool collision) { this->collideLeft = collision; }
+	void SetRightCollision(bool collision) { this->collideRight = collision; }
 	void SetTopCollision(bool collision) { this->collideTop = collision; }
 	void SetRopeCollision(bool collision) { this->collideRope = collision; }
-	void SetPosY(int posy) { this->pos.y = posy; }
-	void SetPosX(int posx) { this->pos.x = posx; }
+	void SetPosY(float posy) { this->pos.y = posy; }
+	void SetPosX(float posx) { this->pos.x = posx; }
 	bool GetFallingState() { return this->canfalling; }
 
 	POINTFLOAT GetRenderPos() { return this->renderPos; }
