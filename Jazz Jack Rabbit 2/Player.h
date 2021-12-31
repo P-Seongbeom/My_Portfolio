@@ -16,8 +16,8 @@ class Player : public GameObject
 
 private:
 	Ammo* ammo = nullptr;
-
-	Image* rabbitMotion[11] = {};
+	//sizeof(EplayerState)
+	Image* playerMotion[11] = {};
 	Image* collisionRect = {};
 
 	Echaracter playerCharacter = {};
@@ -63,7 +63,7 @@ private:
 
 	void characterMotion();
 	void motionAnimator(int playerState, float waitMotionTime, float frameTerm, int maxFrameX);
-	void jumpMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX);
+	void airMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX);
 	void ropeMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX);
 	int renderFrameX = 0;
 	int renderFrameY = 0;

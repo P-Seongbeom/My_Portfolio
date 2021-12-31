@@ -5,18 +5,18 @@
 
 HRESULT Player::Init()
 {
-    rabbitMotion[(int)EplayerState::Stand] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_stand.bmp");
-    rabbitMotion[(int)EplayerState::Walk] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_walk.bmp");
-    rabbitMotion[(int)EplayerState::Run] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_run.bmp");
-    rabbitMotion[(int)EplayerState::Jump] = ImageManager::GetSingleton()->FindImage("Image/character/jump.bmp");
-    rabbitMotion[(int)EplayerState::Rope] = ImageManager::GetSingleton()->FindImage("Image/character/rope.bmp");
-    rabbitMotion[(int)EplayerState::Falling] = ImageManager::GetSingleton()->FindImage("Image/character/falling.bmp");
-    rabbitMotion[(int)EplayerState::QuickDown] = ImageManager::GetSingleton()->FindImage("Image/character/quick_down.bmp");
-    rabbitMotion[(int)EplayerState::UpperCut] = ImageManager::GetSingleton()->FindImage("Image/character/uppercut.bmp");
+    playerMotion[(int)EplayerState::Stand] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_stand.bmp");
+    playerMotion[(int)EplayerState::Walk] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_walk.bmp");
+    playerMotion[(int)EplayerState::Run] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_run.bmp");
+    playerMotion[(int)EplayerState::Jump] = ImageManager::GetSingleton()->FindImage("Image/character/jump.bmp");
+    playerMotion[(int)EplayerState::Rope] = ImageManager::GetSingleton()->FindImage("Image/character/rope.bmp");
+    playerMotion[(int)EplayerState::Falling] = ImageManager::GetSingleton()->FindImage("Image/character/falling.bmp");
+    playerMotion[(int)EplayerState::QuickDown] = ImageManager::GetSingleton()->FindImage("Image/character/quick_down.bmp");
+    playerMotion[(int)EplayerState::UpperCut] = ImageManager::GetSingleton()->FindImage("Image/character/uppercut.bmp");
 
     collisionRect = ImageManager::GetSingleton()->FindImage("Image/character/collisionRect.bmp");
 
-    if (rabbitMotion == nullptr)
+    if (playerMotion == nullptr)
     {
         cout << "로드 실패" << endl;
         return E_FAIL;
@@ -78,17 +78,17 @@ void Player::Render(HDC hdc)
 
     if (playerState == EplayerState::Rope)  //귀로 매달리게
     {
-        rabbitMotion[(int)playerState]->Render(hdc,
+        playerMotion[(int)playerState]->Render(hdc,
                                               renderPos.x, renderPos.y + 16,
-                                              rabbitMotion[(int)playerState]->GetCurrFrameX(),
-                                              rabbitMotion[(int)playerState]->GetCurrFrameY());
+                                              playerMotion[(int)playerState]->GetCurrFrameX(),
+                                              playerMotion[(int)playerState]->GetCurrFrameY());
     }
     else
     {
-        rabbitMotion[(int)playerState]->Render(hdc,
+        playerMotion[(int)playerState]->Render(hdc,
                                               renderPos.x, renderPos.y,
-                                               rabbitMotion[(int)playerState]->GetCurrFrameX(),
-                                               rabbitMotion[(int)playerState]->GetCurrFrameY());
+                                               playerMotion[(int)playerState]->GetCurrFrameX(),
+                                               playerMotion[(int)playerState]->GetCurrFrameY());
     }
 
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
@@ -108,8 +108,6 @@ void Player::Release()
 
 void Player::inputAction()  //플레이어 행동 입력
 {
-
-
     if (Input::GetButton(VK_LSHIFT))
     {
         shiftKeyPressed = true;
@@ -405,14 +403,15 @@ void Player::freeFall()
 
 void Player::quickDown()
 {
-    if (!quickDownSwitch ) return;
+    if (!quickDownSwitch) return;
 
     quickDownWatingTime += Timer::GetDeltaTime();
     playerState = EplayerState::QuickDown;
 
     if (quickDownWatingTime > 0.5)
     {
-        pos.y += 500 * Timer::GetDeltaTime();
+        pos.y += 450 * Timer::GetDeltaTime();
+        cout << pos.y << endl;
     }
 
     if (collideBottom)
@@ -427,6 +426,26 @@ void Player::quickDown()
         quickDownSwitch = false;
         initMotionFrame();
     }
+    //else
+    //{
+    //    quickDownWatingTime += Timer::GetDeltaTime();
+    //    playerState = EplayerState::QuickDown;
+
+    //    if (quickDownWatingTime > 0.5)
+    //    {
+    //        pos.y += 500 * Timer::GetDeltaTime();
+    //        cout << pos.y << endl;
+    //    }
+
+    //}
+
+    //else if(quickDownWatingTime > 0.5)
+    //{
+    //    pos.y += 500 * Timer::GetDeltaTime();
+    //    cout << pos.y << endl;
+    //}
+
+
 }
 
 void Player::characterMotion()
@@ -445,7 +464,7 @@ void Player::characterMotion()
     }
     else if (playerState == EplayerState::Jump)
     {
-        jumpMotionAnimator((int)EplayerState::Jump, 0, 0.065f, 9);
+        airMotionAnimator((int)EplayerState::Jump, 0, 0.065f, 9);
     }
     else if (playerState == EplayerState::Rope)
     {
@@ -453,7 +472,7 @@ void Player::characterMotion()
     }
     else if (playerState == EplayerState::Falling)
     {
-        jumpMotionAnimator((int)EplayerState::Falling, 0, 0.06f, 3);
+        airMotionAnimator((int)EplayerState::Falling, 0, 0.06f, 3);
     }
     else if (playerState == EplayerState::QuickDown)
     {
@@ -495,11 +514,11 @@ void Player::motionAnimator(int playerState,float waitingTime, float frameTerm, 
         renderFrameY = 1;
     }
 
-    rabbitMotion[playerState]->SetCurrFrameX(renderFrameX);
-    rabbitMotion[playerState]->SetCurrFrameY(renderFrameY);
+    playerMotion[playerState]->SetCurrFrameX(renderFrameX);
+    playerMotion[playerState]->SetCurrFrameY(renderFrameY);
 }
 
-void Player::jumpMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX)
+void Player::airMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX)
 {
     playerWatingTime += Timer::GetDeltaTime();
 
@@ -533,8 +552,8 @@ void Player::jumpMotionAnimator(int playerState, float waitingTime, float frameT
         renderFrameY = 0;
     }
 
-    rabbitMotion[playerState]->SetCurrFrameX(renderFrameX);
-    rabbitMotion[playerState]->SetCurrFrameY(renderFrameY);
+    playerMotion[playerState]->SetCurrFrameX(renderFrameX);
+    playerMotion[playerState]->SetCurrFrameY(renderFrameY);
 }
 
 void Player::ropeMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX)
@@ -575,8 +594,8 @@ void Player::ropeMotionAnimator(int playerState, float waitingTime, float frameT
         renderFrameY = 3;
     }
 
-    rabbitMotion[playerState]->SetCurrFrameX(renderFrameX);
-    rabbitMotion[playerState]->SetCurrFrameY(renderFrameY);
+    playerMotion[playerState]->SetCurrFrameX(renderFrameX);
+    playerMotion[playerState]->SetCurrFrameY(renderFrameY);
 }
 
 //도중에 동작이 취소되었을 때 모션과 관련된 값 초기화

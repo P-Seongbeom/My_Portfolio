@@ -261,6 +261,7 @@ void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF
         if (!(r == GetRValue(color) && g == GetGValue(color) && b == GetBValue(color)))
         {
             collidedBottomL = true;
+
             if (collidedLeft == false && (!(r == 34 && g == 177 && b == 76) || !(r == 255 && g == 242 && b == 0)))
             {
                 player->SetBottomCollision(true);
@@ -319,7 +320,6 @@ void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF
             }
         }
     }
-
 
     //계단처리
     if (collidedLeft == false && collidedBottomC == true && collidedBottomL == true)
