@@ -28,7 +28,7 @@ void SceneManager::Init()
 	SceneManager::GetSingleton()->AddScene("TiltleScene", new TiltleScene);
 	SceneManager::GetSingleton()->AddScene("PlayInStage", new PlayInStageScene);
 
-	SceneManager::GetSingleton()->ChangeScene("PlayInStage");
+	SceneManager::GetSingleton()->ChangeScene("TiltleScene");
 }
 
 void SceneManager::Release()
