@@ -10,9 +10,12 @@ HRESULT Player::Init()
     playerMotion[(int)EplayerState::Run] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_run.bmp");
     playerMotion[(int)EplayerState::Jump] = ImageManager::GetSingleton()->FindImage("Image/character/jump.bmp");
     playerMotion[(int)EplayerState::Rope] = ImageManager::GetSingleton()->FindImage("Image/character/rope.bmp");
+    playerMotion[(int)EplayerState::Fire] = ImageManager::GetSingleton()->FindImage("Image/character/shooting.bmp");
     playerMotion[(int)EplayerState::Falling] = ImageManager::GetSingleton()->FindImage("Image/character/falling.bmp");
     playerMotion[(int)EplayerState::QuickDown] = ImageManager::GetSingleton()->FindImage("Image/character/quick_down.bmp");
     playerMotion[(int)EplayerState::UpperCut] = ImageManager::GetSingleton()->FindImage("Image/character/uppercut.bmp");
+
+
 
     collisionRect = ImageManager::GetSingleton()->FindImage("Image/character/collisionRect.bmp");
 
@@ -61,6 +64,7 @@ void Player::Update()
     inputAction();
     jumpPlayer();
     freeFall();
+    fire();
     characterMotion();
 
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
@@ -68,6 +72,8 @@ void Player::Update()
 
         ammo[i].Update();
     }
+    //cout << "Y : " << renderFrameY << endl;
+    //cout << (int)playerState << endl;
 }
 
 void Player::Render(HDC hdc)
@@ -76,19 +82,39 @@ void Player::Render(HDC hdc)
 
     collisionRect->Render(hdc, renderPos.x, renderPos.y - 16);
 
-    if (playerState == EplayerState::Rope)  //귀로 매달리게
+    if (playerState == EplayerState::Rope)
     {
-        playerMotion[(int)playerState]->Render(hdc,
-                                              renderPos.x, renderPos.y + 16,
-                                              playerMotion[(int)playerState]->GetCurrFrameX(),
-                                              playerMotion[(int)playerState]->GetCurrFrameY());
+        if (fireMotion)
+        {
+            playerMotion[(int)EplayerState::Fire]->Render(hdc,
+                                                         renderPos.x, renderPos.y + 16,
+                                                         playerMotion[(int)playerState]->GetCurrFrameX(),
+                                                         playerMotion[(int)playerState]->GetCurrFrameY());
+        }
+        else
+        {
+            playerMotion[(int)playerState]->Render(hdc,
+                                                  renderPos.x, renderPos.y + 16,
+                                                  playerMotion[(int)playerState]->GetCurrFrameX(),
+                                                  playerMotion[(int)playerState]->GetCurrFrameY());
+        }
     }
     else
     {
-        playerMotion[(int)playerState]->Render(hdc,
-                                              renderPos.x, renderPos.y,
-                                               playerMotion[(int)playerState]->GetCurrFrameX(),
-                                               playerMotion[(int)playerState]->GetCurrFrameY());
+        if (fireMotion)
+        {
+            playerMotion[(int)EplayerState::Fire]->Render(hdc,
+                                                         renderPos.x, renderPos.y,
+                                                         playerMotion[(int)playerState]->GetCurrFrameX(),
+                                                         playerMotion[(int)playerState]->GetCurrFrameY());
+        }
+        else
+        {
+            playerMotion[(int)playerState]->Render(hdc,
+                                                  renderPos.x, renderPos.y,
+                                                   playerMotion[(int)playerState]->GetCurrFrameX(),
+                                                   playerMotion[(int)playerState]->GetCurrFrameY());
+        }
     }
 
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
@@ -264,16 +290,19 @@ void Player::inputAction()  //플레이어 행동 입력
 
     if (Input::GetButtonDown(VK_LCONTROL))
     {
-        fire();
+        fireAmmo = true;
+        fireMotion = true;
+        fireMotionTimer = 0;
     }
 
     unlockingCenterPlayer();
     skiddingPlayer();
+    fireMotionSwitch();
 }
 
 void Player::skiddingPlayer()
 {
-    if (moveKeyPressed || moveSpeed < 0) return;
+    if (moveKeyPressed || moveSpeed < 0 || playerState == EplayerState::QuickDown) return;
 
     if (moveSpeed > 0)
     {
@@ -307,6 +336,7 @@ void Player::jumpPlayer()
     }
     else if (upperCut)
     {
+        canFire = false;
         playerState = EplayerState::UpperCut;
     }
 
@@ -338,6 +368,7 @@ void Player::jumpPlayer()
         if (jumpVelocity <= 0)  //점프높이 최대치
         {
             canMove = true;
+            canFire = true;
             upperCut = false;
             initJump();
             initMotionFrame();
@@ -346,6 +377,7 @@ void Player::jumpPlayer()
         if (collideTop)     //점프 도중 머리 충돌
         {
             canMove = true;
+            canFire = true;
             upperCut = false;
             initJump();
             fallingSpeed = 0;
@@ -405,6 +437,23 @@ void Player::quickDown()
 {
     if (!quickDownSwitch) return;
 
+    canFire = false;
+
+    if (collideBottom)
+    {
+        quickDownWatingTime = 0;
+        jumpVelocity = JUMP_VELOCITY;
+        canMove = true;
+        jumpSwitch = false;
+        canfalling = false;
+        canFire = true;
+        playerState = EplayerState::Stand;
+        fallingSpeed = 0;
+        moveSpeed = 0;
+        quickDownSwitch = false;
+        initMotionFrame();
+    }
+
     quickDownWatingTime += Timer::GetDeltaTime();
     playerState = EplayerState::QuickDown;
 
@@ -414,77 +463,80 @@ void Player::quickDown()
         cout << pos.y << endl;
     }
 
-    if (collideBottom)
-    {
-        quickDownWatingTime = 0;
-        jumpVelocity = JUMP_VELOCITY;
-        canMove = true;
-        jumpSwitch = false;
-        canfalling = false;
-        playerState = EplayerState::Stand;
-        fallingSpeed = 0;
-        quickDownSwitch = false;
-        initMotionFrame();
-    }
-    //else
-    //{
-    //    quickDownWatingTime += Timer::GetDeltaTime();
-    //    playerState = EplayerState::QuickDown;
-
-    //    if (quickDownWatingTime > 0.5)
-    //    {
-    //        pos.y += 500 * Timer::GetDeltaTime();
-    //        cout << pos.y << endl;
-    //    }
-
-    //}
-
-    //else if(quickDownWatingTime > 0.5)
-    //{
-    //    pos.y += 500 * Timer::GetDeltaTime();
-    //    cout << pos.y << endl;
-    //}
-
 
 }
 
 void Player::characterMotion()
 {
-    if (playerState == EplayerState::Stand)
+    switch (playerState)
     {
-        motionAnimator((int)EplayerState::Stand, 2, 0.1f, 27);
-    }
-    else if (playerState == EplayerState::Walk)
+    case EplayerState::Stand:
     {
-        motionAnimator((int)EplayerState::Walk, 0, 0.1f, 8);
+        if (fireMotion)
+        {
+            motionAnimator((int)EplayerState::Stand, 0, 0.3f, 2, 0);
+        }
+        else
+        {
+            motionAnimator((int)EplayerState::Stand, 2, 0.1f, 27, 0);
+        }
+        break;
     }
-    else if (playerState == EplayerState::Run)
+    case EplayerState::Walk:
     {
-        motionAnimator((int)EplayerState::Run, 0, 0.0f, 4);
+        fireMotion = false;
+        motionAnimator((int)EplayerState::Walk, 0, 0.1f, 8, 0);
+        break;
     }
-    else if (playerState == EplayerState::Jump)
+    case EplayerState::Run:
     {
-        airMotionAnimator((int)EplayerState::Jump, 0, 0.065f, 9);
+        fireMotion = false;
+        motionAnimator((int)EplayerState::Run, 0, 0.0f, 4, 0);
+        break;
     }
-    else if (playerState == EplayerState::Rope)
+    case EplayerState::Jump:
     {
-        ropeMotionAnimator((int)EplayerState::Rope, 0, 0.1f, 8);
+        if (fireMotion)
+        {
+            airMotionAnimator((int)EplayerState::Jump, 0, 0.3f, 2);
+        }
+        else
+        {
+            airMotionAnimator((int)EplayerState::Jump, 0, 0.07f, 9);
+        }
+        break;
     }
-    else if (playerState == EplayerState::Falling)
+    case EplayerState::Rope:
+    {
+        if (fireMotion)
+        {
+            ropeMotionAnimator((int)EplayerState::Rope, 0, 0.3f, 2);
+        }
+        else
+        {
+            ropeMotionAnimator((int)EplayerState::Rope, 0, 0.1f, 8);
+        }
+        break;
+    }
+    case EplayerState::Falling:
     {
         airMotionAnimator((int)EplayerState::Falling, 0, 0.06f, 3);
+        break;
     }
-    else if (playerState == EplayerState::QuickDown)
+    case EplayerState::QuickDown:
     {
-        motionAnimator((int)EplayerState::QuickDown, 0, 0.0f, 8);
+        motionAnimator((int)EplayerState::QuickDown, 0, 0.0f, 8, 0);
+        break;
     }
-    else if (playerState == EplayerState::UpperCut)
+    case EplayerState::UpperCut:
     {
-        motionAnimator((int)EplayerState::UpperCut, 0, 0.05f, 10);
+        motionAnimator((int)EplayerState::UpperCut, 0, 0.05f, 10, 0);
+        break;
+    }
     }
 }
 
-void Player::motionAnimator(int playerState,float waitingTime, float frameTerm, int maxFrameX)
+void Player::motionAnimator(int playerState,float waitingTime, float frameTerm, int maxFrameX, int startFrameY)
 {
     playerWatingTime += Timer::GetDeltaTime();
 
@@ -507,12 +559,14 @@ void Player::motionAnimator(int playerState,float waitingTime, float frameTerm, 
 
     if (playerMoveDir == EmoveDir::Right)
     {
-        renderFrameY = 0;
+        renderFrameY = startFrameY;
     }
     else if (playerMoveDir == EmoveDir::Left)
     {
-        renderFrameY = 1;
+        renderFrameY = startFrameY + 1;
     }
+
+    cout << renderFrameX << endl;
 
     playerMotion[playerState]->SetCurrFrameX(renderFrameX);
     playerMotion[playerState]->SetCurrFrameY(renderFrameY);
@@ -533,7 +587,7 @@ void Player::airMotionAnimator(int playerState, float waitingTime, float frameTe
         motionFrameTime = 0;
     }
 
-    if (renderFrameX >= maxFrameX)
+    if (renderFrameX >= maxFrameX - 1)
     {
         renderFrameX = 0;
         playerWatingTime = 0;
@@ -551,6 +605,17 @@ void Player::airMotionAnimator(int playerState, float waitingTime, float frameTe
     {
         renderFrameY = 0;
     }
+
+    if (fireMotion && playerMoveDir == EmoveDir::Right)
+    {
+        renderFrameY = 2;
+    }
+    else if (fireMotion && playerMoveDir == EmoveDir::Left)
+    {
+        renderFrameY = 3;
+    }
+
+    cout << renderFrameX << endl;
 
     playerMotion[playerState]->SetCurrFrameX(renderFrameX);
     playerMotion[playerState]->SetCurrFrameY(renderFrameY);
@@ -571,7 +636,7 @@ void Player::ropeMotionAnimator(int playerState, float waitingTime, float frameT
         motionFrameTime = 0;
     }
 
-    if (renderFrameX >= maxFrameX)
+    if (renderFrameX >= maxFrameX - 1)
     {
         renderFrameX = 0;
         playerWatingTime = 0;
@@ -581,24 +646,33 @@ void Player::ropeMotionAnimator(int playerState, float waitingTime, float frameT
     {
         renderFrameY = 0;
     }
-    if (moveKeyPressed == false && playerMoveDir == EmoveDir::Left)
+    else if (moveKeyPressed == false && playerMoveDir == EmoveDir::Left)
     {
         renderFrameY = 1;
     }
+
     if (moveKeyPressed == true && playerMoveDir == EmoveDir::Right)
     {
         renderFrameY = 2;
     }
-    if (moveKeyPressed == true && playerMoveDir == EmoveDir::Left)
+    else if (moveKeyPressed == true && playerMoveDir == EmoveDir::Left)
     {
         renderFrameY = 3;
+    }
+
+    if (fireMotion && playerMoveDir == EmoveDir::Right)
+    {
+        renderFrameY = 4;
+    }
+    else if (fireMotion && playerMoveDir == EmoveDir::Left)
+    {
+        renderFrameY = 5;
     }
 
     playerMotion[playerState]->SetCurrFrameX(renderFrameX);
     playerMotion[playerState]->SetCurrFrameY(renderFrameY);
 }
-
-//도중에 동작이 취소되었을 때 모션과 관련된 값 초기화
+ 
 void Player::initMotionFrame()
 {
     playerWatingTime = 0;
@@ -608,6 +682,8 @@ void Player::initMotionFrame()
 
 void Player::fire()
 {
+    if (!fireAmmo) return;
+     
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
     {
         if (ammo[i].GetIsFire() && ammo[i].GetAlive())
@@ -625,17 +701,25 @@ void Player::fire()
             }
             ammo[i].SetAmmoDir(playerMoveDir);
             ammo[i].SetIsFire(true);
-        
             break;
     }
-    if (playerState == EplayerState::Stand)
+
+    fireAmmo = false;
+}
+
+void Player::fireMotionSwitch()
+{
+    if (!fireMotion) return;
+    fireMotionTimer += Timer::GetDeltaTime();
+
+    if (fireMotionTimer > 0.5)
     {
-        //motionAnimator
+        fireMotion = false;
+        initMotionFrame();
     }
 }
 
 //맵 가장자리부분에서 캐릭터 화면 중앙고정 풀기
-
 void Player::unlockingCenterPlayer()
 {
     if (pos.x < WIN_SIZE_X / 2)

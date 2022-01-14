@@ -159,9 +159,9 @@ void Game::render()
 
     SceneManager::GetSingleton()->Render(_backDC);
 
-    //char test[128] = { 0 };
-    //wsprintf(test, "fps : %d", Timer::GetFPS());
-    //TextOut(_backDC, WIN_SIZE_X / 2, 450, test, strlen(test));
+    char test[128] = { 0 };
+    wsprintf(test, "fps : %d", Timer::GetFPS());
+    TextOut(_backDC, WIN_SIZE_X / 2, 450, test, strlen(test));
 
     BitBlt(_hDC, 0, 0, windowMaxSizeX, windowMaxSizeY,
         _backDC, 0, 0, SRCCOPY);

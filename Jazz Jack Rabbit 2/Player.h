@@ -3,7 +3,7 @@
 #include "Config.h"
 
 #define PLAYER_MAX_SPEED	200.0f
-#define PLAYER_ACCELATE		400.0f
+#define PLAYER_ACCELATE		600.0f
 #define JUMP_VELOCITY		500.0f
 #define GRAVITY				1000.0f
 
@@ -12,12 +12,11 @@ class Image;
 class Player : public GameObject
 {
 	enum class Echaracter { jazz, spaz, Lori };
-	enum class EplayerState { Stand, Walk, Run, Jump, Rope, LookUp, LookDown, Falling, QuickDown, UpperCut, Skidding };
+	enum class EplayerState { Stand, Walk, Run, Jump, Rope, Fire, Falling, QuickDown, UpperCut, End };
 
 private:
 	Ammo* ammo = nullptr;
-	//sizeof(EplayerState)
-	Image* playerMotion[11] = {};
+	Image* playerMotion[(int)EplayerState::End] = {};
 	Image* collisionRect = {};
 
 	Echaracter playerCharacter = {};
@@ -62,7 +61,7 @@ private:
 	float quickDownWatingTime = 0.0f;
 
 	void characterMotion();
-	void motionAnimator(int playerState, float waitMotionTime, float frameTerm, int maxFrameX);
+	void motionAnimator(int playerState, float waitMotionTime, float frameTerm, int maxFrameX, int startFrameY);
 	void airMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX);
 	void ropeMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX);
 	int renderFrameX = 0;
@@ -75,7 +74,11 @@ private:
 
 	//총알
 	void fire();
+	void fireMotionSwitch();
+	bool canFire = true;
 	bool fireAmmo = false;
+	bool fireMotion = false;
+	float fireMotionTimer = false;
 
 	//화면상 캐릭터 위치 설정
 	void unlockingCenterPlayer();

@@ -20,6 +20,8 @@ void ImageManager::Init()
     ImageManager::GetSingleton()->AddImage("Image/character/falling.bmp", 174, 168, 3, 3, true, RGB(44, 102, 150));
     ImageManager::GetSingleton()->AddImage("Image/character/quick_down.bmp", 400, 124, 8, 2, true, RGB(44, 102, 150));
     ImageManager::GetSingleton()->AddImage("Image/character/uppercut.bmp", 680, 122, 10, 2, true, RGB(44, 102, 150));
+    ImageManager::GetSingleton()->AddImage("Image/character/shooting.bmp", 100, 348, 2, 6, true, RGB(44, 102, 150));
+
 
 
 
