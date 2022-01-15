@@ -5,7 +5,7 @@
 class Image;
 class Ammo : public GameObject
 {
-	enum class EammoType{ Normal, Bounce };
+	enum class EammoType { Normal, Bounce };
 
 private:
 	Image* ammo = nullptr;

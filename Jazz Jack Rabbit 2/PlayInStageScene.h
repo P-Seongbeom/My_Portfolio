@@ -16,7 +16,6 @@ private:
 
 	RECT* cameraMoveXZone = {};
 	RECT* cameraMoveYZone = {};
-	POINT playerPos = {};
 
 	bool canMove = true;
 	POINTFLOAT cameraRenderPos = {};
@@ -26,21 +25,23 @@ private:
 
 	bool jumpSwitch = false;
 
+	bool freeCameraMoveZone(RECT* zone, POINTFLOAT ptf);
 	void moveCamera();
 	bool moveHorizontal = true;
 	bool moveVertical = true;
 
-	void returnCamera();
-	bool activateReturnCamera = false;
+	//void returnCamera();
+	//bool activateReturnCamera = false;
 
 	void collision(HDC hdc, int checkPosX, int checkPosY, COLORREF color);
 	bool collidedLeft = false;
 	bool collidedRight = false;
-	bool collidedTop = false;
+	bool collidedTopL = false;
+	bool collidedTopR = false;
 	bool collidedBottomL = false;
 	bool collidedBottomR = false;
 	bool collidedBottomC = false;
-	
+
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;

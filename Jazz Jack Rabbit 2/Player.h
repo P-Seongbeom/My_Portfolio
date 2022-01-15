@@ -94,8 +94,10 @@ public:
 	virtual ~Player() = default;
 
 
-	void SetPlayerInfo(EplayerState state, EmoveDir dir) { this->playerState = state; 
-														   this->playerMoveDir = dir; }
+	void SetPlayerInfo(EplayerState state, EmoveDir dir) {
+		this->playerState = state;
+		this->playerMoveDir = dir;
+	}
 	bool GetjumpSwitch() { return this->jumpSwitch; }
 	void SetFalling(bool fall) { this->canfalling = fall; }
 	void SetBottomCollision(bool collision) { this->collideBottom = collision; }
