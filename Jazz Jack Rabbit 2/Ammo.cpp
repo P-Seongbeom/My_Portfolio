@@ -42,7 +42,7 @@ void Ammo::Fire()
                 pos.x -= AMMO_SPEED * Timer::GetDeltaTime();
                 ammoMoveDis += AMMO_SPEED * Timer::GetDeltaTime();
             }
-        
+
             if (ammoMoveDis > 280)
             {
                 isFire = false;

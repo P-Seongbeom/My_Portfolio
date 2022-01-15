@@ -24,13 +24,13 @@ HRESULT Player::Init()
         cout << "로드 실패" << endl;
         return E_FAIL;
     }
-    
+
     SetPlayerInfo(EplayerState::Falling, EmoveDir::Right);
     renderFrameX = 0;
     renderFrameY = 0;
 
-    pos.x = WIN_SIZE_X/2;
-    pos.y = WIN_SIZE_Y/2;
+    pos.x = WIN_SIZE_X / 2;
+    pos.y = WIN_SIZE_Y / 2;
 
     renderPos.x = pos.x;
     renderPos.y = pos.y;
@@ -82,21 +82,27 @@ void Player::Render(HDC hdc)
 
     collisionRect->Render(hdc, renderPos.x, renderPos.y - 16);
 
+    for (int i = 0; i < AMMO_PACK_COUNT; ++i)
+    {
+        if (ammo[i].GetAlive())
+            ammo[i].Render(hdc);
+    }
+
     if (playerState == EplayerState::Rope)
     {
         if (fireMotion)
         {
             playerMotion[(int)EplayerState::Fire]->Render(hdc,
-                                                         renderPos.x, renderPos.y + 16,
-                                                         playerMotion[(int)playerState]->GetCurrFrameX(),
-                                                         playerMotion[(int)playerState]->GetCurrFrameY());
+                renderPos.x, renderPos.y + 16,
+                playerMotion[(int)playerState]->GetCurrFrameX(),
+                playerMotion[(int)playerState]->GetCurrFrameY());
         }
         else
         {
             playerMotion[(int)playerState]->Render(hdc,
-                                                  renderPos.x, renderPos.y + 16,
-                                                  playerMotion[(int)playerState]->GetCurrFrameX(),
-                                                  playerMotion[(int)playerState]->GetCurrFrameY());
+                renderPos.x, renderPos.y + 16,
+                playerMotion[(int)playerState]->GetCurrFrameX(),
+                playerMotion[(int)playerState]->GetCurrFrameY());
         }
     }
     else
@@ -104,24 +110,19 @@ void Player::Render(HDC hdc)
         if (fireMotion)
         {
             playerMotion[(int)EplayerState::Fire]->Render(hdc,
-                                                         renderPos.x, renderPos.y,
-                                                         playerMotion[(int)playerState]->GetCurrFrameX(),
-                                                         playerMotion[(int)playerState]->GetCurrFrameY());
+                renderPos.x, renderPos.y,
+                playerMotion[(int)playerState]->GetCurrFrameX(),
+                playerMotion[(int)playerState]->GetCurrFrameY());
         }
         else
         {
             playerMotion[(int)playerState]->Render(hdc,
-                                                  renderPos.x, renderPos.y,
-                                                   playerMotion[(int)playerState]->GetCurrFrameX(),
-                                                   playerMotion[(int)playerState]->GetCurrFrameY());
+                renderPos.x, renderPos.y,
+                playerMotion[(int)playerState]->GetCurrFrameX(),
+                playerMotion[(int)playerState]->GetCurrFrameY());
         }
     }
 
-    for (int i = 0; i < AMMO_PACK_COUNT; ++i)
-    {
-        if (ammo[i].GetAlive())
-        ammo[i].Render(hdc);
-    }
 }
 
 
@@ -413,16 +414,16 @@ void Player::freeFall()
         fallingSpeed = min(fallingSpeed, fallingMaxSpeed);
 
         pos.y += fallingSpeed * Timer::GetDeltaTime();
- 
+
         playerState = EplayerState::Falling;
     }
     else if (!canfalling)
     {
         fallingSpeed = 0;
 
-        if (!(playerState == EplayerState::Walk || playerState == EplayerState::Run || 
-              playerState == EplayerState::Jump || playerState == EplayerState::Rope||
-              playerState == EplayerState::UpperCut))
+        if (!(playerState == EplayerState::Walk || playerState == EplayerState::Run ||
+            playerState == EplayerState::Jump || playerState == EplayerState::Rope ||
+            playerState == EplayerState::UpperCut))
         {
             if (playerState != EplayerState::Stand)
             {
@@ -474,7 +475,7 @@ void Player::characterMotion()
     {
         if (fireMotion)
         {
-            motionAnimator((int)EplayerState::Stand, 0, 0.3f, 2, 0);
+            motionAnimator((int)EplayerState::Stand, 0, 0.15f, 2, 0);
         }
         else
         {
@@ -520,7 +521,7 @@ void Player::characterMotion()
     }
     case EplayerState::Falling:
     {
-        airMotionAnimator((int)EplayerState::Falling, 0, 0.06f, 3);
+        airMotionAnimator((int)EplayerState::Falling, 0, 0.3f, 3);
         break;
     }
     case EplayerState::QuickDown:
@@ -536,7 +537,7 @@ void Player::characterMotion()
     }
 }
 
-void Player::motionAnimator(int playerState,float waitingTime, float frameTerm, int maxFrameX, int startFrameY)
+void Player::motionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX, int startFrameY)
 {
     playerWatingTime += Timer::GetDeltaTime();
 
@@ -593,7 +594,7 @@ void Player::airMotionAnimator(int playerState, float waitingTime, float frameTe
         playerWatingTime = 0;
     }
 
-    if (moveKeyPressed  == true && playerMoveDir == EmoveDir::Left)
+    if (moveKeyPressed == true && playerMoveDir == EmoveDir::Left)
     {
         renderFrameY = 2;
     }
@@ -601,7 +602,7 @@ void Player::airMotionAnimator(int playerState, float waitingTime, float frameTe
     {
         renderFrameY = 1;
     }
-    else if(moveKeyPressed == false)
+    else if (moveKeyPressed == false)
     {
         renderFrameY = 0;
     }
@@ -672,7 +673,7 @@ void Player::ropeMotionAnimator(int playerState, float waitingTime, float frameT
     playerMotion[playerState]->SetCurrFrameX(renderFrameX);
     playerMotion[playerState]->SetCurrFrameY(renderFrameY);
 }
- 
+
 void Player::initMotionFrame()
 {
     playerWatingTime = 0;
@@ -683,25 +684,26 @@ void Player::initMotionFrame()
 void Player::fire()
 {
     if (!fireAmmo) return;
-     
+
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
     {
         if (ammo[i].GetIsFire() && ammo[i].GetAlive())
             continue;
-        
-            ammo[i].SetAlive(true);
-            if (playerState == EplayerState::Rope)
-            {
-                ammo[i].SetPos(renderPos);
-                ammo[i].SetPosY(renderPos.y + 10);
-            }
-            else
-            {
-                ammo[i].SetPos(renderPos);
-            }
-            ammo[i].SetAmmoDir(playerMoveDir);
-            ammo[i].SetIsFire(true);
-            break;
+
+        ammo[i].SetAlive(true);
+        if (playerState == EplayerState::Rope)
+        {
+            ammo[i].SetPos(renderPos);
+            ammo[i].SetPosY(renderPos.y - 18);
+        }
+        else
+        {
+            ammo[i].SetPos(renderPos);
+            ammo[i].SetPosY(renderPos.y - 29);
+        }
+        ammo[i].SetAmmoDir(playerMoveDir);
+        ammo[i].SetIsFire(true);
+        break;
     }
 
     fireAmmo = false;
@@ -747,7 +749,7 @@ void Player::unlockingCenterPlayer()
     {
         renderPos.y = WIN_SIZE_Y / 2;
     }
-    
+
 }
 
 //void Player::releaseLooking()

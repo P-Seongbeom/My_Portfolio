@@ -9,11 +9,8 @@ HRESULT PlayInStageScene::Init()
     tileMap = new TileMap;
     tileMap->Init();
 
-	player = new Player;
-	player->Init();
-
-    playerPos.x = player->GetPos().x;
-    playerPos.y = player->GetPos().y;
+    player = new Player;
+    player->Init();
 
     cameraMoveXZone = new RECT;
     cameraMoveXZone->left = WIN_SIZE_X / 2.0;
@@ -33,22 +30,20 @@ HRESULT PlayInStageScene::Init()
     cameraSpeed = PLAYER_MAX_SPEED;
     glanceSpeed = TILE_SIZE * 2;
 
-	return S_OK;
+    return S_OK;
 }
 
 void PlayInStageScene::Update()
 {
     tileMap->Update();
-	player->Update();
-    playerPos.x = player->GetPos().x;
-    playerPos.y = player->GetPos().y;
+    player->Update();
     moveCamera();
 }
 
 void PlayInStageScene::Render(HDC hdc)
 {
     tileMap->BackGroundRender(hdc, cameraRenderPos.x / TILE_SIZE, cameraRenderPos.y / TILE_SIZE);
-	player->Render(hdc);
+    player->Render(hdc);
     tileMap->FrontStructureRender(hdc, cameraRenderPos.x / TILE_SIZE, cameraRenderPos.y / TILE_SIZE);
 }
 
@@ -68,21 +63,30 @@ void PlayInStageScene::PhysicsUpdate()
         RGB(87, 0, 203));
 }
 
+bool PlayInStageScene::freeCameraMoveZone(RECT* zone, POINTFLOAT ptf)
+{
+    if (zone->left <= ptf.x && zone->right >= ptf.x && zone->top <= ptf.y && zone->bottom >= ptf.y)
+    {
+        return true;
+    }
+
+    return false;
+}
 
 void PlayInStageScene::moveCamera()
 {
-    if (PtInRect(cameraMoveXZone, playerPos))
+    if (freeCameraMoveZone(cameraMoveXZone, player->GetPos()))
     {
-        if (cameraRenderPos.x < 0) cameraRenderPos.x = 0;
-    
+        if (cameraRenderPos.x <= 0) cameraRenderPos.x = 0;
+
         cameraRenderPos.x = player->GetPos().x - WIN_SIZE_X / 2;
-        
-        if (cameraRenderPos.x > WIN_SIZE_X) cameraRenderPos.x = WIN_SIZE_X;
-    
+
+        if (cameraRenderPos.x >= WIN_SIZE_X) cameraRenderPos.x = WIN_SIZE_X;
+
         cameraRenderPos.x = player->GetPos().x - WIN_SIZE_X / 2;
     }
-    
-    if (PtInRect(cameraMoveYZone, playerPos))
+
+    if (freeCameraMoveZone(cameraMoveYZone, player->GetPos()))
     {
         cameraRenderPos.y = player->GetPos().y - WIN_SIZE_Y / 2;
     }
@@ -90,32 +94,32 @@ void PlayInStageScene::moveCamera()
 }
 
 //위 아래 바라본 후
-void PlayInStageScene::returnCamera()
-{
-    if (!activateReturnCamera) return;
-
-    if (cameraRenderPos.y > player->GetPos().y - WIN_SIZE_Y / 2)
-    {
-        cameraRenderPos.y -= cameraSpeed * Timer::GetDeltaTime();
-
-        if (cameraRenderPos.y < player->GetPos().y - WIN_SIZE_Y / 2)
-        {
-            cameraRenderPos.y = player->GetPos().y - WIN_SIZE_Y / 2;
-            activateReturnCamera = false;
-        }
-    }
-    else if (cameraRenderPos.y < player->GetPos().y - WIN_SIZE_Y / 2)
-    {
-        cameraRenderPos.y += cameraSpeed * Timer::GetDeltaTime();
-
-        if (cameraRenderPos.y > player->GetPos().y - WIN_SIZE_Y / 2)
-        {
-            cameraRenderPos.y = player->GetPos().y - WIN_SIZE_Y / 2;
-            activateReturnCamera = false;
-        }
-    }
-    
-}
+//void PlayInStageScene::returnCamera()
+//{
+//    if (!activateReturnCamera) return;
+//
+//    if (cameraRenderPos.y > player->GetPos().y - WIN_SIZE_Y / 2)
+//    {
+//        cameraRenderPos.y -= cameraSpeed * Timer::GetDeltaTime();
+//
+//        if (cameraRenderPos.y < player->GetPos().y - WIN_SIZE_Y / 2)
+//        {
+//            cameraRenderPos.y = player->GetPos().y - WIN_SIZE_Y / 2;
+//            activateReturnCamera = false;
+//        }
+//    }
+//    else if (cameraRenderPos.y < player->GetPos().y - WIN_SIZE_Y / 2)
+//    {
+//        cameraRenderPos.y += cameraSpeed * Timer::GetDeltaTime();
+//
+//        if (cameraRenderPos.y > player->GetPos().y - WIN_SIZE_Y / 2)
+//        {
+//            cameraRenderPos.y = player->GetPos().y - WIN_SIZE_Y / 2;
+//            activateReturnCamera = false;
+//        }
+//    }
+//    
+//}
 
 void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF color)
 {
@@ -123,7 +127,7 @@ void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF
     WORD r, g, b;
 
     //좌
-    for (int i = 2; i < 31; ++i)
+    for (int i = 2; i < 16; ++i)
     {
         //최외각
         leftRGB = GetPixel(hdc, checkPosX - 10, checkPosY - 16 - i);
@@ -161,7 +165,7 @@ void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF
     }
 
     //우
-    for (int i = 2; i < 31; ++i)
+    for (int i = 2; i < 16; ++i)
     {
         //최외각
         rightRGB = GetPixel(hdc, checkPosX + 10, checkPosY - 16 - i);
@@ -199,7 +203,7 @@ void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF
     }
 
     //상(왼쪽)
-    for (int i = 5; i < 11; ++i)
+    for (int i = 3; i < 11; ++i)
     {
         topRGB = GetPixel(hdc, checkPosX - 10 + i, checkPosY - 32);
         r = GetRValue(topRGB); g = GetGValue(topRGB); b = GetBValue(topRGB);
@@ -207,54 +211,60 @@ void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF
         {
             if (!(r == 34 && g == 177 && b == 76))//로프가 아닌 벽
             {
-                collidedTop = true;
+                collidedTopL = true;
                 player->SetTopCollision(true);
+                cout << " 왼머리 " << endl;
                 break;
             }
             else if (r == 34 && g == 177 && b == 76)//로프일때 r == 34 && g == 177 && b == 76
             {
-                collidedTop = true;
+                collidedTopL = true;
                 player->SetRopeCollision(true);
                 break;
             }
         }
         else
         {
-            collidedTop = false;
+            collidedTopL = false;
             player->SetTopCollision(false);
         }
     }
     //상(오른쪽)
-    for (int i = 5; i < 11; ++i)
+    for (int i = 3; i < 11; ++i)
     {
         topRGB = GetPixel(hdc, checkPosX + 10 - i, checkPosY - 32);
         r = GetRValue(topRGB); g = GetGValue(topRGB); b = GetBValue(topRGB);
         if (!(r == GetRValue(color) && g == GetGValue(color) && b == GetBValue(color)))
         {
-            if (!(r == 34 && g == 177 && b == 76))//로프가 아닌 벽
+            if (collidedTopL == false && !(r == 34 && g == 177 && b == 76))//로프가 아닌 벽
             {
-                collidedTop = true;
+                collidedTopR = true;
                 player->SetTopCollision(true);
                 break;
             }
-            else if(r == 34 && g == 177 && b == 76)//로프일때 r == 34 && g == 177 && b == 76
+            else if (collidedTopL == false && r == 34 && g == 177 && b == 76)//로프일때 r == 34 && g == 177 && b == 76
             {
-                collidedTop = true;
+                collidedTopR = true;
                 player->SetRopeCollision(true);
                 break;
             }
         }
         else
         {
-            collidedTop = false;
-            player->SetTopCollision(false);
+            collidedTopR = false;
+
+            if (collidedTopL == false)
+            {
+                player->SetTopCollision(false);
+            }
+
         }
     }
 
 
     //하
     //왼쪽
-    for (int i = 2; i < 11; ++i)
+    for (int i = 3; i < 11; ++i)
     {
         bottomRGB = GetPixel(hdc, checkPosX - 10 + i, checkPosY);
         r = GetRValue(bottomRGB); g = GetGValue(bottomRGB); b = GetBValue(bottomRGB);
@@ -262,7 +272,7 @@ void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF
         {
             collidedBottomL = true;
 
-            if (collidedLeft == false && (!(r == 34 && g == 177 && b == 76) || !(r == 255 && g == 242 && b == 0)))
+            if (collidedLeft == false && (!(r == 34 && g == 177 && b == 76) || !(r == 255 && g == 242 && b == 0) || !(r == 237 && g == 28 && b == 36)))
             {
                 player->SetBottomCollision(true);
             }
@@ -283,7 +293,7 @@ void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF
     if (!(r == GetRValue(color) && g == GetGValue(color) && b == GetBValue(color)))
     {
         collidedBottomC = true;
-        if (player->GetjumpSwitch() == false && (!(r == 34 && g == 177 && b == 76) || !(r == 255 && g == 242 && b == 0)))
+        if (player->GetjumpSwitch() == false && (!(r == 34 && g == 177 && b == 76) || !(r == 255 && g == 242 && b == 0) || !(r == 237 && g == 28 && b == 36)))
         {
             player->SetBottomCollision(true);
         }
@@ -298,14 +308,14 @@ void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF
     }
     //하
     //오른쪽
-    for(int i = 2; i < 11; ++i)
+    for (int i = 3; i < 11; ++i)
     {
         bottomRGB = GetPixel(hdc, checkPosX + 10 - i, checkPosY);
         r = GetRValue(bottomRGB); g = GetGValue(bottomRGB); b = GetBValue(bottomRGB);
         if (!(r == GetRValue(color) && g == GetGValue(color) && b == GetBValue(color)))
         {
             collidedBottomR = true;
-            if (collidedRight == false && (!(r == 34 && g == 177 && b == 76) || !(r == 255 && g == 242 && b == 0)))
+            if (collidedRight == false && (!(r == 34 && g == 177 && b == 76) || !(r == 255 && g == 242 && b == 0) || !(r == 237 && g == 28 && b == 36)))
             {
                 player->SetBottomCollision(true);
             }
@@ -351,6 +361,6 @@ void PlayInStageScene::collision(HDC hdc, int checkPosX, int checkPosY, COLORREF
             }
         }
     }
-    
-    
+
+
 }

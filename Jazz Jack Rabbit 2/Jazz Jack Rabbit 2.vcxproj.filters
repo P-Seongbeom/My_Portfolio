@@ -52,6 +52,9 @@
     <Filter Include="MainGame\Main">
       <UniqueIdentifier>{5fd89c39-db70-438b-abe0-148f8dda5674}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Physics">
+      <UniqueIdentifier>{8c4c3d46-5561-4205-b3fb-51ebfd9b3994}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -119,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>MainGame\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelCollider.cpp">
+      <Filter>MainGame\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>MainGame\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelCollider.h">
+      <Filter>MainGame\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
