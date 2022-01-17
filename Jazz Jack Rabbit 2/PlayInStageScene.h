@@ -5,6 +5,7 @@
 class Physics;
 class TileMap;
 class Player;
+class Turtle;
 class Image;
 class PlayInStageScene : public GameEntity
 {
@@ -13,6 +14,7 @@ private:
 	TILE_INFO tileInfo[SAMPLE_IMAGE_COUNT][TILE_COUNT_Y][TILE_COUNT_X] = { 0 };
 
 	Player* player = nullptr;
+	Turtle* turtle = nullptr;
 
 	RECT* cameraMoveXZone = {};
 	RECT* cameraMoveYZone = {};

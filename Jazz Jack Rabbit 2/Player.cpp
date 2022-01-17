@@ -567,8 +567,6 @@ void Player::motionAnimator(int playerState, float waitingTime, float frameTerm,
         renderFrameY = startFrameY + 1;
     }
 
-    cout << renderFrameX << endl;
-
     playerMotion[playerState]->SetCurrFrameX(renderFrameX);
     playerMotion[playerState]->SetCurrFrameY(renderFrameY);
 }
@@ -615,8 +613,6 @@ void Player::airMotionAnimator(int playerState, float waitingTime, float frameTe
     {
         renderFrameY = 3;
     }
-
-    cout << renderFrameX << endl;
 
     playerMotion[playerState]->SetCurrFrameX(renderFrameX);
     playerMotion[playerState]->SetCurrFrameY(renderFrameY);
