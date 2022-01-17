@@ -98,8 +98,8 @@ public:
 		this->playerState = state;
 		this->playerMoveDir = dir;
 	}
-	bool GetjumpSwitch() { return this->jumpSwitch; }
-	void SetFalling(bool fall) { this->canfalling = fall; }
+
+
 	void SetBottomCollision(bool collision) { this->collideBottom = collision; }
 	void SetLeftCollision(bool collision) { this->collideLeft = collision; }
 	void SetRightCollision(bool collision) { this->collideRight = collision; }

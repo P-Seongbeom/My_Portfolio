@@ -245,49 +245,49 @@
 //
 //}
 //
-//void PixelCollider::CollideLeft(HDC hdc, GameObject* object, POINTFLOAT pt, int bodySizeX, int bodySizeY, COLORREF color)
-//{
-//    COLORREF RGB;
-//    WORD r, g, b;
-//
-//    //좌
-//    for (int i = 2; i < 16; ++i)
-//    {
-//        //최외각
-//        RGB = GetPixel(hdc, pt.x - bodySizeX / 2, pt.y - bodySizeY / 2 - i);
-//        r = GetRValue(RGB); g = GetGValue(RGB); b = GetBValue(RGB);
-//
-//        if (!(r == GetRValue(color) && g == GetGValue(color) && b == GetBValue(color)))
-//        {
-//            collidedLeft = true;
-//            player->SetLeftCollision(true);
-//            break;
-//        }
-//        else
-//        {
-//            collidedLeft = false;
-//            player->SetLeftCollision(false);
-//            break;
-//        }
-//        //안쪽
-//        RGB = GetPixel(hdc, pt.x + 1 - bodySizeX / 2, pt.y - bodySizeY / 2 - i);
-//        r = GetRValue(RGB); g = GetGValue(RGB); b = GetBValue(RGB);
-//
-//        if (!(r == GetRValue(color) && g == GetGValue(color) && b == GetBValue(color)))
-//        {
-//            collidedLeft = true;
-//            player->SetPosX(player->GetPos().x + 1);
-//            player->SetLeftCollision(true);
-//            break;
-//        }
-//        else
-//        {
-//            collidedLeft = false;
-//            player->SetLeftCollision(false);
-//            break;
-//        }
-//    }
-//}
+void PixelCollider::CollideLeft(HDC hdc, GameObject* object, POINTFLOAT pt, int bodySizeX, int bodySizeY, COLORREF color)
+{
+    COLORREF RGB;
+    WORD r, g, b;
+
+    //좌
+    for (int i = 2; i < 16; ++i)
+    {
+        //최외각
+        RGB = GetPixel(hdc, pt.x - bodySizeX / 2, pt.y - bodySizeY / 2 - i);
+        r = GetRValue(RGB); g = GetGValue(RGB); b = GetBValue(RGB);
+
+        if (!(r == GetRValue(color) && g == GetGValue(color) && b == GetBValue(color)))
+        {
+            collidedLeft = true;
+            object->SetLeftCollision(true);
+            break;
+        }
+        else
+        {
+            collidedLeft = false;
+            object->SetLeftCollision(false);
+            break;
+        }
+        //안쪽
+        RGB = GetPixel(hdc, pt.x + 1 - bodySizeX / 2, pt.y - bodySizeY / 2 - i);
+        r = GetRValue(RGB); g = GetGValue(RGB); b = GetBValue(RGB);
+
+        if (!(r == GetRValue(color) && g == GetGValue(color) && b == GetBValue(color)))
+        {
+            collidedLeft = true;
+            object->SetPosX(player->GetPos().x + 1);
+            object->SetLeftCollision(true);
+            break;
+        }
+        else
+        {
+            collidedLeft = false;
+            object->SetLeftCollision(false);
+            break;
+        }
+    }
+}
 //
 //void PixelCollider::CollideRight(HDC hdc, int checkPosX, int checkPosY, COLORREF color)
 //{

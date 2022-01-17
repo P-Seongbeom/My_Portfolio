@@ -1,5 +1,6 @@
 #include "PlayInStageScene.h"
 #include "Player.h"
+#include "Turtle.h"
 #include "Config.h"
 #include "Image.h"
 #include "TileMap.h"
@@ -11,6 +12,9 @@ HRESULT PlayInStageScene::Init()
 
     player = new Player;
     player->Init();
+
+    turtle = new Turtle;
+    turtle->Init();
 
     cameraMoveXZone = new RECT;
     cameraMoveXZone->left = WIN_SIZE_X / 2.0;
@@ -38,12 +42,14 @@ void PlayInStageScene::Update()
     tileMap->Update();
     player->Update();
     moveCamera();
+    turtle->Update();
 }
 
 void PlayInStageScene::Render(HDC hdc)
 {
     tileMap->BackGroundRender(hdc, cameraRenderPos.x / TILE_SIZE, cameraRenderPos.y / TILE_SIZE);
     player->Render(hdc);
+    turtle->Render(hdc);
     tileMap->FrontStructureRender(hdc, cameraRenderPos.x / TILE_SIZE, cameraRenderPos.y / TILE_SIZE);
 }
 
@@ -51,6 +57,7 @@ void PlayInStageScene::Release()
 {
     SAFE_RELEASE(tileMap);
     SAFE_RELEASE(player);
+    SAFE_RELEASE(turtle);
     SAFE_DELETE(cameraMoveXZone);
     SAFE_DELETE(cameraMoveYZone);
 }

@@ -22,7 +22,8 @@ void ImageManager::Init()
     ImageManager::GetSingleton()->AddImage("Image/character/uppercut.bmp", 680, 122, 10, 2, true, RGB(44, 102, 150));
     ImageManager::GetSingleton()->AddImage("Image/character/shooting.bmp", 100, 348, 2, 6, true, RGB(44, 102, 150));
 
-
+    ImageManager::GetSingleton()->AddImage("Image/enemy/turtlegoon_walk.bmp", 1488, 126, 12, 2, true, RGB(0, 128, 255));
+    ImageManager::GetSingleton()->AddImage("Image/enemy/turtlegoon_hide.bmp", 1488, 252, 12, 4, true, RGB(0, 128, 255));
 
 
     ImageManager::GetSingleton()->AddImage("Image/character/collisionRect.bmp", 20, 32, 1, 1, false, RGB(127, 127, 127));
