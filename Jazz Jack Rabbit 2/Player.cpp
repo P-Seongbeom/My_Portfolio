@@ -62,10 +62,16 @@ HRESULT Player::Init()
 void Player::Update()
 {
     inputAction();
+    //cout << moveSpeed << endl;
     jumpPlayer();
+    //cout << moveSpeed << endl;
     freeFall();
+    //cout << moveSpeed << endl;
+    //cout << fallingSpeed << endl;
     fire();
+    //cout << moveSpeed << endl;
     characterMotion();
+    //cout << moveSpeed << endl;
 
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
     {
@@ -74,6 +80,9 @@ void Player::Update()
     }
     //cout << "Y : " << renderFrameY << endl;
     //cout << (int)playerState << endl;
+    //cout << canfalling << endl;
+    //cout << collideBottom << endl;
+    //cout << pos.y << endl;
 }
 
 void Player::Render(HDC hdc)
@@ -303,15 +312,17 @@ void Player::inputAction()  //플레이어 행동 입력
 
 void Player::skiddingPlayer()
 {
-    if (moveKeyPressed || moveSpeed < 0 || playerState == EplayerState::QuickDown) return;
+    if (moveKeyPressed || moveSpeed == 0 || playerState == EplayerState::QuickDown) return;
 
     if (moveSpeed > 0)
     {
         moveSpeed -= accel * Timer::GetDeltaTime();
+        //cout << "도냐" << endl;
     }
     else if (moveSpeed < 0)
     {
         moveSpeed = 0;
+        cout << "안도냐" << endl;
     }
     if (playerState != EplayerState::Rope)
     {
