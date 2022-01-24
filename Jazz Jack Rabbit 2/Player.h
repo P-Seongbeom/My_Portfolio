@@ -29,7 +29,7 @@ private:
 
 	void inputAction();
 	void skiddingPlayer();
-	float moveSpeed = 0.0f;
+	//float moveSpeed = 0.0f;
 	float moveMaxSpeed = 0.0f;
 	float accel = 0.0f;
 	float moveKeyPressTime = 0.0f;
@@ -37,24 +37,24 @@ private:
 	bool stayGetDown = false;
 	bool shiftKeyPressed = false;
 	bool moveKeyPressed = false;
-	bool collideLeft = false;
-	bool collideRight = false;
+	//bool collideLeft = false;
+	//bool collideRight = false;
 
 	void jumpPlayer();
 	void initJump();
-	bool jumpSwitch = false;
+	//bool jumpSwitch = false;
 	float jumpVelocity = 0.0f;
 	float gravity = 0.0f;
-	bool collideTop = false;
-	bool collideRope = false;
+	//bool collideTop = false;
+	//bool collideRope = false;
 	bool upperCut = false;
 	float stayJumpKeyTime = 0;
 
 	void freeFall();
 	float fallingSpeed = 0.0f;
 	float fallingMaxSpeed = 0.0f;
-	bool canfalling = true;
-	bool collideBottom = false;
+	//bool canfalling = true;
+	//bool collideBottom = false;
 
 	void quickDown();
 	bool quickDownSwitch = false;
@@ -99,20 +99,20 @@ public:
 		this->playerMoveDir = dir;
 	}
 
-
-	void SetBottomCollision(bool collision) { this->collideBottom = collision; }
-	void SetLeftCollision(bool collision) { this->collideLeft = collision; }
-	void SetRightCollision(bool collision) { this->collideRight = collision; }
-	void SetTopCollision(bool collision) { this->collideTop = collision; }
-	void SetRopeCollision(bool collision) { this->collideRope = collision; }
-	void SetPosY(float posy) { this->pos.y = posy; }
-	void SetPosX(float posx) { this->pos.x = posx; }
-	bool GetFallingState() { return this->canfalling; }
+	//void SetBottomCollision(bool collision) { this->collideBottom = collision; }
+	//void SetLeftCollision(bool collision) { this->collideLeft = collision; }
+	//void SetRightCollision(bool collision) { this->collideRight = collision; }
+	//void SetTopCollision(bool collision) { this->collideTop = collision; }
+	//void SetRopeCollision(bool collision) { this->collideRope = collision; }
+	//void SetPosY(float posy) { this->pos.y = posy; }
+	//void SetPosX(float posx) { this->pos.x = posx; }
+	//bool GetFallingState() { return this->canfalling; }
+	//bool GetjumpSwitch() { return this->jumpSwitch; }
+	//float GetMoveSpeed() { return this->moveSpeed; }
 
 	POINTFLOAT GetRenderPos() { return this->renderPos; }
 
 	EmoveDir GetMoveDir() { return this->playerMoveDir; }
-	float GetMoveSpeed() { return this->moveSpeed; }
 
 	//µð¹ö±ë¿ë
 	float getfallspeed() { return this->fallingSpeed; }

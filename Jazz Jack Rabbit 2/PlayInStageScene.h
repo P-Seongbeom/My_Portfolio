@@ -2,7 +2,7 @@
 #include "GameEntity.h"
 #include "Config.h"
 
-class Physics;
+class PixelCollider;
 class TileMap;
 class Player;
 class Turtle;
@@ -10,6 +10,8 @@ class Image;
 class PlayInStageScene : public GameEntity
 {
 private:
+	PixelCollider* collider = nullptr;
+
 	TileMap* tileMap = nullptr;
 	TILE_INFO tileInfo[SAMPLE_IMAGE_COUNT][TILE_COUNT_Y][TILE_COUNT_X] = { 0 };
 
@@ -24,8 +26,6 @@ private:
 	float cameraSpeed = 0.0f;
 	float glanceSpeed = 0.0f;
 	float stayKeyDownTime = 0.0f;
-
-	bool jumpSwitch = false;
 
 	bool freeCameraMoveZone(RECT* zone, POINTFLOAT ptf);
 	void moveCamera();
