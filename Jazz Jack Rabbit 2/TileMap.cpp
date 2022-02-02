@@ -59,6 +59,21 @@ void TileMap::FrontStructureRender(HDC hdc, float cameraX, float cameraY)
     adjustRenderRatio(hdc, 6, cameraX, cameraY, 1.5);
 }
 
+void TileMap::adjustRenderRatio(HDC hdc, int renderIdx, float cameraX, float cameraY, float ratio)
+{
+    for (int i = cameraY * ratio; i < RENDER_TILE_COUNT_Y + cameraY * ratio; ++i)
+    {
+        for (int j = cameraX * ratio; j < RENDER_TILE_COUNT_X + cameraX * ratio; ++j)
+        {
+            mapTile[renderIdx]->Render(hdc,
+                tileInfo[renderIdx][i][j].rc.left + TILE_SIZE / 2 - cameraX * TILE_SIZE * ratio,
+                tileInfo[renderIdx][i][j].rc.top + TILE_SIZE - cameraY * TILE_SIZE * ratio,
+                tileInfo[renderIdx][i][j].frameX,
+                tileInfo[renderIdx][i][j].frameY);
+        }
+    }
+}
+
 void TileMap::LoadMapFile(int mapNum)
 {
     string loadFileName = "Save/saveMapData_" + to_string(mapNum);
@@ -80,17 +95,3 @@ void TileMap::LoadMapFile(int mapNum)
     CloseHandle(hFile);
 }
 
-void TileMap::adjustRenderRatio(HDC hdc, int renderIdx, float cameraX, float cameraY, float ratio)
-{
-    for (int i = cameraY * ratio; i < RENDER_TILE_COUNT_Y + cameraY * ratio; ++i)
-    {
-        for (int j = cameraX * ratio; j < RENDER_TILE_COUNT_X + cameraX * ratio; ++j)
-        {
-            mapTile[renderIdx]->Render(hdc,
-                tileInfo[renderIdx][i][j].rc.left + TILE_SIZE / 2 - cameraX * TILE_SIZE * ratio,
-                tileInfo[renderIdx][i][j].rc.top + TILE_SIZE - cameraY * TILE_SIZE * ratio,
-                tileInfo[renderIdx][i][j].frameX,
-                tileInfo[renderIdx][i][j].frameY);
-        }
-    }
-}

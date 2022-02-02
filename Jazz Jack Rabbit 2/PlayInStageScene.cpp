@@ -46,6 +46,7 @@ void PlayInStageScene::Update()
     player->Update();
     moveCamera();
     turtle->Update();
+    turtle->SetRenderPos(turtle->GetPos(), player->GetPos(), cameraMoveXZone, cameraMoveYZone);
 }
 
 void PlayInStageScene::Render(HDC hdc)
@@ -69,10 +70,8 @@ void PlayInStageScene::Release()
 void PlayInStageScene::PhysicsUpdate()
 {
     collider->PixelCollision(tileMap->GetImageInfo()->GetMemDC(), player, player->GetPos(), 20, 32, RGB(87, 0, 203));
-    //collision(tileMap->GetImageInfo()->GetMemDC(),
-    //    player->GetPos().x,
-    //    player->GetPos().y,
-    //    RGB(87, 0, 203));
+    collider->PixelCollision(tileMap->GetImageInfo()->GetMemDC(), turtle, turtle->GetPos(), 32, 20, RGB(87, 0, 203));
+    player->SetAmmoCollision(tileMap->GetImageInfo()->GetMemDC(), turtle);
 }
 
 bool PlayInStageScene::freeCameraMoveZone(RECT* zone, POINTFLOAT ptf)
@@ -89,12 +88,6 @@ void PlayInStageScene::moveCamera()
 {
     if (freeCameraMoveZone(cameraMoveXZone, player->GetPos()))
     {
-        if (cameraRenderPos.x <= 0) cameraRenderPos.x = 0;
-
-        cameraRenderPos.x = player->GetPos().x - WIN_SIZE_X / 2;
-
-        if (cameraRenderPos.x >= WIN_SIZE_X) cameraRenderPos.x = WIN_SIZE_X;
-
         cameraRenderPos.x = player->GetPos().x - WIN_SIZE_X / 2;
     }
 

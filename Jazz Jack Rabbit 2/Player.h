@@ -5,10 +5,11 @@
 #define PLAYER_MAX_SPEED	200.0f
 #define PLAYER_ACCELATE		600.0f
 #define JUMP_VELOCITY		500.0f
-#define GRAVITY				1000.0f
+
 
 class Ammo;
 class Image;
+class Turtle;
 class Player : public GameObject
 {
 	enum class Echaracter { jazz, spaz, Lori };
@@ -61,7 +62,7 @@ private:
 	float quickDownWatingTime = 0.0f;
 
 	void characterMotion();
-	void motionAnimator(int playerState, float waitMotionTime, float frameTerm, int maxFrameX, int startFrameY);
+	void motionAnimator(int playerState, float waitMotionTime, float frameTerm, int maxFrameX);
 	void airMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX);
 	void ropeMotionAnimator(int playerState, float waitingTime, float frameTerm, int maxFrameX);
 	int renderFrameX = 0;
@@ -86,6 +87,11 @@ private:
 	bool releasing = false;
 	bool lookUp = false;
 
+	void getDamage();
+	float hitCoolTime = 0.0f;
+	bool blinking = true;
+	float blinkingTime = 0.0f;
+
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;
@@ -93,11 +99,15 @@ public:
 	virtual void Release() override;
 	virtual ~Player() = default;
 
+	void SetAmmoCollision(HDC mapPixel, Turtle* enemy);
 
-	void SetPlayerInfo(EplayerState state, EmoveDir dir) {
+	void SetPlayerInfo(EplayerState state, EmoveDir dir) 
+	{
 		this->playerState = state;
 		this->playerMoveDir = dir;
 	}
+
+	void GetDamaged() { if (hp != 0) hp = hp - 1; }
 
 	//void SetBottomCollision(bool collision) { this->collideBottom = collision; }
 	//void SetLeftCollision(bool collision) { this->collideLeft = collision; }

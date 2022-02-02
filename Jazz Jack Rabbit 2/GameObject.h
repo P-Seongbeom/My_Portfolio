@@ -7,14 +7,16 @@ protected:
 	POINTFLOAT pos = {};
 
 	float moveSpeed = 0.0f;
+	int hp = 0;
 
 	bool collideLeft = false;
 	bool collideRight = false;
 	bool collideTop = false;
 	bool collideRope = false;
 	bool collideBottom = false;
-	bool canfalling = false;
+	bool canfalling = true;
 	bool jumpSwitch = false;
+	bool getHit = false;
 
 public:
 	void SetPos(POINTFLOAT pos) { this->pos = pos; }
@@ -31,7 +33,10 @@ public:
 	void SetPosX(float posx) { this->pos.x = posx; }
 	bool GetFallingState() { return this->canfalling; }
 	bool GetjumpSwitch() { return this->jumpSwitch; }
+	bool GetHittedState() { return this->getHit; }
 	float GetMoveSpeed() { return this->moveSpeed; }
+
+	void GetHit(bool hit) { this->getHit = hit; }
 
 };
 
