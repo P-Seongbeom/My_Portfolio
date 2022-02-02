@@ -29,5 +29,6 @@ public:
 	void CollideDownCenter(HDC hdc, GameObject* object, POINTFLOAT pt, int bodySizeX, int bodySizeY, COLORREF color);
 	void CollideDownRight(HDC hdc, GameObject* object, POINTFLOAT pt, int bodySizeX, int bodySizeY, COLORREF color);
 	void GoUpStairs(HDC hdc, GameObject* object, POINTFLOAT pt, int bodySizeX, int bodySizeY, COLORREF color);
+	bool CollideAmmo(HDC hdc, GameObject object, POINTFLOAT pt, int bodySizeX, int bodySizeY, COLORREF color);
 };
 

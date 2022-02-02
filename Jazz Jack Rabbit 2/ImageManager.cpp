@@ -24,6 +24,7 @@ void ImageManager::Init()
 
     ImageManager::GetSingleton()->AddImage("Image/enemy/turtlegoon_walk.bmp", 1488, 126, 12, 2, true, RGB(0, 128, 255));
     ImageManager::GetSingleton()->AddImage("Image/enemy/turtlegoon_hide.bmp", 1488, 252, 12, 4, true, RGB(0, 128, 255));
+    ImageManager::GetSingleton()->AddImage("Image/enemy/turtlegoon_die.bmp", 124, 126, 1, 2, true, RGB(0, 128, 255));
 
 
     ImageManager::GetSingleton()->AddImage("Image/character/collisionRect.bmp", 20, 32, 1, 1, false, RGB(127, 127, 127));

@@ -1,11 +1,15 @@
 #include "Ammo.h"
 #include "Image.h"
+#include "PixelCollider.h"
+#include "Turtle.h"
 
 HRESULT Ammo::Init()
 {
-    ammo = ImageManager::GetSingleton()->FindImage("Image/object/Ammo.bmp");
+    ammoImage = ImageManager::GetSingleton()->FindImage("Image/object/Ammo.bmp");
 
     ammoType = EammoType::Normal;
+
+    pixelCollider = new PixelCollider;
 
     return S_OK;
 }
@@ -13,19 +17,45 @@ HRESULT Ammo::Init()
 void Ammo::Update()
 {
     if (!ammoAlive) return;
-    Fire();
+    collissionRect.left = pos.x - 5;
+    collissionRect.right = pos.x + 5;
+    collissionRect.top = pos.y - 10;
+    collissionRect.bottom = pos.y;
+    fired();
+    //cout << "¿Þ : " << collideLeft << endl;
+    //cout << "¿À : " << collideRight << endl;
 }
 
 void Ammo::Render(HDC hdc)
 {
-    ammo->Render(hdc, pos.x, pos.y);
+    Rectangle(hdc, renderPos.x - 5, renderPos.y - 5, renderPos.x + 5, renderPos.y + 5);
+    ammoImage->Render(hdc, renderPos.x, renderPos.y);
 }
 
 void Ammo::Release()
 {
+    SAFE_DELETE(pixelCollider);
+    //SAFE_DELETE(collissionRect);
 }
 
-void Ammo::Fire()
+void Ammo::CollideObject(HDC mapPixel, Turtle* enemy, GameObject ammo)
+{
+    RECT rect;
+    RECT enemyRect = enemy->GetCollisionRect();
+
+    if(pixelCollider->CollideAmmo(mapPixel, ammo, pos, 10, 10, RGB(87, 0, 203)))
+    {
+        collideObject = true;
+    }
+    else if (IntersectRect(&rect, &enemyRect, &collissionRect))
+    {
+        enemy->GetHit(true);
+        collideObject = true;
+    }
+
+}
+
+void Ammo::fired()
 {
     if (isFire)
     {
@@ -35,27 +65,27 @@ void Ammo::Fire()
             if (ammoDir == EmoveDir::Right)
             {
                 pos.x += AMMO_SPEED * Timer::GetDeltaTime();
+                renderPos.x += AMMO_SPEED * Timer::GetDeltaTime();
                 ammoMoveDis += AMMO_SPEED * Timer::GetDeltaTime();
             }
             else if (ammoDir == EmoveDir::Left)
             {
                 pos.x -= AMMO_SPEED * Timer::GetDeltaTime();
+                renderPos.x -= AMMO_SPEED * Timer::GetDeltaTime();
                 ammoMoveDis += AMMO_SPEED * Timer::GetDeltaTime();
             }
 
-            if (ammoMoveDis > 280)
+            if (ammoMoveDis > 280 || collideObject)
             {
                 isFire = false;
                 ammoAlive = false;
                 fireTimer = 0;
                 ammoMoveDis = 0;
+                collideObject = false;
             }
         }
     }
 
 }
 
-void Ammo::ChangeAmmoType(EammoType type)
-{
-    //if (!changeAmmo) return;
-}
+
