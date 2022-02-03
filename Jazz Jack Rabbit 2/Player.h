@@ -2,14 +2,10 @@
 #include "GameObject.h"
 #include "Config.h"
 
-#define PLAYER_MAX_SPEED	200.0f
-#define PLAYER_ACCELATE		600.0f
-#define JUMP_VELOCITY		500.0f
-
-
 class Ammo;
 class Image;
 class Turtle;
+class QueenEarlong;
 class Player : public GameObject
 {
 	enum class Echaracter { jazz, spaz, Lori };
@@ -25,8 +21,11 @@ private:
 	EmoveDir playerMoveDir = {};
 
 	POINTFLOAT renderPos = {};
+	POINTFLOAT prevPos = {};
 
-	RECT* playerRect = {};
+	RECT playerRect = {};
+
+	int playerLife = 0;
 
 	void inputAction();
 	void skiddingPlayer();
@@ -91,6 +90,7 @@ private:
 	float hitCoolTime = 0.0f;
 	bool blinking = true;
 	float blinkingTime = 0.0f;
+	bool isDead = false;
 
 public:
 	virtual HRESULT Init() override;
@@ -99,7 +99,7 @@ public:
 	virtual void Release() override;
 	virtual ~Player() = default;
 
-	void SetAmmoCollision(HDC mapPixel, Turtle* enemy);
+	void SetAmmoCollision(HDC mapPixel, Turtle* enemy, QueenEarlong* boss);
 
 	void SetPlayerInfo(EplayerState state, EmoveDir dir) 
 	{
@@ -107,22 +107,13 @@ public:
 		this->playerMoveDir = dir;
 	}
 
-	void GetDamaged() { if (hp != 0) hp = hp - 1; }
-
-	//void SetBottomCollision(bool collision) { this->collideBottom = collision; }
-	//void SetLeftCollision(bool collision) { this->collideLeft = collision; }
-	//void SetRightCollision(bool collision) { this->collideRight = collision; }
-	//void SetTopCollision(bool collision) { this->collideTop = collision; }
-	//void SetRopeCollision(bool collision) { this->collideRope = collision; }
-	//void SetPosY(float posy) { this->pos.y = posy; }
-	//void SetPosX(float posx) { this->pos.x = posx; }
-	//bool GetFallingState() { return this->canfalling; }
-	//bool GetjumpSwitch() { return this->jumpSwitch; }
-	//float GetMoveSpeed() { return this->moveSpeed; }
+	int GetPlayerLife() { return this->playerLife; }
 
 	POINTFLOAT GetRenderPos() { return this->renderPos; }
 
 	EmoveDir GetMoveDir() { return this->playerMoveDir; }
+
+	RECT GetCollisionRect() { return this->playerRect; }
 
 	//µð¹ö±ë¿ë
 	float getfallspeed() { return this->fallingSpeed; }

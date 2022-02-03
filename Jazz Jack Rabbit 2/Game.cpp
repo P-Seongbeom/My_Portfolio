@@ -176,4 +176,7 @@ void Game::Release()
     ImageManager::GetSingleton()->Release();
     ImageManager::GetSingleton()->ReleaseSingleton();
 
+    GameData::GetSingleton()->Release();
+    GameData::GetSingleton()->ReleaseSingleton();
+
 }

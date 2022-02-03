@@ -55,6 +55,9 @@
     <Filter Include="MainGame\Physics">
       <UniqueIdentifier>{8c4c3d46-5561-4205-b3fb-51ebfd9b3994}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Enemy\Boss">
+      <UniqueIdentifier>{41e172b7-6782-4ab0-8eff-24139592bdd6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -125,6 +128,15 @@
     </ClCompile>
     <ClCompile Include="PixelCollider.cpp">
       <Filter>MainGame\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="RectCollider.cpp">
+      <Filter>MainGame\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="QueenEarlong.cpp">
+      <Filter>MainGame\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="StageClearScene.cpp">
+      <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +220,18 @@
     </ClInclude>
     <ClInclude Include="PixelCollider.h">
       <Filter>MainGame\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="RectCollider.h">
+      <Filter>MainGame\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="QueenEarlong.h">
+      <Filter>MainGame\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="StageClearScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>MainGame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

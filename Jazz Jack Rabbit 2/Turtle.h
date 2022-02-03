@@ -7,7 +7,7 @@
 class Image;
 class Turtle : public GameObject
 {
-	enum class EturtleState{Walk, Hide, Die, End};
+	enum class EturtleState{Walk, Hide, Die, Wobble, End};
 
 private:
 	Image* turtleMotion[(int)EturtleState::End] = {};
@@ -49,26 +49,8 @@ public:
 	virtual void Release() override;
 	virtual ~Turtle() = default;
 
-	RECT GetCollisionRect() { return collisionRect; }
+	RECT GetCollisionRect() { return this->collisionRect; }
 
-	void SetRenderPos(POINTFLOAT pos1, POINTFLOAT pos2, RECT* zone1, RECT* zone2) 
-	{ 
-		if (freeCameraMoveZone(zone1, pos2))
-		{
-			this->renderPos.x = pos1.x - pos2.x + WIN_SIZE_X / 2;
-		}
-
-		if (pos2.x <= WIN_SIZE_X / 2 || pos2.x >= WIN_SIZE_X * 1.5f)
-		{
-			this->renderPos.x = pos1.x;
-		}
-
-		if (freeCameraMoveZone(zone2, pos2))
-		{
-			this->renderPos.y = pos1.y - pos2.y + WIN_SIZE_Y/2;
-		}
-	}
-
-
+	void SetRenderPos(POINTFLOAT pos1, POINTFLOAT pos2, RECT* zone1, RECT* zone2);
 };
 

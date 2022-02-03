@@ -3,13 +3,12 @@
 
 HRESULT Turtle::Init()
 {
-    turtleMotion[(int)EturtleState::Walk] = ImageManager::GetSingleton()->FindImage("Image/enemy/turtlegoon_walk.bmp");
-    turtleMotion[(int)EturtleState::Hide] = ImageManager::GetSingleton()->FindImage("Image/enemy/turtlegoon_hide.bmp");
-    turtleMotion[(int)EturtleState::Die] = ImageManager::GetSingleton()->FindImage("Image/enemy/turtlegoon_die.bmp");
+    turtleMotion[(int)EturtleState::Walk] = ImageManager::GetSingleton()->FindImage("Image/enemy/turtle/turtlegoon_walk.bmp");
+    turtleMotion[(int)EturtleState::Hide] = ImageManager::GetSingleton()->FindImage("Image/enemy/turtle/turtlegoon_hide.bmp");
+    turtleMotion[(int)EturtleState::Die] = ImageManager::GetSingleton()->FindImage("Image/enemy/turtle/turtlegoon_die.bmp");
 
     pos.x = WIN_SIZE_X / 2;
     pos.y = WIN_SIZE_Y * 1.5f;
-    //pos.y = WIN_SIZE_Y / 2;
 
     turtleState = EturtleState::Walk;
     turtleMoveDir = EmoveDir::Right;
@@ -26,21 +25,14 @@ HRESULT Turtle::Init()
 
 void Turtle::Update()
 {
+    getDamage();
     die();
     action();
     freeFall();
-
-    //cout << renderPos.x << endl;
-    //cout << renderPos.y << endl;
-    //cout << pos.y << endl;
-    //cout << canfalling << endl;
-    //cout << "°ÅºÏÀÌ hp : " << hp << endl;
 }
 
 void Turtle::Render(HDC hdc)
 {
-    Rectangle(hdc, renderPos.x - 16, renderPos.y - 16, renderPos.x + 16, renderPos.y);
-
     turtleMotion[(int)turtleState]->Render(hdc, renderPos.x, renderPos.y + 5, 
                                             turtleMotion[(int)turtleState]->GetCurrFrameX(), 
                                             turtleMotion[(int)turtleState]->GetCurrFrameY());
@@ -49,6 +41,7 @@ void Turtle::Render(HDC hdc)
 void Turtle::Release()
 {
 }
+
 
 void Turtle::action()
 {
@@ -126,6 +119,7 @@ void Turtle::action()
         collisionRect.bottom = pos.y;
 
         deadMotion();
+        break;
     }
     }
 }
@@ -232,8 +226,6 @@ void Turtle::deadMotion()
     turtleMotion[(int)turtleState]->SetCurrFrameY(renderFrameY);
 }
 
-
-
 void Turtle::initMotionFrame()
 {
     moveTimer = 0;
@@ -288,4 +280,26 @@ bool Turtle::freeCameraMoveZone(RECT* zone, POINTFLOAT ptf)
     }
 
     return false;
+}
+
+void Turtle::SetRenderPos(POINTFLOAT pos1, POINTFLOAT pos2, RECT* zone1, RECT* zone2)
+{
+    if (freeCameraMoveZone(zone1, pos2))
+    {
+        this->renderPos.x = pos1.x - pos2.x + WIN_SIZE_X / 2;
+    }
+
+    if (pos2.x <= WIN_SIZE_X / 2)
+    {
+        this->renderPos.x = pos1.x;
+    }
+    else if (pos2.x >= WIN_SIZE_X * 1.5)
+    {
+        this->renderPos.x = pos1.x - WIN_SIZE_X;
+    }
+
+    if (freeCameraMoveZone(zone2, pos2))
+    {
+        this->renderPos.y = pos1.y - pos2.y + WIN_SIZE_Y / 2;
+    }
 }

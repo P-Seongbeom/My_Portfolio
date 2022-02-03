@@ -22,7 +22,6 @@ using namespace std;
 #define SAFE_RELEASE(p)	{ if (p) { p->Release(); delete p; p = nullptr; } }
 #define SAFE_DELETE(p)	{ if (p) { delete p; p = nullptr; } }
 
-#define GRAVITY				1000.0f
 
 typedef struct ArgumentFuncPtr
 {
@@ -32,6 +31,7 @@ typedef struct ArgumentFuncPtr
 
 #include "ImageManager.h"
 #include "SceneManager.h"
+#include "GameData.h"
 
 extern HWND _hWnd;
 extern HINSTANCE _hInst;
@@ -58,6 +58,12 @@ typedef struct tagTile
 
 //이동하는 object 관련
 enum class EmoveDir { Left, Right, Up, Down };
+
+#define GRAVITY				1000.0f
+#define PLAYER_MAX_SPEED	200.0f
+#define PLAYER_ACCELATE		600.0f
+#define JUMP_VELOCITY		500.0f
+
 
 //총알 관련
 #define AMMO_PACK_COUNT		10

@@ -2,8 +2,7 @@
 #include "Image.h"
 #include "Ammo.h"
 #include "Turtle.h"
-
-
+#include "QueenEarlong.h"
 
 HRESULT Player::Init()
 {
@@ -26,6 +25,7 @@ HRESULT Player::Init()
     }
 
     SetPlayerInfo(EplayerState::Falling, EmoveDir::Right);
+    playerCharacter = Echaracter::jazz;
     renderFrameX = 0;
     renderFrameY = 0;
 
@@ -35,12 +35,8 @@ HRESULT Player::Init()
     renderPos.x = pos.x;
     renderPos.y = pos.y;
 
+    playerLife = 3;
     hp = 5;
-    playerRect = new RECT;
-    playerRect->left = pos.x - 10;
-    playerRect->right = pos.x + 10;
-    playerRect->top = pos.y - 32;
-    playerRect->bottom = pos.y;
 
     fallingSpeed = 0.0f;
     fallingMaxSpeed = 500.0f;
@@ -63,16 +59,10 @@ HRESULT Player::Init()
 void Player::Update()
 {
     inputAction();
-    //cout << moveSpeed << endl;
     jumpPlayer();
-    //cout << moveSpeed << endl;
     freeFall();
-    //cout << moveSpeed << endl;
-    //cout << fallingSpeed << endl;
     fire();
-    //cout << moveSpeed << endl;
     characterMotion();
-    //cout << moveSpeed << endl;
     getDamage();
 
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
@@ -80,13 +70,11 @@ void Player::Update()
 
         ammo[i].Update();
     }
-    //cout << "Y : " << renderFrameY << endl;
-    //cout << (int)playerState << endl;
-    //cout << canfalling << endl;
-    //cout << collideBottom << endl;
-    //cout << pos.y << endl;
-    cout << hp << endl;
-    cout << hitCoolTime << endl;
+
+    playerRect.left = pos.x - 10;
+    playerRect.right = pos.x + 10;
+    playerRect.top = pos.y - 32;
+    playerRect.bottom = pos.y;
 }
 
 void Player::Render(HDC hdc)
@@ -97,7 +85,6 @@ void Player::Render(HDC hdc)
 
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
     {
-        if (ammo[i].GetAlive())
             ammo[i].Render(hdc);
     }
 
@@ -152,16 +139,15 @@ void Player::Release()
     delete[] ammo;
     ammo = nullptr;
 
-    SAFE_DELETE(playerRect);
 }
 
-void Player::SetAmmoCollision(HDC mapPixel, Turtle* enemy)
+void Player::SetAmmoCollision(HDC mapPixel, Turtle* enemy, QueenEarlong* boss)
 {
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
     {
         if (ammo[i].GetAlive())
         {
-            ammo[i].CollideObject(mapPixel, enemy, ammo[i]);
+            ammo[i].CollideObject(mapPixel, enemy, boss, ammo[i]);
         }
     }
 }
@@ -169,6 +155,8 @@ void Player::SetAmmoCollision(HDC mapPixel, Turtle* enemy)
 
 void Player::inputAction()  //플레이어 행동 입력
 {
+    prevPos = pos;
+
     if (Input::GetButton(VK_LSHIFT))
     {
         shiftKeyPressed = true;
@@ -335,7 +323,7 @@ void Player::inputAction()  //플레이어 행동 입력
     fireMotionSwitch();
 }
 
-void Player::skiddingPlayer()
+void Player::skiddingPlayer() //관성
 {
     if (moveKeyPressed || moveSpeed == 0 || playerState == EplayerState::QuickDown) return;
 
@@ -427,7 +415,6 @@ void Player::initJump()
     jumpSwitch = false;
 }
 
-//자유낙하
 void Player::freeFall()
 {
     quickDown();
@@ -495,10 +482,7 @@ void Player::quickDown()
     if (quickDownWatingTime > 0.5)
     {
         pos.y += 450 * Timer::GetDeltaTime();
-        cout << pos.y << endl;
     }
-
-
 }
 
 void Player::characterMotion()
@@ -758,7 +742,6 @@ void Player::fireMotionSwitch()
 
 void Player::getDamage()
 {
-    //if (getHit == false) return;
     hitCoolTime += Timer::GetDeltaTime();
 
     if (hitCoolTime > 2.5f)
@@ -767,17 +750,20 @@ void Player::getDamage()
         {
             --hp;
             hitCoolTime = 0.0f;
-            getHit = false;
         }
         if (hp == 0)
         {
             blinking = false;
             hitCoolTime = 2.5f;
+            --playerLife;
+            isDead = true;
         }
+        blinking = false;
     }
     else
     {
         blinkingTime += Timer::GetDeltaTime();
+        getHit = false;
 
         if (blinkingTime > 0.1)
         {
@@ -824,32 +810,4 @@ void Player::unlockingCenterPlayer()
     }
 
 }
-
-
-
-//void Player::releaseLooking()
-//{
-//    if (!releasing) return;
-//
-//    if (lookUp == false)
-//    {
-//        renderPos.y += moveSpeed * Timer::GetDeltaTime();
-//
-//        if (renderPos.y > WIN_SIZE_Y / 2)
-//        {
-//            renderPos.y = WIN_SIZE_Y / 2;
-//            releasing = false;
-//        }
-//    }
-//    else if (lookUp == true)
-//    {
-//        renderPos.y -= moveSpeed * Timer::GetDeltaTime();
-//
-//        if (renderPos.y < WIN_SIZE_Y / 2)
-//        {
-//            renderPos.y = WIN_SIZE_Y / 2;
-//            releasing = false;
-//        }
-//    }
-//}
 
