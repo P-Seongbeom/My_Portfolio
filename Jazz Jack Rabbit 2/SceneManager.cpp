@@ -3,6 +3,7 @@
 #include "PlayInStageScene.h"
 #include "TileMapToolScene.h"
 #include "TiltleScene.h"
+#include "StageClearScene.h"
 
 //static으로 함수를 선언하면 함수외적인 곳에서 초기화를 꼭 시켜줘야한다.
 GameEntity* SceneManager::currScene = nullptr;
@@ -27,6 +28,7 @@ void SceneManager::Init()
 	SceneManager::GetSingleton()->AddScene("TileMapTool", new TileMapToolScene);
 	SceneManager::GetSingleton()->AddScene("TiltleScene", new TiltleScene);
 	SceneManager::GetSingleton()->AddScene("PlayInStage", new PlayInStageScene);
+	SceneManager::GetSingleton()->AddScene("StageClearScene", new StageClearScene);
 
 	SceneManager::GetSingleton()->ChangeScene("TiltleScene");
 }

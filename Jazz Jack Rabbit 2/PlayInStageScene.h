@@ -3,20 +3,24 @@
 #include "Config.h"
 
 class PixelCollider;
+class RectCollider;
 class TileMap;
 class Player;
 class Turtle;
+class QueenEarlong;
 class Image;
 class PlayInStageScene : public GameEntity
 {
 private:
-	PixelCollider* collider = nullptr;
+	PixelCollider* MapPixelCollider = nullptr;
+	RectCollider* rectCollider = nullptr;
 
 	TileMap* tileMap = nullptr;
 	TILE_INFO tileInfo[SAMPLE_IMAGE_COUNT][TILE_COUNT_Y][TILE_COUNT_X] = { 0 };
 
 	Player* player = nullptr;
 	Turtle* turtle = nullptr;
+	QueenEarlong* boss = nullptr;
 
 	RECT* cameraMoveXZone = {};
 	RECT* cameraMoveYZone = {};
@@ -31,18 +35,6 @@ private:
 	void moveCamera();
 	bool moveHorizontal = true;
 	bool moveVertical = true;
-
-	//void returnCamera();
-	//bool activateReturnCamera = false;
-
-	void collision(HDC hdc, int checkPosX, int checkPosY, COLORREF color);
-	bool collidedLeft = false;
-	bool collidedRight = false;
-	bool collidedTopL = false;
-	bool collidedTopR = false;
-	bool collidedBottomL = false;
-	bool collidedBottomR = false;
-	bool collidedBottomC = false;
 
 public:
 	virtual HRESULT Init() override;

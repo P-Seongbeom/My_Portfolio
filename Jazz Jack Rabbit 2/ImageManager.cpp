@@ -22,17 +22,28 @@ void ImageManager::Init()
     ImageManager::GetSingleton()->AddImage("Image/character/uppercut.bmp", 680, 122, 10, 2, true, RGB(44, 102, 150));
     ImageManager::GetSingleton()->AddImage("Image/character/shooting.bmp", 100, 348, 2, 6, true, RGB(44, 102, 150));
 
-    ImageManager::GetSingleton()->AddImage("Image/enemy/turtlegoon_walk.bmp", 1488, 126, 12, 2, true, RGB(0, 128, 255));
-    ImageManager::GetSingleton()->AddImage("Image/enemy/turtlegoon_hide.bmp", 1488, 252, 12, 4, true, RGB(0, 128, 255));
-    ImageManager::GetSingleton()->AddImage("Image/enemy/turtlegoon_die.bmp", 124, 126, 1, 2, true, RGB(0, 128, 255));
+    ImageManager::GetSingleton()->AddImage("Image/enemy/turtle/turtlegoon_walk.bmp", 1488, 126, 12, 2, true, RGB(0, 128, 255));
+    ImageManager::GetSingleton()->AddImage("Image/enemy/turtle/turtlegoon_hide.bmp", 1488, 252, 12, 4, true, RGB(0, 128, 255));
+    ImageManager::GetSingleton()->AddImage("Image/enemy/turtle/turtlegoon_die.bmp", 124, 126, 1, 2, true, RGB(0, 128, 255));
+    ImageManager::GetSingleton()->AddImage("Image/enemy/boss/queen_idle.bmp", 756, 62, 9, 1, true, RGB(0, 128, 255));
+    ImageManager::GetSingleton()->AddImage("Image/enemy/boss/queen_shouting.bmp", 672, 62, 8, 1, true, RGB(0, 128, 255));
+    ImageManager::GetSingleton()->AddImage("Image/enemy/boss/queen_stompfoot.bmp", 756, 62, 9, 1, true, RGB(0, 128, 255));
+    ImageManager::GetSingleton()->AddImage("Image/enemy/boss/queen_wobble.bmp", 924, 62, 11, 1, true, RGB(0, 128, 255));
+    ImageManager::GetSingleton()->AddImage("Image/enemy/boss/queen_die.bmp", 1092, 62, 13, 1, true, RGB(0, 128, 255));
+    ImageManager::GetSingleton()->AddImage("Image/enemy/boss/queens_brick.bmp", 28, 24, true, RGB(0, 128, 255));
 
 
     ImageManager::GetSingleton()->AddImage("Image/character/collisionRect.bmp", 20, 32, 1, 1, false, RGB(127, 127, 127));
 
     ImageManager::GetSingleton()->AddImage("Image/object/Ammo.bmp", 10, 10, true, RGB(0, 128, 255));
+    ImageManager::GetSingleton()->AddImage("Image/object/ammo_effect.bmp", 176, 20, 8, 1, true, RGB(0, 128, 255));
 
     ImageManager::GetSingleton()->AddImage("Image/title/title_x-mas.bmp", 640, 480, false, RGB(149, 177, 200));
     ImageManager::GetSingleton()->AddImage("Image/title/press_space.bmp", 482, 40, true, RGB(0, 128, 255));
+
+    ImageManager::GetSingleton()->AddImage("Image/scene/stage_clear.bmp", 482, 682, 2, 11, true, RGB(44, 102, 150));
+    ImageManager::GetSingleton()->AddImage("Image/scene/background_black.bmp", 640, 480, false, RGB(255, 0, 255));
+
 }
 
 void ImageManager::Release()

@@ -123,7 +123,6 @@ void PixelCollider::CollideUpRight(HDC hdc, GameObject* object, POINTFLOAT pt, i
             {
                 collidedUpRight = true;
                 object->SetRopeCollision(true);
-                   cout << "ทฮวม2" << endl;
                 break;
             }
         }
@@ -163,16 +162,6 @@ void PixelCollider::CollideDownLeft(HDC hdc, GameObject* object, POINTFLOAT pt, 
             }
             break;
         }
-        //else if (checkPixel(hdc, pt.x - bodySizeX / 2 + i, pt.y, color) == false && (r == 237 && g == 28 && b == 36))
-        //{
-        //    collidedDownLeft = true;
-        //    if (object->GetHittedState() == false)
-        //    {
-        //        object->GetHit(true);
-        //    }
-        //    object->SetBottomCollision(true);
-        //    break;
-        //}
         else if (checkPixel(hdc, pt.x - bodySizeX / 2 + i, pt.y, color) == false && (r == 34 && g == 177 && b == 76))
         {
             collidedDownLeft = false;

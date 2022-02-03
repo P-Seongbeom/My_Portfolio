@@ -2,8 +2,6 @@
 #include "Config.h"
 #include "GameEntity.h"
 
-//enum class Terrain { Earth, Wall, Water, Grass, Breakablewall, End };
-
 typedef struct tagSampleTile
 {
 	RECT rc;

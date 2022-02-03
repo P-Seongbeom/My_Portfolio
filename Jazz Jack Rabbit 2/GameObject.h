@@ -37,6 +37,7 @@ public:
 	float GetMoveSpeed() { return this->moveSpeed; }
 
 	void GetHit(bool hit) { this->getHit = hit; }
+	int GetHpValue() { return this->hp; }
 
 };
 
