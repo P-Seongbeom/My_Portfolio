@@ -56,7 +56,7 @@ bool Game::Init(HINSTANCE hInst)
         return false;
     }
 
-    SetWindowSize(WIN_START_POS_X, WIN_START_POS_Y, WIN_SIZE_X * 1.5, WIN_SIZE_Y * 1.5);
+    SetWindowSize(WIN_START_POS_X, WIN_START_POS_Y, (int)(WIN_SIZE_X * 1.5f), (int)(WIN_SIZE_Y * 1.5f));
 
     ShowWindow(_hWnd, SW_SHOW);
     UpdateWindow(_hWnd);
@@ -159,9 +159,9 @@ void Game::render()
 
     SceneManager::GetSingleton()->Render(_backDC);
 
-    char test[128] = { 0 };
-    wsprintf(test, "fps : %d", Timer::GetFPS());
-    TextOut(_backDC, WIN_SIZE_X / 2, 450, test, strlen(test));
+    //char test[128] = { 0 };
+    //wsprintf(test, "fps : %d", Timer::GetFPS());
+    //TextOut(_backDC, WIN_SIZE_X / 2, 450, test, (int)strlen(test));
 
     BitBlt(_hDC, 0, 0, windowMaxSizeX, windowMaxSizeY,
         _backDC, 0, 0, SRCCOPY);

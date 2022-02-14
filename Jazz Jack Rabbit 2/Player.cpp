@@ -16,7 +16,6 @@ HRESULT Player::Init()
     playerMotion[(int)EplayerState::QuickDown] = ImageManager::GetSingleton()->FindImage("Image/character/quick_down.bmp");
     playerMotion[(int)EplayerState::UpperCut] = ImageManager::GetSingleton()->FindImage("Image/character/uppercut.bmp");
 
-    collisionRect = ImageManager::GetSingleton()->FindImage("Image/character/collisionRect.bmp");
 
     if (playerMotion == nullptr)
     {
@@ -37,6 +36,11 @@ HRESULT Player::Init()
 
     playerLife = 3;
     hp = 5;
+
+    for (int i = 0; i < hp; ++i)
+    {
+        hpUIImage[i] = ImageManager::GetSingleton()->FindImage("Image/character/helth_icon.bmp");
+    }
 
     fallingSpeed = 0.0f;
     fallingMaxSpeed = 500.0f;
@@ -71,18 +75,14 @@ void Player::Update()
         ammo[i].Update();
     }
 
-    playerRect.left = pos.x - 10;
-    playerRect.right = pos.x + 10;
-    playerRect.top = pos.y - 32;
-    playerRect.bottom = pos.y;
+    playerRect.left = (LONG)(pos.x - 10);
+    playerRect.right = (LONG)(pos.x + 10);
+    playerRect.top = (LONG)(pos.y - 32);
+    playerRect.bottom = (LONG)pos.y;
 }
 
 void Player::Render(HDC hdc)
 {
-    char test[128] = { 0 };
-
-    Rectangle(hdc, renderPos.x - 10, renderPos.y - 32, renderPos.x + 10, renderPos.y);
-
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
     {
             ammo[i].Render(hdc);
@@ -95,14 +95,14 @@ void Player::Render(HDC hdc)
             if (fireMotion)
             {
                 playerMotion[(int)EplayerState::Fire]->Render(hdc,
-                    renderPos.x, renderPos.y + 16,
+                    (int)renderPos.x, (int)renderPos.y + 16,
                     playerMotion[(int)playerState]->GetCurrFrameX(),
                     playerMotion[(int)playerState]->GetCurrFrameY());
             }
             else
             {
                 playerMotion[(int)playerState]->Render(hdc,
-                    renderPos.x, renderPos.y + 16,
+                    (int)renderPos.x, (int)renderPos.y + 16,
                     playerMotion[(int)playerState]->GetCurrFrameX(),
                     playerMotion[(int)playerState]->GetCurrFrameY());
             }
@@ -112,20 +112,24 @@ void Player::Render(HDC hdc)
             if (fireMotion)
             {
                 playerMotion[(int)EplayerState::Fire]->Render(hdc,
-                    renderPos.x, renderPos.y,
+                    (int)renderPos.x, (int)renderPos.y,
                     playerMotion[(int)playerState]->GetCurrFrameX(),
                     playerMotion[(int)playerState]->GetCurrFrameY());
             }
             else
             {
                 playerMotion[(int)playerState]->Render(hdc,
-                    renderPos.x, renderPos.y,
+                    (int)renderPos.x, (int)renderPos.y,
                     playerMotion[(int)playerState]->GetCurrFrameX(),
                     playerMotion[(int)playerState]->GetCurrFrameY());
             }
         }
     }
 
+    for (int i = 0; i < hp; ++i)
+    {
+        hpUIImage[i]->Render(hdc, WIN_SIZE_X - 100 + (i * 20), 30);
+    }
 }
 
 
@@ -138,7 +142,6 @@ void Player::Release()
 
     delete[] ammo;
     ammo = nullptr;
-
 }
 
 void Player::SetAmmoCollision(HDC mapPixel, Turtle* enemy, QueenEarlong* boss)
@@ -155,8 +158,6 @@ void Player::SetAmmoCollision(HDC mapPixel, Turtle* enemy, QueenEarlong* boss)
 
 void Player::inputAction()  //플레이어 행동 입력
 {
-    prevPos = pos;
-
     if (Input::GetButton(VK_LSHIFT))
     {
         shiftKeyPressed = true;

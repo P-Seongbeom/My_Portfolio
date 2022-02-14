@@ -26,16 +26,16 @@ HRESULT PlayInStageScene::Init()
     boss->Init();
 
     cameraMoveXZone = new RECT;
-    cameraMoveXZone->left = WIN_SIZE_X / 2.0;
-    cameraMoveXZone->right = WIN_SIZE_X * 1.5;
+    cameraMoveXZone->left = (LONG)WIN_SIZE_X / 2.0;
+    cameraMoveXZone->right = (LONG)WIN_SIZE_X * 1.5;
     cameraMoveXZone->top = 0;
-    cameraMoveXZone->bottom = WIN_SIZE_Y * 2.0;
+    cameraMoveXZone->bottom = (LONG)WIN_SIZE_Y * 2.0;
 
     cameraMoveYZone = new RECT;
     cameraMoveYZone->left = 0;
-    cameraMoveYZone->right = WIN_SIZE_X * 2.0;
-    cameraMoveYZone->top = WIN_SIZE_Y / 2.0;
-    cameraMoveYZone->bottom = WIN_SIZE_Y * 1.5;
+    cameraMoveYZone->right = (LONG)(WIN_SIZE_X * 2.0);
+    cameraMoveYZone->top = (LONG)(WIN_SIZE_Y / 2.0);
+    cameraMoveYZone->bottom = (LONG)(WIN_SIZE_Y * 1.5);
 
     cameraRenderPos.x = player->GetPos().x - WIN_SIZE_X / 2;
     cameraRenderPos.y = player->GetPos().y - WIN_SIZE_Y / 2;
@@ -52,8 +52,8 @@ void PlayInStageScene::Update()
     player->Update();
     moveCamera();
     turtle->Update();
+    boss->SetTarget(player);
     boss->Update();
-    boss->SetBrickTarget(player);
     turtle->SetRenderPos(turtle->GetPos(), player->GetPos(), cameraMoveXZone, cameraMoveYZone);
     boss->SetRenderPos(boss->GetPos(), player->GetPos(), cameraMoveXZone, cameraMoveYZone);
     if (boss->GetIsDead())

@@ -24,14 +24,16 @@ private:
 	RECT brickCollisionRect = {};
 	RECT updateRect = {};
 
+	Player* target = nullptr;
+
 	void makeBrick();
-	void dropBrick(Player* target);
+	void dropBrick();
 	float brickFallingSpeed = 0.0f;
 	float brickFallingMaxSpeed = 0.0f;
 	bool makedBirck = false;
 	float dropBrickTimer = 0.0f;
 
-	void shouting(Player* player);
+	void shouting();
 	float pushPlayerPos = 0.0f;
 
 	void randomStateSetting();
@@ -75,7 +77,7 @@ public:
 
 	RECT GetCollisionRect() { return this->queenCollisionRect; }
 
-	void SetBrickTarget(Player* player);
+	void SetTarget(Player* player);
 
 	void SetRenderPos(POINTFLOAT pos1, POINTFLOAT pos2, RECT* zone1, RECT* zone2);
 

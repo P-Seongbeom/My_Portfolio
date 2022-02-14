@@ -16,7 +16,7 @@ void PixelCollider::CollideLeft(HDC hdc, GameObject* object, POINTFLOAT pt, int 
 {
     for (int i = 2; i < bodySizeY / 2; ++i)
     {
-        if (checkPixel(hdc, pt.x - bodySizeX / 2, pt.y - bodySizeY / 2 - i, color) == false)
+        if (checkPixel(hdc, (int)pt.x - bodySizeX / 2, (int)pt.y - bodySizeY / 2 - i, color) == false)
         {
             collidedLeft = true;
             object->SetLeftCollision(true);
@@ -29,7 +29,7 @@ void PixelCollider::CollideLeft(HDC hdc, GameObject* object, POINTFLOAT pt, int 
             break;
         }
 
-        if (checkPixel(hdc, pt.x - bodySizeX / 2 + 1, pt.y - bodySizeY / 2 - i, color) == false)
+        if (checkPixel(hdc, (int)pt.x - bodySizeX / 2 + 1, (int)pt.y - bodySizeY / 2 - i, color) == false)
         {
             collidedLeft = true;
             object->SetPosX(object->GetPos().x + 1);
@@ -50,7 +50,7 @@ void PixelCollider::CollideRight(HDC hdc, GameObject* object, POINTFLOAT pt, int
     for (int i = 2; i < bodySizeY / 2; ++i)
     {
     
-        if (checkPixel(hdc, pt.x + bodySizeX / 2, pt.y - bodySizeY / 2 - i, color) == false)
+        if (checkPixel(hdc, (int)pt.x + bodySizeX / 2, (int)pt.y - bodySizeY / 2 - i, color) == false)
         {
             collidedRight = true;
             object->SetRightCollision(true);
@@ -63,7 +63,7 @@ void PixelCollider::CollideRight(HDC hdc, GameObject* object, POINTFLOAT pt, int
             break;
         }
     
-        if (checkPixel(hdc, pt.x + bodySizeX / 2 - 1, pt.y - bodySizeY / 2 - i, color) == false)
+        if (checkPixel(hdc, (int)pt.x + bodySizeX / 2 - 1, (int)pt.y - bodySizeY / 2 - i, color) == false)
         {
             collidedRight = true;
             object->SetPosX(object->GetPos().x - 1);
@@ -83,7 +83,7 @@ void PixelCollider::CollideUpLeft(HDC hdc, GameObject* object, POINTFLOAT pt, in
 {
     for (int i = 3; i < bodySizeX / 2 + 1; ++i)
     {
-        if (checkPixel(hdc, pt.x - bodySizeX / 2 + i, pt.y - bodySizeY, color) == false)
+        if (checkPixel(hdc, (int)pt.x - bodySizeX / 2 + i, (int)pt.y - bodySizeY, color) == false)
         {
             if (!(r == 34 && g == 177 && b == 76))//로프가 아닌 벽
             {
@@ -111,7 +111,7 @@ void PixelCollider::CollideUpRight(HDC hdc, GameObject* object, POINTFLOAT pt, i
 
     for (int i = 3; i < bodySizeX / 2 + 1; ++i)
     {
-        if (checkPixel(hdc, pt.x + bodySizeX / 2 - i, pt.y - bodySizeY, color) == false)
+        if (checkPixel(hdc, (int)pt.x + bodySizeX / 2 - i, (int)pt.y - bodySizeY, color) == false)
         {
             if (!(r == 34 && g == 177 && b == 76))//로프가 아닌 벽
             {
@@ -144,7 +144,7 @@ void PixelCollider::CollideDownLeft(HDC hdc, GameObject* object, POINTFLOAT pt, 
 {
     for (int i = 3; i < bodySizeX / 2 + 1; ++i)
     {
-        if (checkPixel(hdc, pt.x - bodySizeX / 2 + i, pt.y, color) == false)
+        if (checkPixel(hdc, (int)pt.x - bodySizeX / 2 + i, (int)pt.y, color) == false)
         {
             collidedDownLeft = true;
 
@@ -162,7 +162,7 @@ void PixelCollider::CollideDownLeft(HDC hdc, GameObject* object, POINTFLOAT pt, 
             }
             break;
         }
-        else if (checkPixel(hdc, pt.x - bodySizeX / 2 + i, pt.y, color) == false && (r == 34 && g == 177 && b == 76))
+        else if (checkPixel(hdc, (int)pt.x - bodySizeX / 2 + i, (int)pt.y, color) == false && (r == 34 && g == 177 && b == 76))
         {
             collidedDownLeft = false;
             object->SetBottomCollision(false);
@@ -179,7 +179,7 @@ void PixelCollider::CollideDownLeft(HDC hdc, GameObject* object, POINTFLOAT pt, 
 
 void PixelCollider::CollideDownCenter(HDC hdc, GameObject* object, POINTFLOAT pt, int bodySizeX, int bodySizeY, COLORREF color)
 {
-    if (checkPixel(hdc, pt.x, pt.y, color) == false)
+    if (checkPixel(hdc, (int)pt.x, (int)pt.y, color) == false)
     {
         collidedDownCenter = true;
         if (object->GetjumpSwitch() == false && (r == 0 && g == 0 && b == 0))
@@ -188,7 +188,7 @@ void PixelCollider::CollideDownCenter(HDC hdc, GameObject* object, POINTFLOAT pt
         }
 
     }
-    else if (checkPixel(hdc, pt.x - bodySizeX / 2, pt.y, color) == false && (r == 237 && g == 28 && b == 36))
+    else if (checkPixel(hdc, (int)pt.x - bodySizeX / 2, (int)pt.y, color) == false && (r == 237 && g == 28 && b == 36))
     {
         collidedDownCenter = true;
         if (object->GetHittedState() == false)
@@ -197,7 +197,7 @@ void PixelCollider::CollideDownCenter(HDC hdc, GameObject* object, POINTFLOAT pt
         }
         object->SetBottomCollision(true);
     }
-    else if (checkPixel(hdc, pt.x - bodySizeX / 2, pt.y, color) == false && (r == 34 && g == 177 && b == 76))
+    else if (checkPixel(hdc, (int)pt.x - bodySizeX / 2, (int)pt.y, color) == false && (r == 34 && g == 177 && b == 76))
     {
         collidedDownCenter = false;
 
@@ -220,7 +220,7 @@ void PixelCollider::CollideDownRight(HDC hdc, GameObject* object, POINTFLOAT pt,
 {
     for (int i = 3; i < bodySizeX / 2 + 1; ++i)
     {
-        if (checkPixel(hdc, pt.x + bodySizeX/2 - i, pt.y, color) == false)
+        if (checkPixel(hdc, (int)pt.x + bodySizeX/2 - i, (int)pt.y, color) == false)
         {
             collidedDownRight = true;
             if (collidedRight == false && (r == 0 && g == 0 && b == 0))
@@ -229,7 +229,7 @@ void PixelCollider::CollideDownRight(HDC hdc, GameObject* object, POINTFLOAT pt,
             }
             break;
         }
-        else if (checkPixel(hdc, pt.x - bodySizeX / 2 + i, pt.y, color) == false && collidedRight == false && (r == 237 && g == 28 && b == 36))
+        else if (checkPixel(hdc, (int)pt.x - bodySizeX / 2 + i, (int)pt.y, color) == false && collidedRight == false && (r == 237 && g == 28 && b == 36))
         {
             collidedDownRight = true;
             if (object->GetHittedState() == false)
@@ -239,7 +239,7 @@ void PixelCollider::CollideDownRight(HDC hdc, GameObject* object, POINTFLOAT pt,
             object->SetBottomCollision(true);
             break;
         }
-        else if (checkPixel(hdc, pt.x - bodySizeX / 2 + i, pt.y, color) == false && (r == 34 && g == 177 && b == 76))
+        else if (checkPixel(hdc, (int)pt.x - bodySizeX / 2 + i, (int)pt.y, color) == false && (r == 34 && g == 177 && b == 76))
         {
             collidedDownRight = false;
 
@@ -266,7 +266,7 @@ void PixelCollider::GoUpStairs(HDC hdc, GameObject* object, POINTFLOAT pt, int b
     {
         for (int i = 3; i < 5; ++i)
         {
-            if (checkPixel(hdc, pt.x - bodySizeX / 2, pt.y - i, RGB(0,0,0)) == true)
+            if (checkPixel(hdc, (int)pt.x - bodySizeX / 2, (int)pt.y - i, RGB(0,0,0)) == true)
             {
                 object->SetPosY(pt.y - object->GetMoveSpeed() * Timer::GetDeltaTime());
                 break;
@@ -278,7 +278,7 @@ void PixelCollider::GoUpStairs(HDC hdc, GameObject* object, POINTFLOAT pt, int b
     {
         for (int i = 3; i < 5; ++i)
         {
-            if (checkPixel(hdc, pt.x + bodySizeX / 2, pt.y - i, RGB(0, 0, 0)) == true)
+            if (checkPixel(hdc, (int)pt.x + bodySizeX / 2, (int)pt.y - i, RGB(0, 0, 0)) == true)
             {
                 object->SetPosY(pt.y - object->GetMoveSpeed() * Timer::GetDeltaTime());
                 break;
@@ -307,7 +307,7 @@ bool PixelCollider::CollideAmmo(HDC hdc, GameObject object, POINTFLOAT pt, int b
 {
     for (int i = 0; i < bodySizeY / 2; ++i)
     {
-        if (checkPixel(hdc, pt.x - bodySizeX / 2, pt.y - bodySizeY / 2 - i, color) == false)
+        if (checkPixel(hdc, (int)pt.x - bodySizeX / 2, (int)pt.y - bodySizeY / 2 - i, color) == false)
         {
             return true;
             break;
@@ -318,7 +318,7 @@ bool PixelCollider::CollideAmmo(HDC hdc, GameObject object, POINTFLOAT pt, int b
             break;
         }
 
-        if (checkPixel(hdc, pt.x - bodySizeX / 2 + 1, pt.y - bodySizeY / 2 - i, color) == false)
+        if (checkPixel(hdc, (int)pt.x - bodySizeX / 2 + 1, (int)pt.y - bodySizeY / 2 - i, color) == false)
         {
             return true;
             break;
@@ -333,7 +333,7 @@ bool PixelCollider::CollideAmmo(HDC hdc, GameObject object, POINTFLOAT pt, int b
     for (int i = 0; i < bodySizeY / 2; ++i)
     {
 
-        if (checkPixel(hdc, pt.x + bodySizeX / 2, pt.y - bodySizeY / 2 - i, color) == false)
+        if (checkPixel(hdc, (int)pt.x + bodySizeX / 2, (int)pt.y - bodySizeY / 2 - i, color) == false)
         {
             return true;
             break;
@@ -344,7 +344,7 @@ bool PixelCollider::CollideAmmo(HDC hdc, GameObject object, POINTFLOAT pt, int b
             break;
         }
 
-        if (checkPixel(hdc, pt.x + bodySizeX / 2 - 1, pt.y - bodySizeY / 2 - i, color) == false)
+        if (checkPixel(hdc, (int)pt.x + bodySizeX / 2 - 1, (int)pt.y - bodySizeY / 2 - i, color) == false)
         {
             return true;
             break;
@@ -355,4 +355,6 @@ bool PixelCollider::CollideAmmo(HDC hdc, GameObject object, POINTFLOAT pt, int b
             break;
         }
     }
+
+    return false;
 }

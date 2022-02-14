@@ -21,7 +21,6 @@ HRESULT TileMap::Init()
 
 void TileMap::Update()
 {
-    //디버깅용 pixel이미지 온오프
     if (Input::GetButtonDown('0') && renderOnOff == false)
     {
         renderOnOff = true;
@@ -29,8 +28,7 @@ void TileMap::Update()
     else if (Input::GetButtonDown('0') && renderOnOff == true)
     {
         renderOnOff = false;
-    }
-        
+    }   
 }
 
 void TileMap::Render(HDC hdc)
@@ -48,9 +46,8 @@ void TileMap::BackGroundRender(HDC hdc, float cameraX, float cameraY)
     adjustRenderRatio(hdc, 2, cameraX, cameraY, 0.8f);
     adjustRenderRatio(hdc, 3, cameraX, cameraY, 1);
 
-    //디버깅용 pixel이미지 온오프
     if (renderOnOff)
-    pixelImage->Render(hdc, pixelImage->GetWidth()/2 - cameraX * 32, pixelImage->GetHeight()/2 - cameraY * 32);
+    pixelImage->Render(hdc, (int)(pixelImage->GetWidth()/2 - cameraX * TILE_SIZE), (int)(pixelImage->GetHeight()/2 - cameraY * TILE_SIZE));
 }
 
 void TileMap::FrontStructureRender(HDC hdc, float cameraX, float cameraY)
@@ -61,13 +58,13 @@ void TileMap::FrontStructureRender(HDC hdc, float cameraX, float cameraY)
 
 void TileMap::adjustRenderRatio(HDC hdc, int renderIdx, float cameraX, float cameraY, float ratio)
 {
-    for (int i = cameraY * ratio; i < RENDER_TILE_COUNT_Y + cameraY * ratio; ++i)
+    for (int i = (int)(cameraY * ratio); i < RENDER_TILE_COUNT_Y + cameraY * ratio; ++i)
     {
-        for (int j = cameraX * ratio; j < RENDER_TILE_COUNT_X + cameraX * ratio; ++j)
+        for (int j = (int)(cameraX * ratio); j < RENDER_TILE_COUNT_X + cameraX * ratio; ++j)
         {
             mapTile[renderIdx]->Render(hdc,
-                tileInfo[renderIdx][i][j].rc.left + TILE_SIZE / 2 - cameraX * TILE_SIZE * ratio,
-                tileInfo[renderIdx][i][j].rc.top + TILE_SIZE - cameraY * TILE_SIZE * ratio,
+                (int)(tileInfo[renderIdx][i][j].rc.left + TILE_SIZE / 2 - cameraX * TILE_SIZE * ratio),
+                (int)(tileInfo[renderIdx][i][j].rc.top + TILE_SIZE - cameraY * TILE_SIZE * ratio),
                 tileInfo[renderIdx][i][j].frameX,
                 tileInfo[renderIdx][i][j].frameY);
         }
@@ -87,6 +84,7 @@ void TileMap::LoadMapFile(int mapNum)
         NULL);
 
     DWORD readByte;
+
     if (ReadFile(hFile, tileInfo, sizeof(tileInfo), &readByte, NULL) == false)
     {
         MessageBox(_hWnd, "맵 데이터 불러오기 실패", "에러", MB_OK);

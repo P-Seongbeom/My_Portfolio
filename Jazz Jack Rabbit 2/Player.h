@@ -14,22 +14,23 @@ class Player : public GameObject
 private:
 	Ammo* ammo = nullptr;
 	Image* playerMotion[(int)EplayerState::End] = {};
-	Image* collisionRect = {};
+	Image* hpUIImage[5] = {};
 
 	Echaracter playerCharacter = {};
 	EplayerState playerState = {};
 	EmoveDir playerMoveDir = {};
 
 	POINTFLOAT renderPos = {};
-	POINTFLOAT prevPos = {};
+	POINTFLOAT hpUIPos = {};
 
 	RECT playerRect = {};
 
 	int playerLife = 0;
 
+	bool isCollided = false;
+
 	void inputAction();
 	void skiddingPlayer();
-	//float moveSpeed = 0.0f;
 	float moveMaxSpeed = 0.0f;
 	float accel = 0.0f;
 	float moveKeyPressTime = 0.0f;
@@ -37,24 +38,17 @@ private:
 	bool stayGetDown = false;
 	bool shiftKeyPressed = false;
 	bool moveKeyPressed = false;
-	//bool collideLeft = false;
-	//bool collideRight = false;
 
 	void jumpPlayer();
 	void initJump();
-	//bool jumpSwitch = false;
 	float jumpVelocity = 0.0f;
 	float gravity = 0.0f;
-	//bool collideTop = false;
-	//bool collideRope = false;
 	bool upperCut = false;
 	float stayJumpKeyTime = 0;
 
 	void freeFall();
 	float fallingSpeed = 0.0f;
 	float fallingMaxSpeed = 0.0f;
-	//bool canfalling = true;
-	//bool collideBottom = false;
 
 	void quickDown();
 	bool quickDownSwitch = false;
@@ -82,7 +76,6 @@ private:
 
 	//화면상 캐릭터 위치 설정
 	void unlockingCenterPlayer();
-	//void releaseLooking();
 	bool releasing = false;
 	bool lookUp = false;
 
@@ -115,9 +108,6 @@ public:
 
 	RECT GetCollisionRect() { return this->playerRect; }
 
-	//디버깅용
-	float getfallspeed() { return this->fallingSpeed; }
-	bool getfall() { return this->canfalling; }
-	bool getCollbot() { return this->collideBottom; }
+	bool GetIsCollidedLeft() { return this->collideLeft; }
 };
 

@@ -35,15 +35,12 @@ void StageClearScene::Update()
 
 	stageClearScene->SetCurrFrameX(renderFrameX);
 	stageClearScene->SetCurrFrameY(renderFrameY);
-
-	//cout << renderPos.x << endl;
-	//cout << renderPos.y << endl;
 }
 
 void StageClearScene::Render(HDC hdc)
 {
 	background->Render(hdc, WIN_SIZE_X / 2, WIN_SIZE_Y / 2);
-	stageClearScene->Render(hdc, renderPos.x, renderPos.y,
+	stageClearScene->Render(hdc, (int)renderPos.x, (int)renderPos.y,
 							stageClearScene->GetCurrFrameX(),
 							stageClearScene->GetCurrFrameY());
 }

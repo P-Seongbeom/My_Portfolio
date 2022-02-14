@@ -67,4 +67,4 @@ enum class EmoveDir { Left, Right, Up, Down };
 
 //ÃÑ¾Ë °ü·Ã
 #define AMMO_PACK_COUNT		10
-#define AMMO_SPEED			640
+#define AMMO_SPEED			640.0f

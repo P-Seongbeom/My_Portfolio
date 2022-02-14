@@ -19,34 +19,30 @@ HRESULT Ammo::Init()
 
 void Ammo::Update()
 {
-    explosionEffect(0.1, 8);
-    fired();
+    explosionEffect(0.05f, 8);
     if (!ammoAlive) return;
-    collissionRect.left = pos.x - 5;
-    collissionRect.right = pos.x + 5;
-    collissionRect.top = pos.y - 10;
-    collissionRect.bottom = pos.y;
-    //cout << "¿Þ : " << collideLeft << endl;
-    //cout << "¿À : " << collideRight << endl;
+    fired();
+    collissionRect.left = (LONG)(pos.x - 5);
+    collissionRect.right = (LONG)(pos.x + 5);
+    collissionRect.top = (LONG)(pos.y - 10);
+    collissionRect.bottom = (LONG)pos.y;
 }
 
 void Ammo::Render(HDC hdc)
 {
     if (effectSwitch)
     {
-        ammoEffectImage->Render(hdc, prevRenderPos.x, prevRenderPos.y + 10, renderFrameX, renderFrameY);
+        ammoEffectImage->Render(hdc, (int)prevRenderPos.x, (int)(prevRenderPos.y + 10), renderFrameX, renderFrameY);
     }
     if (ammoAlive)
     {
-        Rectangle(hdc, renderPos.x - 5, renderPos.y - 5, renderPos.x + 5, renderPos.y + 5);
-        ammoImage->Render(hdc, renderPos.x, renderPos.y);
+        ammoImage->Render(hdc, (int)renderPos.x, (int)renderPos.y);
     }
 }
 
 void Ammo::Release()
 {
     SAFE_DELETE(pixelCollider);
-    //SAFE_DELETE(collissionRect);
 }
 
 void Ammo::CollideObject(HDC mapPixel, Turtle* enemy, QueenEarlong* boss, GameObject ammo)
@@ -112,21 +108,21 @@ void Ammo::fired()
             {
                 pos.x += AMMO_SPEED * Timer::GetDeltaTime();
                 renderPos.x += AMMO_SPEED * Timer::GetDeltaTime();
-                ammoMoveDis += AMMO_SPEED * Timer::GetDeltaTime();
+                ammoMoveDistance += AMMO_SPEED * Timer::GetDeltaTime();
             }
             else if (ammoDir == EmoveDir::Left)
             {
                 pos.x -= AMMO_SPEED * Timer::GetDeltaTime();
                 renderPos.x -= AMMO_SPEED * Timer::GetDeltaTime();
-                ammoMoveDis += AMMO_SPEED * Timer::GetDeltaTime();
+                ammoMoveDistance += AMMO_SPEED * Timer::GetDeltaTime();
             }
 
-            if (ammoMoveDis > 280 || collideObject)
+            if (ammoMoveDistance > 280 || collideObject)
             {
                 isFire = false;
                 ammoAlive = false;
                 fireTimer = 0;
-                ammoMoveDis = 0;
+                ammoMoveDistance = 0;
                 collideObject = false;
                 effectSwitch = true;
                 prevRenderPos = renderPos;
