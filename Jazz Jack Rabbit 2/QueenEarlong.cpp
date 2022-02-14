@@ -17,8 +17,8 @@ HRESULT QueenEarlong::Init()
 	pos.x = BOSS_POS_X;
 	pos.y = BOSS_POS_Y;
 
-    updateRect.left = (WIN_SIZE_X * 2) - (TILE_SIZE * 12);
-    updateRect.top = (WIN_SIZE_Y * 2) - (TILE_SIZE * 12);
+    updateRect.left = (WIN_SIZE_X * 2) - (TILE_SIZE * 15);
+    updateRect.top = (WIN_SIZE_Y * 2) - (TILE_SIZE * 15);
     updateRect.right = WIN_SIZE_X * 2;
     updateRect.bottom = WIN_SIZE_Y * 2;
 
@@ -41,19 +41,23 @@ void QueenEarlong::Update()
     {
         action();
 
+        dropBrick();
+
+        shouting();
+
         getDamage();
 
         freeFall();
 
-        queenCollisionRect.left = pos.x - 16;
-        queenCollisionRect.right = pos.x + 16;
-        queenCollisionRect.top = pos.y - 40;
-        queenCollisionRect.bottom = pos.y;
+        queenCollisionRect.left = (LONG)(pos.x - 16);
+        queenCollisionRect.right = (LONG)(pos.x + 16);
+        queenCollisionRect.top = (LONG)(pos.y - 40);
+        queenCollisionRect.bottom = (LONG)pos.y;
 
-        brickCollisionRect.left = brickPos.x - 14;
-        brickCollisionRect.right = brickPos.x + 14;
-        brickCollisionRect.top = brickPos.y - 24;
-        brickCollisionRect.bottom = brickPos.y;
+        brickCollisionRect.left = (LONG)(brickPos.x - 14);
+        brickCollisionRect.right = (LONG)(brickPos.x + 14);
+        brickCollisionRect.top = (LONG)(brickPos.y - 24);
+        brickCollisionRect.bottom = (LONG)brickPos.y;
     }
 }
 
@@ -61,15 +65,13 @@ void QueenEarlong::Render(HDC hdc)
 {
     if (blinking == false)
     {
-        Rectangle(hdc, renderPos.x - 16, renderPos.y - 32, renderPos.x + 16, renderPos.y);
-
-        QueenMotion[(int)queenState]->Render(hdc, renderPos.x, renderPos.y,
+        QueenMotion[(int)queenState]->Render(hdc, (int)renderPos.x, (int)renderPos.y,
                                              QueenMotion[(int)queenState]->GetCurrFrameX(),
                                              QueenMotion[(int)queenState]->GetCurrFrameY());
 
     }
 
-    QueensBrick->Render(hdc, brickRenderPos.x, brickRenderPos.y);
+    QueensBrick->Render(hdc, (int)brickRenderPos.x, (int)brickRenderPos.y);
 }
 
 void QueenEarlong::Release()
@@ -85,7 +87,7 @@ void QueenEarlong::makeBrick()
     makedBirck = true;
 }
 
-void QueenEarlong::dropBrick(Player* target)
+void QueenEarlong::dropBrick()
 {
     if (makedBirck == false) return;
 
@@ -109,14 +111,14 @@ void QueenEarlong::dropBrick(Player* target)
     }
 }
 
-void QueenEarlong::shouting(Player* player)
+void QueenEarlong::shouting()
 {
-    if (queenState != EQueenState::Shouting) return;
+    if (queenState != EQueenState::Shouting || target->GetIsCollidedLeft()) return;
 
     if (renderFrameX >= 2 && renderFrameX <= 4)
     {
-        pushPlayerPos = player->GetPos().x - (PLAYER_MAX_SPEED * 0.8 * Timer::GetDeltaTime());
-        player->SetPosX(pushPlayerPos);
+        pushPlayerPos = target->GetPos().x - (PLAYER_MAX_SPEED * 0.8f * Timer::GetDeltaTime());
+        target->SetPosX(pushPlayerPos);
     }
 }
 
@@ -306,10 +308,9 @@ bool QueenEarlong::canUpdate()
     return false;
 }
 
-void QueenEarlong::SetBrickTarget(Player* player)
+void QueenEarlong::SetTarget(Player* player)
 {
-    dropBrick(player);
-    shouting(player);
+    target = player;
 }
 
 void QueenEarlong::SetRenderPos(POINTFLOAT pos1, POINTFLOAT pos2, RECT* zone1, RECT* zone2)

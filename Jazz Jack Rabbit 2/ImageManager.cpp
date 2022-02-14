@@ -22,6 +22,8 @@ void ImageManager::Init()
     ImageManager::GetSingleton()->AddImage("Image/character/uppercut.bmp", 680, 122, 10, 2, true, RGB(44, 102, 150));
     ImageManager::GetSingleton()->AddImage("Image/character/shooting.bmp", 100, 348, 2, 6, true, RGB(44, 102, 150));
 
+    ImageManager::GetSingleton()->AddImage("Image/character/helth_icon.bmp", 15, 12, 1, 1, true, RGB(0, 128, 255));
+
     ImageManager::GetSingleton()->AddImage("Image/enemy/turtle/turtlegoon_walk.bmp", 1488, 126, 12, 2, true, RGB(0, 128, 255));
     ImageManager::GetSingleton()->AddImage("Image/enemy/turtle/turtlegoon_hide.bmp", 1488, 252, 12, 4, true, RGB(0, 128, 255));
     ImageManager::GetSingleton()->AddImage("Image/enemy/turtle/turtlegoon_die.bmp", 124, 126, 1, 2, true, RGB(0, 128, 255));

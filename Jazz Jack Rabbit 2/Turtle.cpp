@@ -33,7 +33,7 @@ void Turtle::Update()
 
 void Turtle::Render(HDC hdc)
 {
-    turtleMotion[(int)turtleState]->Render(hdc, renderPos.x, renderPos.y + 5, 
+    turtleMotion[(int)turtleState]->Render(hdc, (int)renderPos.x, (int)renderPos.y + 5,
                                             turtleMotion[(int)turtleState]->GetCurrFrameX(), 
                                             turtleMotion[(int)turtleState]->GetCurrFrameY());
 }
@@ -51,10 +51,10 @@ void Turtle::action()
     {
         moveTimer += Timer::GetDeltaTime();
 
-        collisionRect.left = pos.x - 16;
-        collisionRect.right = pos.x + 16;
-        collisionRect.top = pos.y - 32;
-        collisionRect.bottom = pos.y;
+        collisionRect.left = (LONG)(pos.x - 16);
+        collisionRect.right = (LONG)(pos.x + 16);
+        collisionRect.top = (LONG)(pos.y - 32);
+        collisionRect.bottom = (LONG)pos.y;
 
         if (turtleMoveDir == EmoveDir::Right)
         {
@@ -88,10 +88,10 @@ void Turtle::action()
     }
     case EturtleState::Hide:
     {
-        collisionRect.left = pos.x - 16;
-        collisionRect.right = pos.x + 16;
-        collisionRect.top = pos.y - 16;
-        collisionRect.bottom = pos.y;
+        collisionRect.left = (LONG)(pos.x - 16);
+        collisionRect.right = (LONG)(pos.x + 16);
+        collisionRect.top = (LONG)(pos.y - 16);
+        collisionRect.bottom = (LONG)pos.y;
 
         hidingMotion(0.1f, 12);
 
@@ -113,10 +113,10 @@ void Turtle::action()
     }
     case EturtleState::Die:
     {
-        collisionRect.left = pos.x - 16;
-        collisionRect.right = pos.x + 16;
-        collisionRect.top = pos.y - 16;
-        collisionRect.bottom = pos.y;
+        collisionRect.left = (LONG)(pos.x - 16);
+        collisionRect.right = (LONG)(pos.x + 16);
+        collisionRect.top = (LONG)(pos.y - 16);
+        collisionRect.bottom = (LONG)pos.y;
 
         deadMotion();
         break;

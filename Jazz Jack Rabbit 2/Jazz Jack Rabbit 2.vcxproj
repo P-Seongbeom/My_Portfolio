@@ -156,7 +156,6 @@
     <ClCompile Include="QueenEarlong.cpp" />
     <ClCompile Include="RectCollider.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Score.cpp" />
     <ClCompile Include="ScoreObject.cpp" />
     <ClCompile Include="StageClearScene.cpp" />
     <ClCompile Include="TileMap.cpp" />
@@ -188,7 +187,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Score.h" />
     <ClInclude Include="ScoreObject.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="StageClearScene.h" />

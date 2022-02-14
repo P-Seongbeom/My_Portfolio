@@ -78,9 +78,6 @@
     <ClCompile Include="Ammo.cpp">
       <Filter>MainGame\Ammo</Filter>
     </ClCompile>
-    <ClCompile Include="Score.cpp">
-      <Filter>MainGame\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Life.cpp">
       <Filter>MainGame\UI</Filter>
     </ClCompile>
@@ -157,9 +154,6 @@
     </ClInclude>
     <ClInclude Include="Ammo.h">
       <Filter>MainGame\Ammo</Filter>
-    </ClInclude>
-    <ClInclude Include="Score.h">
-      <Filter>MainGame\UI</Filter>
     </ClInclude>
     <ClInclude Include="Gun.h">
       <Filter>MainGame\UI</Filter>

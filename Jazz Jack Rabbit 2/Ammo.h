@@ -27,7 +27,7 @@ private:
 
 	void fired();
 	float fireTimer = 0.0f;
-	int ammoMoveDis = 0;
+	float ammoMoveDistance = 0;
 	bool isFire = false;
 	bool ammoAlive = false;
 	bool changeAmmo = false;

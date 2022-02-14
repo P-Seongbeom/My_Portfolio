@@ -232,6 +232,7 @@ void TileMapToolScene::SaveMap()
 {
     int saveNum;
     cout << "저장할 맵 번호 입력" << endl;
+
     cin >> saveNum;
 
     string saveFileName = "Save/saveMapData_" + to_string(saveNum);
