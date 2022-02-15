@@ -12,7 +12,7 @@ void ImageManager::Init()
     ImageManager::GetSingleton()->AddImage("Image/tilemap/CollisionPixel.bmp", 96, 224, 3, 7, true, RGB(87, 0, 203));
     ImageManager::GetSingleton()->AddImage("Image/tilemap/pixelMap1.bmp", 1280, 960, 1, 1, true, RGB(87, 0, 203));
 
-    ImageManager::GetSingleton()->AddImage("Image/character/jazz_stand.bmp", 1296, 110, 27, 2, true, RGB(44, 102, 150));
+    ImageManager::GetSingleton()->AddImage("Image/character/jazz_idle.bmp", 1296, 110, 27, 2, true, RGB(44, 102, 150));
     ImageManager::GetSingleton()->AddImage("Image/character/jazz_walk.bmp", 448, 106, 8, 2, true, RGB(44, 102, 150));
     ImageManager::GetSingleton()->AddImage("Image/character/jazz_run.bmp", 277, 106, 4, 2, true, RGB(44, 102, 150));
     ImageManager::GetSingleton()->AddImage("Image/character/jump.bmp", 522, 168, 9, 3, true, RGB(44, 102, 150));

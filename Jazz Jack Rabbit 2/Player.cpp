@@ -6,7 +6,7 @@
 
 HRESULT Player::Init()
 {
-    playerMotion[(int)EplayerState::Stand] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_stand.bmp");
+    playerMotion[(int)EplayerState::Idle] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_idle.bmp");
     playerMotion[(int)EplayerState::Walk] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_walk.bmp");
     playerMotion[(int)EplayerState::Run] = ImageManager::GetSingleton()->FindImage("Image/character/jazz_run.bmp");
     playerMotion[(int)EplayerState::Jump] = ImageManager::GetSingleton()->FindImage("Image/character/jump.bmp");
@@ -212,7 +212,7 @@ void Player::inputAction()  //플레이어 행동 입력
 
             if (collideBottom)
             {
-                playerState = EplayerState::Stand;
+                playerState = EplayerState::Idle;
             }
             initMotionFrame();
         }
@@ -255,7 +255,7 @@ void Player::inputAction()  //플레이어 행동 입력
 
             if (collideBottom)
             {
-                playerState = EplayerState::Stand;
+                playerState = EplayerState::Idle;
             }
             initMotionFrame();
         }
@@ -314,9 +314,12 @@ void Player::inputAction()  //플레이어 행동 입력
 
     if (Input::GetButtonDown(VK_LCONTROL))
     {
-        fireAmmo = true;
-        fireMotion = true;
-        fireMotionTimer = 0;
+        if (false == (playerState == EplayerState::QuickDown || playerState == EplayerState::UpperCut))
+        {
+            fireAmmo = true;
+            fireMotion = true;
+            fireMotionTimer = 0;
+        }
     }
 
     unlockingCenterPlayer();
@@ -447,11 +450,11 @@ void Player::freeFall()
             playerState == EplayerState::Jump || playerState == EplayerState::Rope ||
             playerState == EplayerState::UpperCut))
         {
-            if (playerState != EplayerState::Stand)
+            if (playerState != EplayerState::Idle)
             {
                 initMotionFrame();
             }
-            playerState = EplayerState::Stand;
+            playerState = EplayerState::Idle;
         }
     }
 }
@@ -470,7 +473,7 @@ void Player::quickDown()
         jumpSwitch = false;
         canfalling = false;
         canFire = true;
-        playerState = EplayerState::Stand;
+        playerState = EplayerState::Idle;
         fallingSpeed = 0;
         moveSpeed = 0;
         quickDownSwitch = false;
@@ -490,15 +493,15 @@ void Player::characterMotion()
 {
     switch (playerState)
     {
-    case EplayerState::Stand:
+    case EplayerState::Idle:
     {
         if (fireMotion)
         {
-            motionAnimator((int)EplayerState::Stand, 0, 0.15f, 2);
+            motionAnimator((int)EplayerState::Idle, 0, 0.15f, 2);
         }
         else
         {
-            motionAnimator((int)EplayerState::Stand, 2, 0.1f, 27);
+            motionAnimator((int)EplayerState::Idle, 2, 0.1f, 27);
         }
         break;
     }

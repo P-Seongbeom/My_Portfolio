@@ -9,7 +9,7 @@ class QueenEarlong;
 class Player : public GameObject
 {
 	enum class Echaracter { jazz, spaz, Lori };
-	enum class EplayerState { Stand, Walk, Run, Jump, Rope, Fire, Falling, QuickDown, UpperCut, End };
+	enum class EplayerState { Idle, Walk, Run, Jump, Rope, Fire, Falling, QuickDown, UpperCut, End };
 
 private:
 	Ammo* ammo = nullptr;

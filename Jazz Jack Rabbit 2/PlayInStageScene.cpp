@@ -26,10 +26,10 @@ HRESULT PlayInStageScene::Init()
     boss->Init();
 
     cameraMoveXZone = new RECT;
-    cameraMoveXZone->left = (LONG)WIN_SIZE_X / 2.0;
-    cameraMoveXZone->right = (LONG)WIN_SIZE_X * 1.5;
+    cameraMoveXZone->left = (LONG)(WIN_SIZE_X / 2.0);
+    cameraMoveXZone->right = (LONG)(WIN_SIZE_X * 1.5);
     cameraMoveXZone->top = 0;
-    cameraMoveXZone->bottom = (LONG)WIN_SIZE_Y * 2.0;
+    cameraMoveXZone->bottom = (LONG)(WIN_SIZE_Y * 2.0);
 
     cameraMoveYZone = new RECT;
     cameraMoveYZone->left = 0;
