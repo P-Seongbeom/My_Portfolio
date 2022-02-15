@@ -43,10 +43,10 @@ private:
 	bool freeCameraMoveZone(RECT* zone, POINTFLOAT ptf);
 
 public:
-	virtual HRESULT Init() override;
-	virtual void Update() override;
-	virtual void Render(HDC hdc) override;
-	virtual void Release() override;
+	virtual HRESULT Init();
+	virtual void Update();
+	virtual void Render(HDC hdc);
+	virtual void Release();
 	virtual ~Turtle() = default;
 
 	RECT GetCollisionRect() { return this->collisionRect; }

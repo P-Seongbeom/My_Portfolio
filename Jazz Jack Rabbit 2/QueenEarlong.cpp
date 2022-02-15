@@ -320,23 +320,19 @@ void QueenEarlong::SetRenderPos(POINTFLOAT pos1, POINTFLOAT pos2, RECT* zone1, R
     if (freeCameraMoveZone(zone1, pos2))
     {
         this->renderPos.x = pos1.x - pos2.x + WIN_SIZE_X / 2;
-        //brickRenderPos.x = brickPos.x - playerPos.x + WIN_SIZE_X / 2;
     }
 
     if (pos2.x <= WIN_SIZE_X / 2)
     {
         this->renderPos.x = pos1.x;
-        //brickRenderPos.x = brickPos.x;
     }
     else if (pos2.x >= WIN_SIZE_X * 1.5)
     {
         this->renderPos.x = pos1.x - WIN_SIZE_X;
-        //brickRenderPos.x = brickPos.x - WIN_SIZE_X;
     }
 
     if (freeCameraMoveZone(zone2, pos2))
     {
         this->renderPos.y = pos1.y - pos2.y + WIN_SIZE_Y / 2;
-        //brickRenderPos.y = brickPos.y - playerPos.y + WIN_SIZE_Y / 2;
     }
 }

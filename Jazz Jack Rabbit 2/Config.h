@@ -35,15 +35,14 @@ typedef struct ArgumentFuncPtr
 
 extern HWND _hWnd;
 extern HINSTANCE _hInst;
-//extern POINT g_ptMouse;
 
 extern int windowSizeX;
 extern int windowSizeY;
 
 //타일맵 관련
 #define TILE_SIZE	32
-#define TILE_COUNT_X	40	//타일맵 툴
-#define TILE_COUNT_Y	30	//타일맵 툴
+#define TILE_COUNT_X	40
+#define TILE_COUNT_Y	30
 #define SAMPLE_TILE_COUNT_X		10
 #define SAMPLE_TILE_COUNT_Y		30
 #define SAMPLE_IMAGE_COUNT		7

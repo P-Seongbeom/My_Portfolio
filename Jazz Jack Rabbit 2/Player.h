@@ -61,12 +61,10 @@ private:
 	int renderFrameX = 0;
 	int renderFrameY = 0;
 
-	//모션 프레임 관련
 	void initMotionFrame();
 	float motionFrameTime = 0.0f;
 	float playerWatingTime = 0.0f;
 
-	//총알
 	void fire();
 	void fireMotionSwitch();
 	bool canFire = true;
@@ -74,7 +72,6 @@ private:
 	bool fireMotion = false;
 	float fireMotionTimer = false;
 
-	//화면상 캐릭터 위치 설정
 	void unlockingCenterPlayer();
 	bool releasing = false;
 	bool lookUp = false;
@@ -86,10 +83,10 @@ private:
 	bool isDead = false;
 
 public:
-	virtual HRESULT Init() override;
-	virtual void Update() override;
-	virtual void Render(HDC hdc) override;
-	virtual void Release() override;
+	virtual HRESULT Init();
+	virtual void Update();
+	virtual void Render(HDC hdc);
+	virtual void Release();
 	virtual ~Player() = default;
 
 	void SetAmmoCollision(HDC mapPixel, Turtle* enemy, QueenEarlong* boss);

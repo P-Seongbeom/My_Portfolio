@@ -37,14 +37,8 @@
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{3b18922b-43b7-439e-adab-b23385e2c4e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Item">
-      <UniqueIdentifier>{9c437b83-887d-41f6-bbb5-42b948cefdaf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="2D Framework\Timer">
       <UniqueIdentifier>{a751eca1-b532-4a08-bd94-6c0109b96d91}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainGame\UI">
-      <UniqueIdentifier>{780c10e8-dd28-4382-9efd-e52cc7976fc2}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainGame\Player">
       <UniqueIdentifier>{d886923b-2e7b-4937-9b65-32734074760c}</UniqueIdentifier>
@@ -72,28 +66,13 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>MainGame\Map</Filter>
     </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>MainGame\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Ammo.cpp">
       <Filter>MainGame\Ammo</Filter>
-    </ClCompile>
-    <ClCompile Include="Life.cpp">
-      <Filter>MainGame\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Gun.cpp">
-      <Filter>MainGame\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreObject.cpp">
-      <Filter>MainGame\Item</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>2D Framework\Manager</Filter>
     </ClCompile>
     <ClCompile Include="TiltleScene.cpp">
-      <Filter>MainGame\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterSelectScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="PlayInStageScene.cpp">
@@ -149,28 +128,13 @@
     <ClInclude Include="TileMap.h">
       <Filter>MainGame\Map</Filter>
     </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>MainGame\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Ammo.h">
       <Filter>MainGame\Ammo</Filter>
-    </ClInclude>
-    <ClInclude Include="Gun.h">
-      <Filter>MainGame\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Life.h">
-      <Filter>MainGame\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreObject.h">
-      <Filter>MainGame\Item</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>2D Framework\Manager</Filter>
     </ClInclude>
     <ClInclude Include="TiltleScene.h">
-      <Filter>MainGame\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterSelectScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="PlayInStageScene.h">

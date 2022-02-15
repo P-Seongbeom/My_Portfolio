@@ -98,7 +98,6 @@ void TileMapToolScene::Update()
         sampleAreaIdx = 6;
     }
 
-    //드래그로 원하는 만큼 타일 선택
     if (PtInRect(&sampleArea[sampleAreaIdx], Input::GetMousePosition()))
     {
         if (Input::GetButtonDown(VK_LBUTTON))
@@ -190,7 +189,6 @@ void TileMapToolScene::Update()
 
 void TileMapToolScene::Render(HDC hdc)
 {
-    //타일맵툴
     for (int i = 0; i < TILE_COUNT_Y; ++i)
     {
         for (int j = 0; j < TILE_COUNT_X; ++j)
@@ -203,12 +201,10 @@ void TileMapToolScene::Render(HDC hdc)
         }
     }
 
-    //우측 샘플 이미지
     sampleImage[sampleAreaIdx]->Render(hdc, 
         TILEMAPTOOL_SIZE_X - sampleImage[sampleAreaIdx]->GetWidth() + sampleImage[sampleAreaIdx]->GetWidth() / 2,
         sampleImage[sampleAreaIdx]->GetHeight() / 2);
 
-    //선택된 샘플 이미지
     for (int j = 0; j < selectedTileCountY; ++j)
     {
         for (int i = 0; i < selectedTileCountX; ++i)

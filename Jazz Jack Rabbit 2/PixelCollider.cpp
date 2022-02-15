@@ -85,13 +85,13 @@ void PixelCollider::CollideUpLeft(HDC hdc, GameObject* object, POINTFLOAT pt, in
     {
         if (checkPixel(hdc, (int)pt.x - bodySizeX / 2 + i, (int)pt.y - bodySizeY, color) == false)
         {
-            if (!(r == 34 && g == 177 && b == 76))//로프가 아닌 벽
+            if (!(r == 34 && g == 177 && b == 76))
             {
                 collidedUpLeft = true;
                 object->SetTopCollision(true);
                 break;
             }
-            else if (r == 34 && g == 177 && b == 76)//로프일때
+            else if (r == 34 && g == 177 && b == 76)
             {
                 collidedUpLeft = true;
                 object->SetRopeCollision(true);
@@ -113,13 +113,13 @@ void PixelCollider::CollideUpRight(HDC hdc, GameObject* object, POINTFLOAT pt, i
     {
         if (checkPixel(hdc, (int)pt.x + bodySizeX / 2 - i, (int)pt.y - bodySizeY, color) == false)
         {
-            if (!(r == 34 && g == 177 && b == 76))//로프가 아닌 벽
+            if (!(r == 34 && g == 177 && b == 76))
             {
                 collidedUpRight = true;
                 object->SetTopCollision(true);
                 break;
             }
-            else if (r == 34 && g == 177 && b == 76)//로프일때
+            else if (r == 34 && g == 177 && b == 76)
             {
                 collidedUpRight = true;
                 object->SetRopeCollision(true);
@@ -209,7 +209,7 @@ void PixelCollider::CollideDownCenter(HDC hdc, GameObject* object, POINTFLOAT pt
     else
     {
         collidedDownCenter = false;
-        if (collidedDownLeft == false)//좌측계단 오름시 낙하동작 방지
+        if (collidedDownLeft == false)
         {
             object->SetBottomCollision(false);
         }
@@ -252,7 +252,7 @@ void PixelCollider::CollideDownRight(HDC hdc, GameObject* object, POINTFLOAT pt,
         {
             collidedDownRight = false;
 
-            if (collidedDownLeft == false)//좌측계단 오름시 낙하동작 방지
+            if (collidedDownLeft == false)
             {
                 object->SetBottomCollision(false);
             }

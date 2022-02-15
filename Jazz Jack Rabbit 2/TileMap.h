@@ -18,10 +18,10 @@ private:
 
 public:
 	virtual ~TileMap() = default;
-	virtual HRESULT Init() override;
-	virtual void Update() override;
-	virtual void Render(HDC hdc) override;
-	virtual void Release() override;
+	virtual HRESULT Init();
+	virtual void Update();
+	virtual void Render(HDC hdc);
+	virtual void Release();
 
 	void BackGroundRender(HDC hdc, float cameraX, float cameraY);
 	void FrontStructureRender(HDC hdc, float cameraX, float cameraY);

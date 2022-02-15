@@ -19,18 +19,18 @@ protected:
 	bool getHit = false;
 
 public:
+	virtual ~GameObject();
+
 	void SetPos(POINTFLOAT pos) { this->pos = pos; }
 	POINTFLOAT GetPos() { return this->pos = pos; }
-
-	virtual ~GameObject();
+	void SetPosX(float posx) { this->pos.x = posx; }
+	void SetPosY(float posy) { this->pos.y = posy; }
 
 	void SetBottomCollision(bool collision) { this->collideBottom = collision; }
 	void SetLeftCollision(bool collision) { this->collideLeft = collision; }
 	void SetRightCollision(bool collision) { this->collideRight = collision; }
 	void SetTopCollision(bool collision) { this->collideTop = collision; }
 	void SetRopeCollision(bool collision) { this->collideRope = collision; }
-	void SetPosY(float posy) { this->pos.y = posy; }
-	void SetPosX(float posx) { this->pos.x = posx; }
 	bool GetFallingState() { return this->canfalling; }
 	bool GetjumpSwitch() { return this->jumpSwitch; }
 	bool GetHittedState() { return this->getHit; }

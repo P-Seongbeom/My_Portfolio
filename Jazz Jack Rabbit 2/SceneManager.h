@@ -10,9 +10,9 @@ private:
 	map<string, GameEntity*>	mapLoadingScenes;
 
 public:
-	static GameEntity* currScene;		// 현재 출력 중인 씬
-	static GameEntity* readyScene;		// 준비 중인 씬
-	static GameEntity* loadingScene;	// 로딩 씬
+	static GameEntity* currScene;	
+	static GameEntity* readyScene;	
+	static GameEntity* loadingScene;
 
 	void Init();
 	void Release();

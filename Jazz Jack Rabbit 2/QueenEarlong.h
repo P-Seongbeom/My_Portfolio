@@ -69,10 +69,10 @@ private:
 	bool canUpdate();
 
 public:
-	virtual HRESULT Init() override;
-	virtual void Update() override;
-	virtual void Render(HDC hdc) override;
-	virtual void Release() override;
+	virtual HRESULT Init();
+	virtual void Update();
+	virtual void Render(HDC hdc);
+	virtual void Release();
 	virtual ~QueenEarlong() = default;
 
 	RECT GetCollisionRect() { return this->queenCollisionRect; }
@@ -82,7 +82,5 @@ public:
 	void SetRenderPos(POINTFLOAT pos1, POINTFLOAT pos2, RECT* zone1, RECT* zone2);
 
 	bool GetIsDead() { return this->isDead; }
-
-	//void GetObjectPosition(GameObject* object){	this->playerPos = object->GetPos();	}
 };
 

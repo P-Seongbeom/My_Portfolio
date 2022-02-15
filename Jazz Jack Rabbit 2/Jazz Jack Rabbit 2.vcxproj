@@ -141,14 +141,11 @@
   <ItemGroup>
     <ClCompile Include="Ammo.cpp" />
     <ClCompile Include="BasicGameFramework.cpp" />
-    <ClCompile Include="CharacterSelectScene.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Life.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="PixelCollider.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -156,28 +153,23 @@
     <ClCompile Include="QueenEarlong.cpp" />
     <ClCompile Include="RectCollider.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="ScoreObject.cpp" />
     <ClCompile Include="StageClearScene.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TileMapToolScene.cpp" />
     <ClCompile Include="TiltleScene.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Turtle.cpp" />
-    <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ammo.h" />
     <ClInclude Include="BasicGameFramework.h" />
-    <ClInclude Include="CharacterSelectScene.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Gun.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="Life.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="PixelCollider.h" />
     <ClInclude Include="Player.h" />
@@ -187,7 +179,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="ScoreObject.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="StageClearScene.h" />
     <ClInclude Include="TileMap.h" />
@@ -195,7 +186,6 @@
     <ClInclude Include="TiltleScene.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Turtle.h" />
-    <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Jazz Jack Rabbit 2.rc" />

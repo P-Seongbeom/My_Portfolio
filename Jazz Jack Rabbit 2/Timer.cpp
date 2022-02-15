@@ -43,15 +43,6 @@ bool Timer::CanUpdate() noexcept
 
 	_deltaTime = elapsed.count();
 
-	//++_fpsFrameCount;
-	//_fpsTimeElapsed += _deltaTime * _timeScale;
-	//if (_fpsTimeElapsed >= 1.0f)
-	//{
-	//	_fps = _fpsFrameCount;
-	//	_fpsFrameCount = 0;
-	//	_fpsTimeElapsed = 0.0f;
-	//}
-
 	_prevTime = current;
 
 	return true;

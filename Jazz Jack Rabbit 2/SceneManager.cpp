@@ -5,14 +5,12 @@
 #include "TiltleScene.h"
 #include "StageClearScene.h"
 
-//static으로 함수를 선언하면 함수외적인 곳에서 초기화를 꼭 시켜줘야한다.
 GameEntity* SceneManager::currScene = nullptr;
 GameEntity* SceneManager::readyScene = nullptr;
 GameEntity* SceneManager::loadingScene = nullptr;
 
-DWORD CALLBACK LoadingThread(LPVOID pvParam)	//함수 이름은 바뀌어도 됨, 나머지는 맞춰야함
+DWORD CALLBACK LoadingThread(LPVOID pvParam)
 {
-	// 레디씬을 초기화 한다.
 	SceneManager::readyScene->Init();
 	SceneManager::currScene = SceneManager::readyScene;
 
@@ -98,11 +96,10 @@ HRESULT SceneManager::ChangeScene(string sceneName)
 
 	if (it == mapScenes.end()) return E_FAIL;
 
-	if (SUCCEEDED((it->second)->Init()))	//성공여부를 판별하려면 Init의 return타입을 HRESULT로 해줘야함
+	if (SUCCEEDED((it->second)->Init()))
 	{
-		//second가 초기화 되면
-		if (currScene)	currScene->Release();	//기존꺼를 release하고
-		currScene = it->second;	//currScene에 second를 넣는다.
+		if (currScene)	currScene->Release();
+		currScene = it->second;
 		return S_OK;
 	}
 	return E_FAIL;
@@ -114,14 +111,12 @@ HRESULT SceneManager::ChangeScene(string sceneName, string loadingSceneName)
 
 	if (it == mapScenes.end()) return E_FAIL;
 
-	//로딩씬 확인
 	map<string, GameEntity*>::iterator itLoading = mapLoadingScenes.find(loadingSceneName);
 	if (itLoading == mapLoadingScenes.end())
 	{
 		return ChangeScene(sceneName);
 	}
 
-	//로딩씬 있을 때
 	if (SUCCEEDED((itLoading->second)->Init()))
 	{
 		if (currScene)	currScene->Release();
@@ -131,11 +126,10 @@ HRESULT SceneManager::ChangeScene(string sceneName, string loadingSceneName)
 
 		currScene = loadingScene;
 
-		// 멀티쓰레드 처리
 		DWORD loadThread;
 		HANDLE hThread = CreateThread(NULL, 0,
-			LoadingThread/*실행시킬 함수포인터(함수이름)*/,
-			NULL /*실행 시킬 함수에 들어갈 매개변수*/,
+			LoadingThread,
+			NULL,
 			0, &loadThread);
 
 		CloseHandle(hThread);

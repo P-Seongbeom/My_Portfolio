@@ -37,13 +37,14 @@ private:
 	bool moveVertical = true;
 
 public:
-	virtual HRESULT Init() override;
-	virtual void Update() override;
-	virtual void Render(HDC hdc) override;
-	virtual void Release() override;
+	virtual HRESULT Init();
+	virtual void Update();
+	virtual void Render(HDC hdc);
+	virtual void Release();
+	virtual void PhysicsUpdate();
+
 	virtual ~PlayInStageScene() = default;
 
-	virtual void PhysicsUpdate() override;
 
 };
 

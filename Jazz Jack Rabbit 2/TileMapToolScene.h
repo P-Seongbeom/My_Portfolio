@@ -31,14 +31,12 @@ private:
 
 	SAMPLE_TILE_INFO	selectedSampleTile;
 
-	//RECT sampleArea[SAMPLE_IMAGE_COUNT];
-
 public:
 	virtual ~TileMapToolScene() = default;
-	virtual HRESULT Init() override;
-	virtual void Update() override;
-	virtual void Render(HDC hdc) override;
-	virtual void Release() override;
+	virtual HRESULT Init();
+	virtual void Update();
+	virtual void Render(HDC hdc);
+	virtual void Release();
 
 	void SaveMap();
 	void LoadMap();

@@ -156,7 +156,7 @@ void Player::SetAmmoCollision(HDC mapPixel, Turtle* enemy, QueenEarlong* boss)
 }
 
 
-void Player::inputAction()  //플레이어 행동 입력
+void Player::inputAction()
 {
     if (Input::GetButton(VK_LSHIFT))
     {
@@ -327,7 +327,7 @@ void Player::inputAction()  //플레이어 행동 입력
     fireMotionSwitch();
 }
 
-void Player::skiddingPlayer() //관성
+void Player::skiddingPlayer()
 {
     if (moveKeyPressed || moveSpeed == 0 || playerState == EplayerState::QuickDown) return;
 
@@ -367,7 +367,7 @@ void Player::jumpPlayer()
         playerState = EplayerState::UpperCut;
     }
 
-    if (stayGetDown)    //아래 입력 후 점프 = jazz 특수공격
+    if (stayGetDown) 
     {
         canMove = false;
         upperCut = true;
@@ -376,7 +376,7 @@ void Player::jumpPlayer()
         playerState = EplayerState::UpperCut;
     }
 
-    if (collideRope)    //점프 중 로프가 머리와 충돌
+    if (collideRope) 
     {
         canMove = true;
         initJump();
@@ -386,13 +386,13 @@ void Player::jumpPlayer()
 
     if (playerState == EplayerState::Jump || playerState == EplayerState::UpperCut)
     {
-        if (jumpVelocity > 0)   //점프
+        if (jumpVelocity > 0)
         {
             pos.y -= jumpVelocity * Timer::GetDeltaTime();
             jumpVelocity -= gravity * Timer::GetDeltaTime();
         }
 
-        if (jumpVelocity <= 0)  //점프높이 최대치
+        if (jumpVelocity <= 0)
         {
             canMove = true;
             canFire = true;
@@ -401,7 +401,7 @@ void Player::jumpPlayer()
             initMotionFrame();
             playerState = EplayerState::Falling;
         }
-        if (collideTop)     //점프 도중 머리 충돌
+        if (collideTop)
         {
             canMove = true;
             canFire = true;
@@ -432,7 +432,6 @@ void Player::freeFall()
     }
     else canfalling = true;
 
-    //자유낙하 가능
     if (canfalling)
     {
         fallingSpeed += gravity * Timer::GetDeltaTime();
@@ -784,7 +783,6 @@ void Player::getDamage()
     }   
 }
 
-//맵 가장자리부분에서 캐릭터 화면 중앙고정 풀기
 void Player::unlockingCenterPlayer()
 {
     if (pos.x < WIN_SIZE_X / 2)
