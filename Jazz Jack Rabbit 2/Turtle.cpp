@@ -7,8 +7,8 @@ HRESULT Turtle::Init()
     turtleMotion[(int)EturtleState::Hide] = ImageManager::GetSingleton()->FindImage("Image/enemy/turtle/turtlegoon_hide.bmp");
     turtleMotion[(int)EturtleState::Die] = ImageManager::GetSingleton()->FindImage("Image/enemy/turtle/turtlegoon_die.bmp");
 
-    pos.x = WIN_SIZE_X / 2;
-    pos.y = WIN_SIZE_Y * 1.5f;
+    pos.x = TURTLE_POS_X;
+    pos.y = TURTLE_POS_Y;
 
     turtleState = EturtleState::Walk;
     turtleMoveDir = EmoveDir::Right;
@@ -16,7 +16,7 @@ HRESULT Turtle::Init()
     moveSpeed = TURTLE_MOVE_SPEED;
 
     fallingSpeed = 0.0f;
-    fallingMaxSpeed = 500.0f;
+    fallingMaxSpeed = FALLING_MAX_SPEED;
 
     hp = 1;
 
@@ -51,9 +51,9 @@ void Turtle::action()
     {
         moveTimer += Timer::GetDeltaTime();
 
-        collisionRect.left = (LONG)(pos.x - 16);
-        collisionRect.right = (LONG)(pos.x + 16);
-        collisionRect.top = (LONG)(pos.y - 32);
+        collisionRect.left = (LONG)(pos.x - TURTLE_BODYSIZE_X / 2);
+        collisionRect.right = (LONG)(pos.x + TURTLE_BODYSIZE_X / 2);
+        collisionRect.top = (LONG)(pos.y - TURTLE_BODYSIZE_Y);
         collisionRect.bottom = (LONG)pos.y;
 
         if (turtleMoveDir == EmoveDir::Right)
@@ -88,9 +88,9 @@ void Turtle::action()
     }
     case EturtleState::Hide:
     {
-        collisionRect.left = (LONG)(pos.x - 16);
-        collisionRect.right = (LONG)(pos.x + 16);
-        collisionRect.top = (LONG)(pos.y - 16);
+        collisionRect.left = (LONG)(pos.x - TURTLE_BODYSIZE_X / 2);
+        collisionRect.right = (LONG)(pos.x + TURTLE_BODYSIZE_X / 2);
+        collisionRect.top = (LONG)(pos.y - TURTLE_BODYSIZE_Y / 2);
         collisionRect.bottom = (LONG)pos.y;
 
         hidingMotion(0.1f, 12);
@@ -113,9 +113,9 @@ void Turtle::action()
     }
     case EturtleState::Die:
     {
-        collisionRect.left = (LONG)(pos.x - 16);
-        collisionRect.right = (LONG)(pos.x + 16);
-        collisionRect.top = (LONG)(pos.y - 16);
+        collisionRect.left = (LONG)(pos.x - TURTLE_BODYSIZE_X / 2);
+        collisionRect.right = (LONG)(pos.x + TURTLE_BODYSIZE_X / 2);
+        collisionRect.top = (LONG)(pos.y - TURTLE_BODYSIZE_Y / 2);
         collisionRect.bottom = (LONG)pos.y;
 
         deadMotion();

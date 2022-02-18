@@ -86,12 +86,12 @@ void PlayInStageScene::Release()
 
 void PlayInStageScene::PhysicsUpdate()
 {
-    MapPixelCollider->PixelCollision(tileMap->GetImageInfo()->GetMemDC(), player, player->GetPos(), 20, 32, RGB(87, 0, 203));
-    MapPixelCollider->PixelCollision(tileMap->GetImageInfo()->GetMemDC(), turtle, turtle->GetPos(), 32, 20, RGB(87, 0, 203));
-    MapPixelCollider->PixelCollision(tileMap->GetImageInfo()->GetMemDC(), boss, boss->GetPos(), 32, 40, RGB(87, 0, 203));
+    MapPixelCollider->PixelCollision(tileMap->GetImageInfo()->GetMemDC(), player, player->GetPos(), PLAYER_BODYSIZE_X, PLAYER_BODYSIZE_Y, RGB(87, 0, 203));
+    MapPixelCollider->PixelCollision(tileMap->GetImageInfo()->GetMemDC(), turtle, turtle->GetPos(), TURTLE_BODYSIZE_X, TURTLE_BODYSIZE_Y, RGB(87, 0, 203));
+    MapPixelCollider->PixelCollision(tileMap->GetImageInfo()->GetMemDC(), boss, boss->GetPos(), BOSS_BODYSIZE_X, BOSS_BODYSIZE_Y, RGB(87, 0, 203));
     player->SetAmmoCollision(tileMap->GetImageInfo()->GetMemDC(), turtle, boss);
-    rectCollider->GiveDamageObject1(player, 20, 32, turtle, 32, 20);
-    rectCollider->CollideObjects(player, 20, 32, boss, 32, 40);
+    rectCollider->GiveDamageObject1(player, PLAYER_BODYSIZE_X, PLAYER_BODYSIZE_Y, turtle, TURTLE_BODYSIZE_X, TURTLE_BODYSIZE_Y);
+    rectCollider->CollideObjects(player, PLAYER_BODYSIZE_X, PLAYER_BODYSIZE_Y, boss, BOSS_BODYSIZE_X, BOSS_BODYSIZE_Y);
 }
 
 bool PlayInStageScene::freeCameraMoveZone(RECT* zone, POINTFLOAT ptf)

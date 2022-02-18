@@ -2,12 +2,10 @@
 #include "GameObject.h"
 #include "Config.h"
 
-#define TURTLE_MOVE_SPEED 100.0f
-
 class Image;
 class Turtle : public GameObject
 {
-	enum class EturtleState{Walk, Hide, Die, Wobble, End};
+	enum class EturtleState{Walk, Hide, Die, End};
 
 private:
 	Image* turtleMotion[(int)EturtleState::End] = {};

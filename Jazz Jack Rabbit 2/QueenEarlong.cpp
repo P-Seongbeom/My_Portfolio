@@ -23,10 +23,10 @@ HRESULT QueenEarlong::Init()
     updateRect.bottom = WIN_SIZE_Y * 2;
 
 	fallingSpeed = 0.0f;
-	fallingMaxSpeed = 500.0f;
+	fallingMaxSpeed = FALLING_MAX_SPEED;
 
     brickFallingSpeed = 0.0f;
-    brickFallingMaxSpeed = 500.0f;
+    brickFallingMaxSpeed = FALLING_MAX_SPEED;
 
     hp = 10;
 
@@ -49,14 +49,14 @@ void QueenEarlong::Update()
 
         freeFall();
 
-        queenCollisionRect.left = (LONG)(pos.x - 16);
-        queenCollisionRect.right = (LONG)(pos.x + 16);
-        queenCollisionRect.top = (LONG)(pos.y - 40);
+        queenCollisionRect.left = (LONG)(pos.x - BOSS_BODYSIZE_X / 2);
+        queenCollisionRect.right = (LONG)(pos.x + BOSS_BODYSIZE_X / 2);
+        queenCollisionRect.top = (LONG)(pos.y - BOSS_BODYSIZE_Y);
         queenCollisionRect.bottom = (LONG)pos.y;
 
-        brickCollisionRect.left = (LONG)(brickPos.x - 14);
-        brickCollisionRect.right = (LONG)(brickPos.x + 14);
-        brickCollisionRect.top = (LONG)(brickPos.y - 24);
+        brickCollisionRect.left = (LONG)(brickPos.x - BRICK_SIZE_X / 2);
+        brickCollisionRect.right = (LONG)(brickPos.x + BRICK_SIZE_X / 2);
+        brickCollisionRect.top = (LONG)(brickPos.y - BRICK_SIZE_Y);
         brickCollisionRect.bottom = (LONG)brickPos.y;
     }
 }

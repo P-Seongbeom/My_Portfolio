@@ -57,13 +57,35 @@ typedef struct tagTile
 
 //이동하는 object 관련
 enum class EmoveDir { Left, Right, Up, Down };
-
 #define GRAVITY				1000.0f
+#define FALLING_MAX_SPEED	500.0f
+
+//플레이어 관련
+#define PLAYER_POS_X		WIN_SIZE_X * 0.5f
+#define PLAYER_POS_Y		WIN_SIZE_Y * 0.5f
 #define PLAYER_MAX_SPEED	200.0f
 #define PLAYER_ACCELATE		600.0f
 #define JUMP_VELOCITY		500.0f
-
+#define PLAYER_BODYSIZE_X	20
+#define PLAYER_BODYSIZE_Y	32
+#define QUICK_DOWN_SPEED	450.0f
 
 //총알 관련
 #define AMMO_PACK_COUNT		10
 #define AMMO_SPEED			640.0f
+
+//거북이 관련
+#define TURTLE_POS_X		WIN_SIZE_X * 0.5f
+#define TURTLE_POS_Y		WIN_SIZE_Y * 1.5f
+#define TURTLE_MOVE_SPEED	100.0f
+#define TURTLE_BODYSIZE_X	32
+#define TURTLE_BODYSIZE_Y	32
+
+//보스 관련
+#define BOSS_POS_X			1166
+#define BOSS_POS_Y			720
+#define BOSS_DIE_POS_X		1216
+#define BOSS_BODYSIZE_X		32
+#define BOSS_BODYSIZE_Y		40
+#define BRICK_SIZE_X		28
+#define BRICK_SIZE_Y		24

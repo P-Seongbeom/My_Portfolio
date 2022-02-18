@@ -2,10 +2,6 @@
 #include "Config.h"
 #include "GameObject.h"
 
-#define BOSS_POS_X	1166
-#define BOSS_POS_Y	720
-#define BOSS_DIE_POS_X 1216
-
 class Image;
 class Player;
 class QueenEarlong : public GameObject

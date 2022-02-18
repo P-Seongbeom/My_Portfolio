@@ -28,8 +28,8 @@ HRESULT Player::Init()
     renderFrameX = 0;
     renderFrameY = 0;
 
-    pos.x = WIN_SIZE_X / 2;
-    pos.y = WIN_SIZE_Y / 2;
+    pos.x = PLAYER_POS_X;
+    pos.y = PLAYER_POS_Y;
 
     renderPos.x = pos.x;
     renderPos.y = pos.y;
@@ -43,7 +43,7 @@ HRESULT Player::Init()
     }
 
     fallingSpeed = 0.0f;
-    fallingMaxSpeed = 500.0f;
+    fallingMaxSpeed = FALLING_MAX_SPEED;
 
     moveSpeed = 0.0f;
     moveMaxSpeed = PLAYER_MAX_SPEED;
@@ -71,13 +71,12 @@ void Player::Update()
 
     for (int i = 0; i < AMMO_PACK_COUNT; ++i)
     {
-
         ammo[i].Update();
     }
 
-    playerRect.left = (LONG)(pos.x - 10);
-    playerRect.right = (LONG)(pos.x + 10);
-    playerRect.top = (LONG)(pos.y - 32);
+    playerRect.left = (LONG)(pos.x - PLAYER_BODYSIZE_X / 2);
+    playerRect.right = (LONG)(pos.x + PLAYER_BODYSIZE_X / 2);
+    playerRect.top = (LONG)(pos.y - PLAYER_BODYSIZE_Y);
     playerRect.bottom = (LONG)pos.y;
 }
 
@@ -95,14 +94,14 @@ void Player::Render(HDC hdc)
             if (fireMotion)
             {
                 playerMotion[(int)EplayerState::Fire]->Render(hdc,
-                    (int)renderPos.x, (int)renderPos.y + 16,
+                    (int)renderPos.x, (int)renderPos.y + PLAYER_BODYSIZE_Y / 2,
                     playerMotion[(int)playerState]->GetCurrFrameX(),
                     playerMotion[(int)playerState]->GetCurrFrameY());
             }
             else
             {
                 playerMotion[(int)playerState]->Render(hdc,
-                    (int)renderPos.x, (int)renderPos.y + 16,
+                    (int)renderPos.x, (int)renderPos.y + PLAYER_BODYSIZE_X / 2,
                     playerMotion[(int)playerState]->GetCurrFrameX(),
                     playerMotion[(int)playerState]->GetCurrFrameY());
             }
@@ -339,6 +338,7 @@ void Player::skiddingPlayer()
     {
         moveSpeed = 0;
     }
+
     if (playerState != EplayerState::Rope)
     {
         if (playerMoveDir == EmoveDir::Left && !collideLeft)
@@ -350,7 +350,6 @@ void Player::skiddingPlayer()
             pos.x += moveSpeed * Timer::GetDeltaTime();
         }
     }
-
 }
 
 void Player::jumpPlayer()
@@ -484,7 +483,7 @@ void Player::quickDown()
 
     if (quickDownWatingTime > 0.5)
     {
-        pos.y += 450 * Timer::GetDeltaTime();
+        pos.y += QUICK_DOWN_SPEED * Timer::GetDeltaTime();
     }
 }
 
